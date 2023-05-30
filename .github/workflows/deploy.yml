@@ -13,5 +13,5 @@ jobs:
         with:
           path: './dist'
           private-key: ${{ secrets.PK }}
-          bundlr-endpoint: 'http://devnet.bundlr.network'
+          bundlr-endpoint: 'http://node1.bundlr.network'
 
