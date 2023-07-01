@@ -46,6 +46,7 @@ import yayoThumbnail from 'assets/yayo.jpg?preset=thumbnail&resize=true'
 import zladyThumbnail from 'assets/zlady.jpg?preset=thumbnail&resize=true'
 import angelThumbnail from 'assets/angel.jpg?preset=thumbnail&resize=true'
 import radcatThumbnail from 'assets/radcat.jpg?preset=thumbnail&resize=true'
+import kawamiiThumbnail from 'assets/kawami.jpg?preset=thumbnail&resize=true'
 
 /* Test vite's import.meta.glob */
 /* 
@@ -282,6 +283,11 @@ const approved: Collection[] = [
     image: janklerThumbnail,
     name: 'Janklerz',
     link: 'https://pro.opensea.io/collection/janklerz',
+  },
+  {
+    image: kawamiiThumbnail,
+    name: 'Kawamii Teens',
+    link: 'https://pro.opensea.io/collection/kawamii',
   },
   {
     image: strawberryThumbnail,
