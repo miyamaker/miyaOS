@@ -2,16 +2,33 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
 import macrosPlugin from 'vite-plugin-babel-macros'
+import dynamicImport from 'vite-plugin-dynamic-import'
 import imagePresets, { widthPreset } from 'vite-plugin-image-presets'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
   base: '',
   plugins: [
     react(),
+    dynamicImport(),
     svgr(),
     macrosPlugin(),
     imagePresets({
+      pattern: widthPreset({
+        loading: 'eager',
+        widths: [2],
+        formats: {
+          webp: { quality: 100 },
+        },
+      }),
+      icon: widthPreset({
+        loading: 'eager',
+        widths: [16, 60],
+        formats: {
+          webp: { quality: 50 },
+        },
+      }),
       thumbnail: widthPreset({
         loading: 'lazy',
         widths: [120, 170],
@@ -35,12 +52,19 @@ export default defineConfig({
         },
       }),
     }),
+    nodePolyfills({
+      // Whether to polyfill specific globals.
+      globals: {
+        Buffer: true, // can also be 'build', 'dev', or false
+        global: true,
+        process: true,
+      },
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    }),
   ],
   build: {
     sourcemap: true,
-    commonjsOptions: {
-      include: [],
-    },
   },
   resolve: {
     alias: [
@@ -54,6 +78,6 @@ export default defineConfig({
     ],
   },
   optimizeDeps: {
-    disabled: false,
+    disabled: 'build',
   },
 })

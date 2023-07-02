@@ -31,17 +31,14 @@ export enum ZIndex {
   tooltip = 1080,
 }
 
-const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } = Object.keys(MEDIA_WIDTHS).reduce(
-  (accumulator, size) => {
-    ;(accumulator as any)[size] = (a: any, b: any, c: any) => css`
-      @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
-        ${css(a, b, c)}
-      }
-    `
-    return accumulator
-  },
-  {}
-) as any
+const mediaWidthTemplates = Object.keys(MEDIA_WIDTHS).reduce((accumulator, size) => {
+  ;(accumulator as Record<string, unknown>)[size] = (a: any, b: any, c: any) => css`
+    @media (max-width: ${MEDIA_WIDTHS[size as keyof typeof MEDIA_WIDTHS]}px) {
+      ${css(a, b, c)}
+    }
+  `
+  return accumulator
+}, {}) as { [width in keyof typeof MEDIA_WIDTHS]: typeof css }
 
 const white = '#FFFFFF'
 const black = '#000000'
@@ -153,23 +150,25 @@ export const ThemedText = {
 }
 
 export const ThemedGlobalStyle = createGlobalStyle`
+
+
 * {
   box-sizing: border-box;
+  font-family: 'Hiragino Kaku Gothic Pro W3', Osaka, Meiryo, 'MS PGothic', arial, helvetica, clean, sans-serif;
 }
+
 html {
   color: ${({ theme }) => theme.neutral900};
   background-repeat: no-repeat;
   height: 100%;
-  font-family: "Ã£Æ’â€™Ã£Æ’Â©Ã£â€šÂ®Ã£Æ’Å½Ã¨Â§â€™Ã£â€šÂ´ Pro W3", "Hiragino Kaku Gothic Pro", Osaka,
-    "Ã£Æ’Â¡Ã£â€šÂ¤Ã£Æ’ÂªÃ£â€šÂª", Meiryo, "MS PÃ£â€šÂ´Ã£â€šÂ·Ã£Æ’Æ’Ã£â€šÂ¯", "MS PGothic", farial, helvetica,
-    clean, sans-serif;
   //max-width: 43em;
 }
 body {
   margin: 0;
+  z-index: 0;
+  position: relative;
   // font-size: 1.2em;
   margin: auto;
-  background-image: linear-gradient(black, black, white, black, black);
   background-attachment: fixed;
   
 }
