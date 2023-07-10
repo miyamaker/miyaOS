@@ -11,33 +11,35 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets'
 import merge from 'lodash.merge'
-import { configureChains, createClient, mainnet, WagmiConfig } from 'wagmi'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { Provider } from 'react-redux'
+import { configureChains, createConfig, mainnet, WagmiConfig } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
-import QueryProvider from './context/QueryProvider'
+import AccountProvider from './context/AccountProvider'
 import Router from './Router'
+import store from './store'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 
-const { chains, provider } = configureChains(
-  [mainnet],
-  [
-    jsonRpcProvider({
-      rpc: (chain) => ({ http: chain.rpcUrls.default.http[0]! }),
-    }),
-  ],
-  { pollingInterval: 10_000, stallTimeout: 5000 }
-)
+const { chains, publicClient } = configureChains([mainnet], [publicProvider()], {
+  pollingInterval: 10_000,
+  stallTimeout: 5000,
+})
 
 const readTheme = merge(lightTheme(), {
+  colors: {
+    modalBackground: '#a9a3c9',
+    accentColor: '#d97ada',
+    selectedOptionBorder: '#000',
+  },
   fonts: {
-    body: '',
+    body: 'inherit',
   },
   radii: {
-    actionButton: '12px',
-    connectButton: '12px',
-    menuButton: '12px',
-    modal: '12px',
-    modalMobile: '12px',
+    actionButton: '0',
+    connectButton: '0',
+    menuButton: '0',
+    modal: '0',
+    modalMobile: '0',
   },
   shadows: {
     connectButton: '0',
@@ -51,6 +53,7 @@ const readTheme = merge(lightTheme(), {
 
 const walletConfig = {
   appName: 'miya.wtf',
+  projectId: import.meta.env.PROD ? import.meta.env.VITE_WC_KEY_PROD : import.meta.env.VITE_WC_KEY_DEV,
   chains,
 }
 
@@ -69,25 +72,27 @@ const recommendedConnectors = connectorsForWallets([
     wallets: [rainbowWallet(walletConfig), walletConnectWallet(walletConfig)],
   },
 ])
-const wagmiClient = createClient({
+const wagmiClient = createConfig({
   autoConnect: true,
   connectors: recommendedConnectors,
-  provider,
+  publicClient,
 })
 
 export default function App() {
   return (
     <>
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains} theme={readTheme}>
-          <QueryProvider>
-            <ThemeProvider>
-              <ThemedGlobalStyle />
-              <Router />
-            </ThemeProvider>
-          </QueryProvider>
-        </RainbowKitProvider>
-      </WagmiConfig>
+      <Provider store={store}>
+        <WagmiConfig config={wagmiClient}>
+          <AccountProvider>
+            <RainbowKitProvider chains={chains} theme={readTheme}>
+              <ThemeProvider>
+                <ThemedGlobalStyle />
+                <Router />
+              </ThemeProvider>
+            </RainbowKitProvider>
+          </AccountProvider>
+        </WagmiConfig>
+      </Provider>
     </>
   )
 }

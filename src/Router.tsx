@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 
-import Home from './pages/Home'
+import OperatingSystem from './pages/OperatingSystem'
 
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="*" element={<OperatingSystem />} />
     </Routes>
   )
 }

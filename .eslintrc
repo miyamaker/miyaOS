@@ -1,7 +1,7 @@
 {
   "root": true,
   // Configuration for JavaScript files
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "extends": ["airbnb-base", "plugin:prettier/recommended", "mdcs"],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -100,7 +100,8 @@
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
         "simple-import-sort/imports": "error", // Import configuration for `eslint-plugin-simple-import-sort`
         "unused-imports/no-unused-imports": "error",
-        "unused-imports/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+        "unused-imports/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "react/no-unknown-property": ["error", { "ignore": ["attach", "args", "map"] }]
       }
     }
   ]
