@@ -20,7 +20,7 @@ export default function MintPage() {
       <TitleBar
         closeBtn
         onClose={(e) => {
-          e.stopPropagation()
+          if (e.cancelable) e.stopPropagation()
           close()
         }}
         fullscreen={fullscreen}
@@ -28,7 +28,7 @@ export default function MintPage() {
         onFullscreen={() => toggleFullscreen()}
         minimizeBtn
         onMinimize={(e) => {
-          e.stopPropagation()
+          if (e.cancelable) e.stopPropagation()
           minimize()
         }}
       >

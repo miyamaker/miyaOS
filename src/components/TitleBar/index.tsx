@@ -6,17 +6,24 @@ import { HighlightButton } from '../Button'
 const StyledTitleBar = styled.div`
   background: #d97ada;
   color: white;
-  padding: 2px 4px;
-  user-select: none;
   cursor: grab;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
+const TitleContainer = styled.div`
+  padding: 2px 4px;
+  flex-grow: 1;
+  height: 100%;
+`
+
 const ButtonContainer = styled.div`
+  padding: 2px 4px;
   display: flex;
   gap: 2px;
+  pointer-events: all;
+  user-select: all;
 `
 
 export default function TitleBar({
@@ -41,8 +48,8 @@ export default function TitleBar({
   children?: ReactNode
 }) {
   return (
-    <StyledTitleBar className={className}>
-      {children}
+    <StyledTitleBar>
+      <TitleContainer className={className}>{children}</TitleContainer>
       <ButtonContainer>
         <div style={{ display: 'flex', gap: '0' }}>
           {minimizeBtn && (
