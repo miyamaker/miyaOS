@@ -36,11 +36,7 @@ export default function Header() {
           </BoxContent>
         </MBox>
         <AudioContainer>
-          <audio
-            controls
-            autoPlay
-            title="Return of ☸️ Miya Black Hearted Cyber Angel Baby ☸️ (61621) [YIFY COMPRESSED EDIT]"
-          >
+          <audio controls title="Return of ☸️ Miya Black Hearted Cyber Angel Baby ☸️ (61621) [YIFY COMPRESSED EDIT]">
             <source src={'sounds/61621.mp3'} type="audio/mpeg" />
           </audio>
         </AudioContainer>
