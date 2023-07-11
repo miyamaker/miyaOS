@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 import Typewriter from '@/components/Typewriter'
 import { load } from '@/store/experience/actions'
 
-const asciiArt: FixedLengthArray<{ content: string; chars: number; speed: number }, 48> = [
+const asciiArt: FixedLengthArray<{ content: string; className?: string; chars: number; speed: number }, 48> = [
   { content: '                             .-=+*#%%@@@@@@%%#*+=-:                             ', chars: 6, speed: 0 },
   { content: '                       .-=*%@@@@@@@@@@@@@@@@@@@@@@@@@#+-.                       ', chars: 6, speed: 0 },
   { content: '                    :+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*-                    ', chars: 6, speed: 0 },
@@ -43,17 +43,32 @@ const asciiArt: FixedLengthArray<{ content: string; chars: number; speed: number
   { content: '                                                :                  .            ', chars: 6, speed: 0 },
   { content: '                                                                                ', chars: 20, speed: 0 },
   { content: '                                                                                ', chars: 20, speed: 0 },
-  { content: 'Milady BIOS v1.00', chars: 1, speed: 30 },
-  { content: 'Decentralized for BRG R2 CPU', chars: 1, speed: 30 },
-  { content: 'Processor : BRG Engineering', chars: 1, speed: 30 },
-  { content: '<MilaID:8266>', chars: 1, speed: 30 },
-  { content: 'Random Access Milady : At Least 8', chars: 1, speed: 30 },
-  { content: 'Milady Testing: OK', chars: 1, speed: 30 },
-  { content: '                                                                                ', chars: 20, speed: 0 },
-  { content: 'IDK Channel 0 Master : RemiliacorpCD/DVDW RE-S14H', chars: 1, speed: 30 },
-  { content: 'Finished searching for IDK drives', chars: 1, speed: 30 },
-  { content: '                                                                                ', chars: 20, speed: 0 },
-  { content: 'System boot finished successfully, press any key to continue...', chars: 1, speed: 30 },
+  { content: 'Milady BIOS v1.00', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: 'Decentralized for BRG R2 CPU', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: 'Processor : BRG Engineering', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: '<MilaID:8266>', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: 'Random Access Milady : At Least 8', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: 'Milady Testing: OK', className: 'mobile-none', chars: 1, speed: 30 },
+  {
+    content: '                                                                                ',
+    className: 'mobile-none',
+    chars: 20,
+    speed: 0,
+  },
+  { content: 'IDK Channel 0 Master : RemiliacorpCD/DVDW RE-S14H', className: 'mobile-none', chars: 1, speed: 30 },
+  { content: 'Finished searching for IDK drives', className: 'mobile-none', chars: 1, speed: 30 },
+  {
+    content: '                                                                                ',
+    className: 'mobile-none',
+    chars: 20,
+    speed: 0,
+  },
+  {
+    content: 'System boot finished successfully, press any key to continue...',
+    className: 'mobile-none',
+    chars: 1,
+    speed: 30,
+  },
 ]
 
 const Row = styled.div`
@@ -71,13 +86,36 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   padding: 1rem;
-  s span {
+  span {
     font-family: monospace !important;
     font-size: 1rem;
-    ${({ theme }) => theme.mediaWidth.upToMedium`
-      font-size: 2rem;
-    `}
   }
+  #skipButton::before {
+    content: '[Press S to Skip]';
+  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+  justify-content: center;
+  align-items: center;
+  .mobile-none {
+    display: none!important;
+  }
+  #skipButton {
+    background-color: #000;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 1rem;
+    padding:1rem;
+    text-align: center;
+    &::before {
+      content: "[Press to Continue]";
+    }
+  }
+  span {
+    font-size: 0.5rem;
+  }
+  `}
 `
 
 const Container = styled.pre`
@@ -89,7 +127,7 @@ const Container = styled.pre`
     font-family: monospace !important;
     font-size: 1rem;
     ${({ theme }) => theme.mediaWidth.upToMedium`
-      font-size: 2rem;
+      font-size: 0.40rem;
     `}
   }
 `
@@ -115,7 +153,11 @@ export default function OsLoader() {
     <Row onKeyDownCapture={(e) => close(e.code)} tabIndex={0} onClick={() => close()}>
       <Container>
         {asciiArt.map((line, i) => (
-          <span key={`line-${i}`} style={{ display: i <= currentLine ? 'block' : 'none' }}>
+          <span
+            key={`line-${i}`}
+            style={{ display: i <= currentLine ? 'block' : 'none' }}
+            className={line.className || ''}
+          >
             {line.content}
           </span>
         ))}
@@ -123,6 +165,7 @@ export default function OsLoader() {
           <Typewriter
             key={`typewriter-${currentLine + 1}`}
             text={asciiArt[currentLine + 1]?.content || ''}
+            className={asciiArt[currentLine + 1]?.className}
             charsPerTick={asciiArt[currentLine + 1]?.chars}
             speed={asciiArt[currentLine + 1]?.speed}
             onFinished={() => {
@@ -135,7 +178,7 @@ export default function OsLoader() {
           />
         )}
       </Container>
-      <span onClick={() => close('KeyS')}>[Press S to Skip]</span>
+      <span id="skipButton" onClick={() => close('KeyS')}></span>
     </Row>
   )
 }

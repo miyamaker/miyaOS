@@ -35,6 +35,7 @@ const DEFAULT_MS = 30
 
 export interface ITypewriterProps {
   text: string | string[]
+  className?: string
   charsPerTick?: number
   speed?: number
   loop?: boolean
@@ -46,6 +47,7 @@ export interface ITypewriterProps {
 
 export default function Typewriter({
   text,
+  className,
   charsPerTick = 1,
   speed = DEFAULT_MS,
   loop = false,
@@ -80,5 +82,9 @@ export default function Typewriter({
     }, speed + Math.random() * random)
   })
 
-  return <span style={{ margin: 0 }}>{(text[currentStringIndex] || '').substring(0, currentTextIndex)}</span>
+  return (
+    <span className={className || ''} style={{ margin: 0 }}>
+      {(text[currentStringIndex] || '').substring(0, currentTextIndex)}
+    </span>
+  )
 }
