@@ -187,6 +187,13 @@ export default function OperatingSystem() {
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
                   My collections
                 </DesktopIcon>
+                <DesktopIcon
+                  normalState={CreateNew[0]?.src}
+                  onClick={() => handleOpen('swap')}
+                  realignment={'0 -10px 0 0'}
+                >
+                  MiyaSwaps.exe
+                </DesktopIcon>
               </div>
             </div>
           </div>

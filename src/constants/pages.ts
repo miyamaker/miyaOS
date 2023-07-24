@@ -33,6 +33,16 @@ const Pages: Record<string, Page> = {
       height: 475,
     },
   },
+  swap: {
+    id: 'swap',
+    path: '/swap',
+    label: 'MiyaSwaps Marketplace',
+    icon: MintIcon[0],
+    minSize: {
+      width: 600,
+      height: 475,
+    },
+  },
 }
 
 export default Pages
