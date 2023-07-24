@@ -171,11 +171,20 @@ export default function OperatingSystem() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '2rem' }}>
-              <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
-                MiyaNet
-                <br />
-                Explorer
-              </DesktopIcon>
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
+                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
+                  MiyaNet
+                  <br />
+                  Explorer
+                </DesktopIcon>
+                <DesktopIcon
+                  normalState={CreateNew[0]?.src}
+                  onClick={() => handleOpen('swap')}
+                  realignment={'0 -10px 0 0'}
+                >
+                  MiyaSwaps.exe
+                </DesktopIcon>
+              </div>
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
                 <DesktopIcon
                   normalState={CreateNew[0]?.src}
@@ -186,13 +195,6 @@ export default function OperatingSystem() {
                 </DesktopIcon>
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
                   My collections
-                </DesktopIcon>
-                <DesktopIcon
-                  normalState={CreateNew[0]?.src}
-                  onClick={() => handleOpen('swap')}
-                  realignment={'0 -10px 0 0'}
-                >
-                  MiyaSwaps.exe
                 </DesktopIcon>
               </div>
             </div>
