@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import MiyaLogo from 'assets/134321870.png'
-import CreateNew from 'assets/create_new.png?preset=thumbnail&resize=true'
+import MiyaMint from 'assets/arrows_copy.png'
 import Folder from 'assets/folder.png?preset=thumbnail&resize=true'
 import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
+import MiyaSwaps from 'assets/miyaswaps_logo.png'
 import { Fragment, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
@@ -177,20 +178,12 @@ export default function OperatingSystem() {
                   <br />
                   Explorer
                 </DesktopIcon>
-                <DesktopIcon
-                  normalState={CreateNew[0]?.src}
-                  onClick={() => handleOpen('swap')}
-                  realignment={'0 -10px 0 0'}
-                >
+                <DesktopIcon normalState={MiyaSwaps} onClick={() => handleOpen('swap')} realignment={'0 -10px 0 0'}>
                   MiyaSwaps.exe
                 </DesktopIcon>
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIcon
-                  normalState={CreateNew[0]?.src}
-                  onClick={() => handleOpen('mint')}
-                  realignment={'0 -10px 0 0'}
-                >
+                <DesktopIcon normalState={MiyaMint} onClick={() => handleOpen('mint')} realignment={'0 -10px 0 0'}>
                   MiyaMints.exe
                 </DesktopIcon>
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
