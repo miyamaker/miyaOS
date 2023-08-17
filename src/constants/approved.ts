@@ -1,3 +1,4 @@
+import angelThumbnail from 'assets/angel.jpg?preset=thumbnail&resize=true'
 import asciiThumbnail from 'assets/ascii.jpg?preset=thumbnail&resize=true'
 import auraThumbnail from 'assets/aura.jpg?preset=thumbnail&resize=true'
 import babiesThumbnail from 'assets/babies.jpg?preset=thumbnail&resize=true'
@@ -11,6 +12,7 @@ import ghibladyThumbnail from 'assets/ghiblady.jpg?preset=thumbnail&resize=true'
 import godsThumbnail from 'assets/gods.jpg?preset=thumbnail&resize=true'
 import heiseiThumbnail from 'assets/heisei.jpg?preset=thumbnail&resize=true'
 import janklerThumbnail from 'assets/jankler.jpg?preset=thumbnail&resize=true'
+import kawamiiThumbnail from 'assets/kawami.jpg?preset=thumbnail&resize=true'
 import malilyThumbnail from 'assets/malily.jpg?preset=thumbnail&resize=true'
 import matrixThumbnail from 'assets/matrix.jpg?preset=thumbnail&resize=true'
 import meowladyThumbnail from 'assets/meowlady.jpg?preset=thumbnail&resize=true'
@@ -26,9 +28,9 @@ import petzThumbnail from 'assets/petz.jpg?preset=thumbnail&resize=true'
 import pixeladyThumbnail from 'assets/pixelady.jpg?preset=thumbnail&resize=true'
 import pixelbcThumbnail from 'assets/pixelbc.jpg?preset=thumbnail&resize=true'
 import pixelbroThumbnail from 'assets/pixelbro.jpg?preset=thumbnail&resize=true'
-import popsThumbnail from 'assets/pops.jpg?preset=thumbnail&resize=true'
 import r3dThumbnail from 'assets/r3d.jpg?preset=thumbnail&resize=true'
 import radbroThumbnail from 'assets/radbro.jpg?preset=thumbnail&resize=true'
+import radcatThumbnail from 'assets/radcat.jpg?preset=thumbnail&resize=true'
 import raveThumbnail from 'assets/rave.jpg?preset=thumbnail&resize=true'
 import rememThumbnail from 'assets/remem.jpg?preset=thumbnail&resize=true'
 import remilioThumbnail from 'assets/remilio.jpg?preset=thumbnail&resize=true'
@@ -44,9 +46,6 @@ import vipThumbnail from 'assets/vip.jpg?preset=thumbnail&resize=true'
 import wotlikThumbnail from 'assets/wotlik.jpg?preset=thumbnail&resize=true'
 import yayoThumbnail from 'assets/yayo.jpg?preset=thumbnail&resize=true'
 import zladyThumbnail from 'assets/zlady.jpg?preset=thumbnail&resize=true'
-import angelThumbnail from 'assets/angel.jpg?preset=thumbnail&resize=true'
-import radcatThumbnail from 'assets/radcat.jpg?preset=thumbnail&resize=true'
-import kawamiiThumbnail from 'assets/kawami.jpg?preset=thumbnail&resize=true'
 
 /* Test vite's import.meta.glob */
 /* 
@@ -268,11 +267,6 @@ const approved: Collection[] = [
     image: milaidyThumbnail,
     name: 'milAIdys',
     link: 'https://pro.opensea.io/collection/milaidys',
-  },
-  {
-    image: popsThumbnail,
-    name: 'Schizopops',
-    link: 'https://pro.opensea.io/collection/schizopops',
   },
   {
     image: angelThumbnail,
