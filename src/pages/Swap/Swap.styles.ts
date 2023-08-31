@@ -10,7 +10,7 @@ export const OneInchWindow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 0 10%;
+  padding: 0 0 0 0;
 `
 
 export const SwapFlex = styled.div`
@@ -116,4 +116,32 @@ export const PoweredBy = styled.p`
   left: 0;
 
   font-size: 14px;
+`
+
+export const BannerSwap = styled.img`
+  height: auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 24px 0;
+  /* object-fit: cover; */
+  /* position: absolute; */
+`
+
+export const LeftFlex = styled.div`
+  height: 100%;
+  width: 65%;
+
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 65%;
+  }
+`
+
+export const BottomFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `

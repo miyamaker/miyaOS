@@ -1,4 +1,5 @@
 import Miya from 'assets/134321870.png?preset=avatar&resize=true'
+import SwapBanner from 'assets/SwapBanner.jpg'
 import axios from 'axios'
 import console from 'console'
 import { useEffect, useState } from 'react'
@@ -218,68 +219,72 @@ export default function SwapPage() {
       <S.OneInchWindow>
         {tokens && (
           <>
-            <S.SwapFlex>
-              <S.SwapRow>
-                <S.InputFlex>
-                  <TextInput
-                    name="amountTokenA"
-                    placeholder="0"
-                    onChange={(e) => setSellAmount(e.target.value || '0')}
-                    value={sellAmount}
-                  />
-                  <p onClick={setMax} style={{ cursor: 'pointer' }}>
-                    Max
-                  </p>
-                </S.InputFlex>
-                <S.TokenButtonFlex>
-                  <S.TokenButton onClick={() => handleSelectTokens('A')} isActive={selectAOpen}>
-                    <TokenImage src={sellToken?.logoURI} name={sellToken?.symbol ?? ''} />
-                    <p>{sellToken?.symbol}</p>
-                  </S.TokenButton>
-                  <p>{balanceA && parseFloat(balanceA).toFixed(4)}</p>
-                </S.TokenButtonFlex>
-              </S.SwapRow>
-              {/* <S.SwitchButton>
+            <S.LeftFlex>
+              <S.BannerSwap src={SwapBanner} />
+
+              <S.SwapFlex>
+                <S.SwapRow>
+                  <S.InputFlex>
+                    <TextInput
+                      name="amountTokenA"
+                      placeholder="0"
+                      onChange={(e) => setSellAmount(e.target.value || '0')}
+                      value={sellAmount}
+                    />
+                    <p onClick={setMax} style={{ cursor: 'pointer' }}>
+                      Max
+                    </p>
+                  </S.InputFlex>
+                  <S.TokenButtonFlex>
+                    <S.TokenButton onClick={() => handleSelectTokens('A')} isActive={selectAOpen}>
+                      <TokenImage src={sellToken?.logoURI} name={sellToken?.symbol ?? ''} />
+                      <p>{sellToken?.symbol}</p>
+                    </S.TokenButton>
+                    <p>{balanceA && parseFloat(balanceA).toFixed(4)}</p>
+                  </S.TokenButtonFlex>
+                </S.SwapRow>
+                {/* <S.SwitchButton>
               <HighlightButton onClick={switchTokens}>Switch</HighlightButton>
             </SwitchButton> */}
-              <S.SwitchButton switched={switched} onClick={switchTokens} style={{ cursor: 'pointer' }}>
-                <S.SwitchLinesFlex>
-                  <S.SwitchLine />
-                  <S.SwitchLine />
-                  <S.SwitchLine />
-                </S.SwitchLinesFlex>
-              </S.SwitchButton>
+                <S.SwitchButton switched={switched} onClick={switchTokens} style={{ cursor: 'pointer' }}>
+                  <S.SwitchLinesFlex>
+                    <S.SwitchLine />
+                    <S.SwitchLine />
+                    <S.SwitchLine />
+                  </S.SwitchLinesFlex>
+                </S.SwitchButton>
 
-              <S.SwapRow>
-                <S.InputFlex>
-                  <TextInput
-                    name="amountTokenB"
-                    placeholder="0"
-                    disabled={true}
-                    value={sellAmount !== '0' && price ? formatEther(BigInt(price.buyAmount)) : '0'}
+                <S.SwapRow>
+                  <S.InputFlex>
+                    <TextInput
+                      name="amountTokenB"
+                      placeholder="0"
+                      disabled={true}
+                      value={sellAmount !== '0' && price ? formatEther(BigInt(price.buyAmount)) : '0'}
+                    />
+                  </S.InputFlex>
+                  <S.TokenButtonFlex>
+                    <S.TokenButton onClick={() => handleSelectTokens('B')} isActive={selectBOpen}>
+                      <TokenImage src={buyToken?.logoURI} name={buyToken?.symbol ?? ''} />
+                      <p>{buyToken?.symbol}</p>
+                    </S.TokenButton>
+                    <p>{balanceB && parseFloat(balanceB).toFixed(4)}</p>
+                  </S.TokenButtonFlex>
+                </S.SwapRow>
+
+                {account?.address ? (
+                  <ApproveOrReviewButton
+                    //
+                    price={price}
+                    // previewMode={previewMode}
+                    takerAddress={account.address}
                   />
-                </S.InputFlex>
-                <S.TokenButtonFlex>
-                  <S.TokenButton onClick={() => handleSelectTokens('B')} isActive={selectBOpen}>
-                    <TokenImage src={buyToken?.logoURI} name={buyToken?.symbol ?? ''} />
-                    <p>{buyToken?.symbol}</p>
-                  </S.TokenButton>
-                  <p>{balanceB && parseFloat(balanceB).toFixed(4)}</p>
-                </S.TokenButtonFlex>
-              </S.SwapRow>
-
-              {account?.address ? (
-                <ApproveOrReviewButton
-                  //
-                  price={price}
-                  // previewMode={previewMode}
-                  takerAddress={account.address}
-                />
-              ) : (
-                <StartButton />
-              )}
-              <S.PoweredBy>Powered by Matcha API</S.PoweredBy>
-            </S.SwapFlex>
+                ) : (
+                  <StartButton />
+                )}
+                <S.PoweredBy>Powered by Matcha API</S.PoweredBy>
+              </S.SwapFlex>
+            </S.LeftFlex>
 
             {selectAOpen && (
               <TokenSelect selectedToken={sellToken} tokens={tokens} onSelectChange={handleSellTokenChange} />

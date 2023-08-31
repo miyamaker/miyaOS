@@ -15,6 +15,8 @@ import {
 import { HighlightButton } from '@/components/Button'
 import type { PriceResponse, QuoteResponse } from '@/types/matcha'
 
+import * as S from './Swap.styles'
+
 const ZERO_EX_ADDRESS = '0xdef1c0ded9bec7f1a1670819833240f027b25eff'
 const MAX_ALLOWANCE = 115792089237316195423570985008687907853269984665640564039457584007913129639935n
 const ZERO_EX_API_KEY = import.meta.env.VITE_ZERO_EX_API_KEY
@@ -31,6 +33,7 @@ export default function ApproveOrReviewButton({
   const [txnHash, setTxnHash] = useState<TransactionReceipt | undefined>()
   const [quote, setQuote] = useState<QuoteResponse | undefined>()
 
+  const [success, setSuccess] = useState(false)
   const fetchQuote = async () => {
     const headers = { '0x-api-key': ZERO_EX_API_KEY }
 
@@ -59,12 +62,17 @@ export default function ApproveOrReviewButton({
     chainId: quote?.chainId,
   })
 
-  const { sendTransaction } = useSendTransaction(swapConfig)
+  const { sendTransaction } = useSendTransaction(swapConfig, {
+    onSuccess(data) {
+      console.log(data)
+      setSuccess(true)
+    },
+  })
 
   async function performSwap() {
     try {
       await fetchQuote()
-      sendTransaction?.() // Optional chaining in case sendTransaction is not defined.
+      sendTransaction?.()
     } catch (err) {
       console.error('Failed to perform swap:', err)
     }
@@ -119,16 +127,12 @@ export default function ApproveOrReviewButton({
   }
 
   return (
-    <>
+    <S.BottomFlex>
       <HighlightButton type="button" disabled={!price} onClick={() => performSwap()}>
         Swap
       </HighlightButton>
-      {txnHash && (
-        <a href={`https://etherscan.io/tx/${txnHash}`} target="_blank" rel="noreferrer">
-          View your transaction
-        </a>
-      )}
+      {success && <p>Much Success!</p>}
       {error && <div>Error... {(error as BaseError).shortMessage}</div>}
-    </>
+    </S.BottomFlex>
   )
 }
