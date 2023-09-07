@@ -191,8 +191,4 @@ img {
   max-width: 20rem;
   border: 1px solid #777;
 }
-
-img:hover {
-  border: 1px solid purple;
-}
 `

@@ -47,7 +47,7 @@ export default function SwapPage() {
   const headers = { '0x-api-key': ZERO_EX_API_KEY }
 
   const [selectAOpen, setSelectAOpen] = useState<boolean>(false)
-  const [selectBOpen, setSelectBOpen] = useState<boolean>(false)
+  const [selectBOpen, setSelectBOpen] = useState<boolean>(true)
 
   function handleSelectTokens(side: 'A' | 'B') {
     if (side === 'A') {
@@ -68,12 +68,35 @@ export default function SwapPage() {
 
   useEffect(() => {
     const getAllTokens = async () => {
-      const response = await axios.get('https://gateway.ipfs.io/ipns/tokens.uniswap.org')
-
-      // Filter tokens for chainId === 1
-      const filteredTokens = response.data.tokens.filter((token: any) => token.chainId === 1)
+      const uniresponse = await axios.get('https://gateway.ipfs.io/ipns/tokens.uniswap.org')
+      const response = await axios.get('https://www.dextools.io/shared/hotpairs/hot?chain=ether')
+      // Filter tokens for format
+      const unifilteredTokens = uniresponse.data.tokens.filter((token: any) => token.chainId === 1)
+      const filteredTokens = response.data.data[0].data.slice(0, 10)
+      const dexToken = []
+      filteredTokens.map((tkn) => {
+        if (!dexToken.includes(tkn.token.name)) {
+          const newToken = {
+            address: tkn.token.reprPair.id.token,
+            chainId: 1,
+            decimals: tkn.token.decimals,
+            logoURI: `https://www.dextools.io/resources/tokens/logos/${tkn.token.logo}`,
+            name: tkn.token.name,
+            symbol: tkn.token.symbol,
+          }
+          dexToken.push(newToken)
+        }
+      })
 
       setTokens([
+        {
+          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+          chainId: 1,
+          decimals: 18,
+          logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+          name: 'Ethereum',
+          symbol: 'ETH',
+        },
         {
           address: '0xa358491CA72B793ddf21cF46C7289CC6e0ce9e5A',
           chainId: 1,
@@ -83,14 +106,15 @@ export default function SwapPage() {
           symbol: 'MIYA',
         },
         {
-          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+          address: '0x2890df158d76e584877a1d17a85fea3aeeb85aa6',
           chainId: 1,
           decimals: 18,
-          logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
-          name: 'Ethereum',
-          symbol: 'ETH',
+          logoURI: 'https://assets.coingecko.com/coins/images/30812/small/miladyfumo.jpg',
+          name: 'Alien Milady Fumo',
+          symbol: 'FUMO',
         },
-        ...filteredTokens,
+        ...dexToken,
+        ...unifilteredTokens,
       ])
     }
 
