@@ -11753,10 +11753,10 @@ typescript-optional@^3.0.0-alpha.3:
   resolved "https://registry.yarnpkg.com/typescript-optional/-/typescript-optional-3.0.0-alpha.3.tgz#2f5317275f66318c6c521423b3e313feab0e8f79"
   integrity sha512-X2JbUQA+WK0P8gwiickO6s8yZnX/ufov6zx4hbvdYVqHFTz8fAYoh+8JMKxVzQuh2/aMUvF9KSNqXi4p6pNxuA==
 
-typescript@^4.9.3:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
-  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+typescript@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.2.tgz#00d1c7c1c46928c5845c1ee8d0cc2791031d4c43"
+  integrity sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==
 
 typesync@^0.11.1:
   version "0.11.1"
@@ -12017,10 +12017,10 @@ viem@^1.0.0:
     isomorphic-ws "5.0.0"
     ws "8.12.0"
 
-viem@^1.19.7:
-  version "1.19.7"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-1.19.7.tgz#815d100c37ed1dda56809bbbb1c1ca4a7982f5f7"
-  integrity sha512-NFCqU73CTHML9K7G3K8hnDJ9VjHJbH822Z6U2jUGNr0g5486EHMW0gtwnk6ivFP+ru5UewmUKwEvO0p5m0rvnA==
+viem@^1.19.9:
+  version "1.19.9"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-1.19.9.tgz#a11f3ad4a3323994ebd2010dbc659d1a2b12e583"
+  integrity sha512-Sf9U2x4jU0S/FALqYypcspWOGene0NZyD470oUripNhE0Ta6uOE/OgE4toTDVfRxov8qw0JFinr/wPGxYE3+HQ==
   dependencies:
     "@adraffy/ens-normalize" "1.10.0"
     "@noble/curves" "1.2.0"

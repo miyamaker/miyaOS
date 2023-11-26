@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable no-underscore-dangle */
 import { WebIrys } from '@irys/sdk'
-import type { Chain } from '@rainbow-me/rainbowkit'
 import { getAccount } from '@wagmi/core'
-import type { Address } from 'viem'
 import { createWalletClient, custom } from 'viem'
+import type { Address, Chain } from 'wagmi'
 import { mainnet } from 'wagmi'
 
 interface WindowWithEthereum extends Window {

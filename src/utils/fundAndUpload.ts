@@ -1,4 +1,4 @@
-import type { Chain } from 'viem'
+import type { Chain } from 'wagmi'
 
 import getIrys from './getIrys'
 

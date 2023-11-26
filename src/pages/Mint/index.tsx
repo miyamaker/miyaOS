@@ -272,7 +272,7 @@ export default function MintPage() {
 
   const setRoyalty = (value: string) => {
     try {
-      const result = setRoyaltyValidate.parse(value)
+      setRoyaltyValidate.parse(value)
       setForm((prev) => ({ ...prev, royalty: value }))
     } catch (e) {
       console.log(e)
@@ -550,6 +550,7 @@ export default function MintPage() {
             View contract
           </LinkButton>
         )}
+        {error && <p>{error.message}</p>}
       </TextContainer>
     )
   }, [form, selectedType])

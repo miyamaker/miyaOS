@@ -75,7 +75,7 @@ const Icons = styled.div`
   }
 `
 
-const ComponentPage = Pages.components
+// const ComponentPage = Pages.components
 const UploaderPage = Pages.uploader
 
 export default function OperatingSystem() {

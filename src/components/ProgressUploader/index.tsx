@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useNetwork } from 'wagmi'
 
@@ -14,8 +14,6 @@ import getIrysToken from '@/utils/getIrysToken'
 import ProgressBar from '../ProgressBar'
 
 interface ProgressBarUploaderProps {
-  showImageView?: boolean
-  showReceiptView?: boolean
   request?: { requestFrom: string; timestamp: number; label?: string; result?: any }
   onRequest?: (value: string) => void
 }
@@ -62,22 +60,15 @@ const FileButtonRow = styled.div`
   align-items: center;
   gap: 1rem;
 `
-export const ProgressBarUploader = ({
-  showImageView = true,
-  showReceiptView = true,
-  request,
-  onRequest,
-}: ProgressBarUploaderProps) => {
+export const ProgressBarUploader = ({ request, onRequest }: ProgressBarUploaderProps) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined)
   const [fileUrl, setFileUrl] = useState<string>('')
   const [progress, setProgress] = useState<number>(0)
   const [txProcessing, setTxProcessing] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
 
-  const [receipt, setReceipt] = useState<string>('')
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [uploadTxId, setUploadTxId] = useState<string | null>(null)
-
-  const totalChunks = useRef<number>(0)
 
   const { chain } = useNetwork()
 
@@ -239,14 +230,9 @@ export const ProgressBarUploader = ({
             </div>
             <FileButtonRow>
               {fileUrl && (
-                <>
-                  {showImageView && (
-                    <LinkButton target="_blank" href={fileUrl} style={{ gap: '0.5rem' }}>
-                      <img src={SearchDirectory} alt="Search file" style={{ width: '16px', border: 'none' }} /> Check
-                      upload
-                    </LinkButton>
-                  )}
-                </>
+                <LinkButton target="_blank" href={fileUrl} style={{ gap: '0.5rem' }}>
+                  <img src={SearchDirectory} alt="Search file" style={{ width: '16px', border: 'none' }} /> Check upload
+                </LinkButton>
               )}
             </FileButtonRow>
           </FileRow>
