@@ -14,7 +14,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: true }).concat(save({ states: PERSISTED_KEYS, debounce: 1000 })),
-  preloadedState: load({ states: PERSISTED_KEYS, disableWarnings: process.env.NODE_ENV === 'test' }),
+  preloadedState: load({ states: PERSISTED_KEYS, disableWarnings: import.meta.env.NODE_ENV === 'test' }),
 })
 
 setupListeners(store.dispatch)

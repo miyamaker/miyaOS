@@ -96,7 +96,7 @@
         "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
         "react/require-default-props": "off", // Allow non-defined react props as undefined
         "react/react-in-jsx-scope": "off",
-        "react-hooks/exhaustive-deps": "off",
+        "react-hooks/exhaustive-deps": "warn",
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
         "simple-import-sort/imports": "error", // Import configuration for `eslint-plugin-simple-import-sort`
         "unused-imports/no-unused-imports": "error",

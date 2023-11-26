@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 
 import type { Page } from '@/constants/pages'
 import Pages from '@/constants/pages'
+import { findLastObject } from '@/utils/findLastObject'
 
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { toggleFullscreen, updateWindowPosition } from './actions'
@@ -41,4 +42,11 @@ export function useFullscreen(id: PageKey): [boolean, () => void] {
   const onToggleFullscreen = useCallback(() => dispatch(toggleFullscreen({ value: id })), [id])
 
   return [isFullscreen, onToggleFullscreen]
+}
+
+type LastUpload = { requestFrom: string; timestamp: number; label?: string; result?: any; value?: any } | undefined
+
+export function useLastUploadRequest(): LastUpload {
+  const uploadRequests = useAppSelector((state) => state.windows.uploadRequests) || {}
+  return findLastObject(uploadRequests)
 }

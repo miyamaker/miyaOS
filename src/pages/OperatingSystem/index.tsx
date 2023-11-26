@@ -16,6 +16,7 @@ import Pages from '@/constants/pages'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { minimizeWindow, openWindow, setToFront } from '@/store/windows/actions'
 import { useWindows } from '@/store/windows/hooks'
+import type { PageKey } from '@/store/windows/reducer'
 import getMediaKey from '@/utils/getMediaKey'
 
 import Background from './Background'
@@ -73,6 +74,9 @@ const Icons = styled.div`
     pointer-events: auto;
   }
 `
+
+const ComponentPage = Pages.components
+const UploaderPage = Pages.uploader
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -171,11 +175,20 @@ export default function OperatingSystem() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '2rem' }}>
-              <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
-                MiyaNet
-                <br />
-                Explorer
-              </DesktopIcon>
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
+                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
+                  MiyaNet
+                  <br />
+                  Explorer
+                </DesktopIcon>
+                <DesktopIcon
+                  normalState={UploaderPage?.icon?.src}
+                  onClick={() => handleOpen(UploaderPage?.id as PageKey)}
+                >
+                  {UploaderPage?.label}
+                </DesktopIcon>
+              </div>
+
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
                 <DesktopIcon
                   normalState={CreateNew[0]?.src}
@@ -184,6 +197,14 @@ export default function OperatingSystem() {
                 >
                   MiyaMints.exe
                 </DesktopIcon>
+                {/*
+                <DesktopIcon
+                  normalState={ComponentPage?.icon?.src}
+                  onClick={() => handleOpen(ComponentPage?.id as PageKey)}
+                >
+                  {ComponentPage?.label}
+                </DesktopIcon> 
+                */}
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
                   My collections
                 </DesktopIcon>

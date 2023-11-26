@@ -1,5 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 /// <reference types="vite/client" />
+
 declare module '*.svg' {
   import type { FunctionComponent, SVGProps } from 'react'
 
@@ -37,3 +38,5 @@ declare module '*&resize=true' {
   const preset: ResizedImage[]
   export default preset
 }
+
+declare module 'filereader-stream'

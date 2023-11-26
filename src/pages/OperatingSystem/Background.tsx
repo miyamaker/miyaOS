@@ -57,7 +57,7 @@ export default function Background() {
       <ButtonContainer>
         <OSInfo>
           <p>MiyaOS</p>
-          <p>Version 0.0.2</p>
+          <p>Version 0.0.3</p>
           {account?.isConnected && (
             <>
               {ens.data && <p>{ens.data}</p>}
