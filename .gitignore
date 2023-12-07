@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.yarn
+.wakatime-project
+.yarnrc.yml
 
 # Editor directories and files
 !.vscode/extensions.json

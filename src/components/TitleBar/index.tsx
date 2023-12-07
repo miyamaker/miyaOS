@@ -3,8 +3,8 @@ import styled from 'styled-components/macro'
 
 import { HighlightButton } from '../Button'
 
-const StyledTitleBar = styled.div`
-  background: #d97ada;
+const StyledTitleBar = styled.div<{ color?: string }>`
+  background: ${({ color }) => color ?? '#d97ada'};
   color: white;
   cursor: grab;
   display: flex;
@@ -36,6 +36,7 @@ export default function TitleBar({
   onMinimize,
   className = 'title-bar',
   children,
+  color,
 }: {
   minimizeBtn?: boolean
   fullscreenBtn?: boolean
@@ -46,9 +47,10 @@ export default function TitleBar({
   fullscreen?: boolean
   className?: string
   children?: ReactNode
+  color?: string
 }) {
   return (
-    <StyledTitleBar>
+    <StyledTitleBar color={color}>
       <TitleContainer className={className}>{children}</TitleContainer>
       <ButtonContainer>
         <div style={{ display: 'flex', gap: '0' }}>
