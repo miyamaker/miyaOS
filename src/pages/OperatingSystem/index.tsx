@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import MiyaLogo from 'assets/134321870.png'
-import MiyaMint from 'assets/arrows_copy.png'
 import Folder from 'assets/folder.png?preset=thumbnail&resize=true'
 import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
-import MiyaSwaps from 'assets/miyaswaps_logo.png'
+import MiyaMint from 'assets/miyamints1.png'
+import MiyaSwaps from 'assets/miyaswaps1.png'
 import { Fragment, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
@@ -187,14 +187,6 @@ export default function OperatingSystem() {
                   onClick={() => handleOpen(UploaderPage?.id as PageKey)}
                 >
                   {UploaderPage?.label}
-                </DesktopIcon>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
-                  MiyaNet
-                  <br />
-                  Explorer
                 </DesktopIcon>
                 <DesktopIcon normalState={MiyaSwaps} onClick={() => handleOpen('swap')} realignment={'0 -10px 0 0'}>
                   MiyaSwaps.exe

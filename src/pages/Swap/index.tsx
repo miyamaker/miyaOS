@@ -1,4 +1,5 @@
 import Miya from 'assets/134321870.png?preset=avatar&resize=true'
+import fumodoll from 'assets/Screenshot_2023-12-06_at_4.04.13_PM-removebg-preview.png'
 import SwapBanner from 'assets/SwapBanner.jpg'
 import axios from 'axios'
 import console from 'console'
@@ -69,24 +70,36 @@ export default function SwapPage() {
   useEffect(() => {
     const getAllTokens = async () => {
       const uniresponse = await axios.get('https://gateway.ipfs.io/ipns/tokens.uniswap.org')
-      const response = await axios.get('https://www.dextools.io/shared/hotpairs/hot?chain=ether')
+      // const response = await axios.get('https://www.dextools.io/shared/hotpairs/hot?chain=ether')
       // Filter tokens for format
       const unifilteredTokens = uniresponse.data.tokens.filter((token: any) => token.chainId === 1)
-      const filteredTokens = response.data.data[0].data.slice(0, 10)
-      const dexToken = []
-      filteredTokens.map((tkn) => {
-        if (!dexToken.includes(tkn.token.name)) {
-          const newToken = {
-            address: tkn.token.reprPair.id.token,
-            chainId: 1,
-            decimals: tkn.token.decimals,
-            logoURI: `https://www.dextools.io/resources/tokens/logos/${tkn.token.logo}`,
-            name: tkn.token.name,
-            symbol: tkn.token.symbol,
-          }
-          dexToken.push(newToken)
-        }
-      })
+      // const filteredTokens = response.data.data[0].data.slice(0, 10)
+      // const dexToken: { address: string; chainId: number; decimals: any; logoURI: string; name: any; symbol: any }[] =
+      //   []
+      // filteredTokens.map(
+      //   (tkn: {
+      //     token: {
+      //       name: { address: string; chainId: number; decimals: any; logoURI: string; name: any; symbol: any }
+      //       reprPair: { id: { token: any } }
+      //       decimals: any
+      //       logo: any
+      //       symbol: any
+      //     }
+      //     // eslint-disable-next-line array-callback-return
+      //   }) => {
+      //     if (!dexToken.includes(tkn.token.name)) {
+      //       const newToken = {
+      //         address: tkn.token.reprPair.id.token,
+      //         chainId: 1,
+      //         decimals: tkn.token.decimals,
+      //         logoURI: `https://www.dextools.io/resources/tokens/logos/${tkn.token.logo}`,
+      //         name: tkn.token.name,
+      //         symbol: tkn.token.symbol,
+      //       }
+      //       dexToken.push(newToken)
+      //     }
+      //   }
+      // )
 
       setTokens([
         {
@@ -109,11 +122,19 @@ export default function SwapPage() {
           address: '0x2890df158d76e584877a1d17a85fea3aeeb85aa6',
           chainId: 1,
           decimals: 18,
-          logoURI: 'https://assets.coingecko.com/coins/images/30812/small/miladyfumo.jpg',
+          logoURI: fumodoll,
           name: 'Alien Milady Fumo',
           symbol: 'FUMO',
         },
-        ...dexToken,
+        {
+          address: '0xaaee1a9723aadb7afa2810263653a34ba2c21c7a',
+          chainId: 1,
+          decimals: 18,
+          logoURI: 'https://assets.coingecko.com/coins/images/31059/standard/MOG_LOGO_200x200.png',
+          name: 'Mog Coin',
+          symbol: 'MOG',
+        },
+        // ...dexToken,
         ...unifilteredTokens,
       ])
     }
@@ -197,6 +218,7 @@ export default function SwapPage() {
   const { data: sellTokenBalance } = useBalance({ address: account?.address, chainId: 1, token: sellToken?.address })
   const { data: buyTokenBalance } = useBalance({ address: account?.address, chainId: 1, token: buyToken?.address })
 
+  // eslint-disable-next-line consistent-return
   const getBalanceForToken = (token: Token, tokenBalance: any) => {
     if (token) return isEth(token) ? balance?.formatted : tokenBalance?.formatted
   }
