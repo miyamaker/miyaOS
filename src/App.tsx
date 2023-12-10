@@ -1,5 +1,4 @@
 import '@rainbow-me/rainbowkit/styles.css'
-import ReactGA from "react-ga4";
 
 import type { Theme } from '@rainbow-me/rainbowkit'
 import { connectorsForWallets, lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
@@ -20,8 +19,6 @@ import AccountProvider from './context/AccountProvider'
 import Router from './Router'
 import store from './store'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
-
-ReactGA.initialize("G-W08254B3RN");
 
 const { chains, publicClient } = configureChains([mainnet], [publicProvider()], {
   pollingInterval: 10_000,
