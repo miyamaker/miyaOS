@@ -6,7 +6,7 @@ interface ContractAddresses {
 }
 
 export const FACTORY_CONTRACT: ContractAddresses = {
-  [mainnet.id]: '',
+  [mainnet.id]: '0x37d2127ed8fc713cbb30c8dd2f6ef6d329e43420',
   [goerli.id]: '0x20422d2216c99306bba8a28309bf2abe9f9f2b27',
 }
 

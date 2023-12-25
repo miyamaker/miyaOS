@@ -82,11 +82,11 @@ export default function NameRow({
             justifyContent: 'center',
             gap: '8px',
           }}
-          disabled={transacting}
+          disabled={true}
           onClick={() => (active ? handleUpdate() : openInput())}
           withChain={[mainnet.id, goerli.id]}
         >
-          {active ? (transacting ? 'Updating...' : `Update`) : 'Edit'}
+          Locked
         </ConnectedButton>
       </td>
     </tr>
