@@ -77,6 +77,7 @@ const Icons = styled.div`
 
 // const ComponentPage = Pages.components
 const UploaderPage = Pages.uploader
+const ManagePage = Pages.manager
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -186,6 +187,9 @@ export default function OperatingSystem() {
                   onClick={() => handleOpen(UploaderPage?.id as PageKey)}
                 >
                   {UploaderPage?.label}
+                </DesktopIcon>
+                <DesktopIcon normalState={ManagePage?.icon?.src} onClick={() => handleOpen(ManagePage?.id as PageKey)}>
+                  {ManagePage?.label}
                 </DesktopIcon>
               </div>
 

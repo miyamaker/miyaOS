@@ -26,8 +26,8 @@ import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import { useFullscreen } from '@/store/windows/hooks'
 
+import FormInput from '../../components/FormInput'
 import { abi, BASE_FORM, DEFAULT_FORM } from './constants'
-import FormInput from './FormInput'
 import {
   partialSchemaPageOne,
   partialSchemaPageTwo,
@@ -168,21 +168,11 @@ export default function MintPage() {
         collaborators: [],
       }
 
+      const contractURI = `data:application/json;utf8,${JSON.stringify(json)}`
+
       return [
         success,
-        [
-          name,
-          symbol,
-          baseURI,
-          `data:application/json;utf8,${JSON.stringify(json)}`,
-          maxSupply,
-          royalty,
-          allocation,
-          owner,
-          alignedNft,
-          tokenPrice,
-          vaultId,
-        ],
+        [name, symbol, baseURI, contractURI, maxSupply, royalty, allocation, owner, alignedNft, tokenPrice, vaultId],
         OneValidated,
         TwoValidated,
       ]

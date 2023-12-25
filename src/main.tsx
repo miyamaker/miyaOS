@@ -11,7 +11,10 @@ import { GlobalHistory } from './GlobalHistory'
 
 window.Buffer = Buffer
 
-ReactGA.initialize(import.meta.env.VITE_ANALYTICS_ID)
+if (import.meta.env.VITE_ANALYTICS_ID) {
+  ReactGA.initialize(import.meta.env.VITE_ANALYTICS_ID)
+}
+
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const rootElement = document.getElementById('app')!
 const root = ReactDOM.createRoot(rootElement)

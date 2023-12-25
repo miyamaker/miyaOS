@@ -55,6 +55,16 @@ const Pages: Record<string, Page> = {
       height: 475,
     },
   },
+  manager: {
+    id: 'manager',
+    path: '/manage',
+    label: 'MiyaManager',
+    icon: ExecutableIcon[0],
+    minSize: {
+      width: 600,
+      height: 475,
+    },
+  },
 }
 
 export default Pages

@@ -4,6 +4,7 @@ import ProgressBar from '@/components/ProgressBar'
 import Radio from '@/components/Radio'
 import Select from '@/components/Select'
 import Slider from '@/components/Slider'
+import Tabs from '@/components/Tabs'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
@@ -60,6 +61,7 @@ export default function MintPage() {
           onChange={(e) => setSelect(e.target.value)}
         />
         <Radio checked={radio} onChange={(e) => setRadio(e.target.value === 'on')} />
+        <Tabs>a</Tabs>
       </div>
     </WindowWrapper>
   )
