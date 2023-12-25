@@ -24,7 +24,6 @@ async function encryptFile(file: File) {
   // 2. Ensure we have a wallet signature
   const authSig = await LitJsSdk.checkAndSignAuthMessage({
     chain: import.meta.env.VITE_LIT_CHAIN || 'polygon',
-    nonce: '0',
   })
 
   // 3. Define access control conditions.
@@ -151,7 +150,6 @@ async function decryptFile(id: string, encryptedFileType: string): Promise<strin
     // 3.5 You might need to get authSig or sessionSigs here if required
     const authSig = await LitJsSdk.checkAndSignAuthMessage({
       chain: import.meta.env.VITE_LIT_CHAIN || 'polygon',
-      nonce: '0',
     })
 
     // 4. Decrypt the zipBlob
