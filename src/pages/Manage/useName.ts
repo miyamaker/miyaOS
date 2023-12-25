@@ -17,5 +17,5 @@ export function useName({ address }: { address?: Address }) {
     ],
   })
 
-  return { realName: name as string, setRealName: (input: string) => null, refetch }
+  return { realName: name as string, setRealName: () => null, refetch }
 }
