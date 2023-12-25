@@ -56,7 +56,7 @@ export default function NameRow({
   const handleUpdate = () => {
     setTransacting(true)
     try {
-      const result = setRealName() // @TODO
+      const result = setRealName(input) // @TODO
     } catch (e) {
       setTransacting(false)
       // warn message
