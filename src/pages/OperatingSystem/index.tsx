@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import MiyaLogo from 'assets/134321870.png'
-import CreateNew from 'assets/create_new.png?preset=thumbnail&resize=true'
 import Folder from 'assets/folder.png?preset=thumbnail&resize=true'
 import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
+import CreateNew from 'assets/miyamints1.png?preset=thumbnail&resize=true'
 import { Fragment, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
