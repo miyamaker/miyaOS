@@ -1,4 +1,4 @@
-import ShadertoyReact from 'shadertoy-react';
+import ShadertoyReact from 'shadertoy-react'
 import styled from 'styled-components/macro'
 import { useEnsName } from 'wagmi'
 
@@ -69,7 +69,9 @@ export default function Background() {
       </ButtonContainer>
       <GradientBlock />
       {/* render the shader only if the user has enabled it */}
-      {waves && <ShadertoyReact fs={fs} devicePixelRatio={0.5} />}
+      {waves && (
+        <ShadertoyReact fs={fs} devicePixelRatio={0.5} style={{ opacity: 0.1, position: 'relative', zIndex: 1 }} />
+      )}
     </BackgroundStyled>
   )
 }
