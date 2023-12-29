@@ -1,6 +1,6 @@
 export const fs = `        
 #define PI 3.1415926535
-#define STEPS 50
+#define STEPS 15
 
 mat2 rot( in float a ) {
     float c = cos(a);

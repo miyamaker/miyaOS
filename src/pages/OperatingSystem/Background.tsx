@@ -1,10 +1,11 @@
-import Shader from 'shadertoy-react'
+import ShadertoyReact from 'shadertoy-react';
 import styled from 'styled-components/macro'
 import { useEnsName } from 'wagmi'
 
 import { useAccount } from '@/context/AccountProvider'
 import { useWaves } from '@/store/experience/hooks'
 
+// import { fs } from './webgl'
 import { fs } from './webgl'
 
 const GradientBlock = styled.div`
@@ -67,9 +68,8 @@ export default function Background() {
         </OSInfo>
       </ButtonContainer>
       <GradientBlock />
-      <div style={{ visibility: waves ? 'visible' : 'hidden', width: '100%', height: '100%' }}>
-        <Shader fs={fs} clearColor={[0, 0, 0, 0]} style={{ opacity: 0.1, position: 'relative', zIndex: 1 }} />
-      </div>
+      {/* render the shader only if the user has enabled it */}
+      {waves && <ShadertoyReact fs={fs} devicePixelRatio={0.5} />}
     </BackgroundStyled>
   )
 }
