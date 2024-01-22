@@ -78,6 +78,7 @@ const Icons = styled.div`
 // const ComponentPage = Pages.components
 const UploaderPage = Pages.uploader
 const ManagePage = Pages.manager
+const AuctionPage = Pages.auction
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -207,10 +208,16 @@ export default function OperatingSystem() {
                   onClick={() => handleOpen(ComponentPage?.id as PageKey)}
                 >
                   {ComponentPage?.label}
-                </DesktopIcon> 
+                </DesktopIcon>
                 */}
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
                   My collections
+                </DesktopIcon>
+                <DesktopIcon
+                  normalState={AuctionPage?.icon?.src}
+                  onClick={() => handleOpen(AuctionPage?.id as PageKey)}
+                >
+                  {AuctionPage?.label}
                 </DesktopIcon>
               </div>
             </div>
