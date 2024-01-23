@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import styled from 'styled-components/macro'
 
 const Wrapper = styled.fieldset`
@@ -17,7 +17,7 @@ export default function ExplorerWrapper({
   title,
   children,
 }: {
-  style: object
+  style?: CSSProperties
   title: string
   children: ReactNode
 }) {

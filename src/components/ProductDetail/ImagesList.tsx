@@ -99,14 +99,14 @@ const Counter = styled.div`
 
 export default function ImagesList({ images }: { images: string[] }) {
   const totalImages = images.length
-  const previousButtonRef = useRef(null)
-  const nextButtonRef = useRef(null)
+  const previousButtonRef = useRef<HTMLButtonElement>(null)
+  const nextButtonRef = useRef<HTMLButtonElement>(null)
   const [currentCounter, setCurrentCounter] = useState<number>(1)
 
   const handleClickButton = (type: string) => {
     let current = currentCounter
     if (type === 'next') {
-      if (current === 1) {
+      if (current === 1 && previousButtonRef.current) {
         previousButtonRef.current.disabled = false
       }
 
@@ -115,14 +115,14 @@ export default function ImagesList({ images }: { images: string[] }) {
         setCurrentCounter(current)
       }
 
-      if (current === totalImages) {
+      if (current === totalImages && nextButtonRef.current) {
         nextButtonRef.current.disabled = true
       }
 
       return
     }
 
-    if (current === totalImages) {
+    if (current === totalImages && nextButtonRef.current) {
       nextButtonRef.current.disabled = false
     }
 
@@ -131,13 +131,15 @@ export default function ImagesList({ images }: { images: string[] }) {
       setCurrentCounter(current)
     }
 
-    if (current === 1) {
+    if (current === 1 && previousButtonRef.current) {
       previousButtonRef.current.disabled = true
     }
   }
 
   useEffect(() => {
-    previousButtonRef.current.disabled = true
+    if (previousButtonRef.current) {
+      previousButtonRef.current.disabled = true
+    }
   }, [])
 
   return (

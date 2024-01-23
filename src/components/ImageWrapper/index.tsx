@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import styled from 'styled-components/macro'
 
 const Wrapper = styled.div`
@@ -10,6 +10,6 @@ const Wrapper = styled.div`
   padding: 1rem 2rem;
 `
 
-export default function ImageWrapper({ style, children }: { style: object; children: ReactNode }) {
+export default function ImageWrapper({ style, children }: { style?: CSSProperties; children: ReactNode }) {
   return <Wrapper style={style}>{children}</Wrapper>
 }
