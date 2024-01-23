@@ -70,7 +70,7 @@ const Pages: Record<string, Page> = {
   auction: {
     id: 'auction',
     path: '/auction',
-    label: 'Auction',
+    label: 'MiyaAuction',
     icon: AuctionIcon[0],
     minSize: {
       width: 600,
