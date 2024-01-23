@@ -4,6 +4,7 @@ import Hoodies from 'assets/products/kool-skull/hoodies.png'
 
 import ExplorerWrapper from '@/components/ExplorerWrapper'
 import ProductDetail from '@/components/ProductDetail'
+import ProductList from '@/components/ProductList'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
@@ -23,6 +24,8 @@ const product = {
   currency: 'ETH',
   images: [Hoodies, Hoodies],
 }
+
+const products = [product, product, product, product, product, product, product]
 
 export default function AuctionPage() {
   // Account
@@ -61,11 +64,11 @@ export default function AuctionPage() {
           height: 'calc(100% - 1.5rem)',
         }}
       >
-        <ExplorerWrapper title={'Miya Hoodie'}>
+        <ExplorerWrapper style={{ height: '60%' }} title={'Miya Hoodie'}>
           <ProductDetail product={product} />
         </ExplorerWrapper>
-        <ExplorerWrapper title={'Active lots'}>
-          <h1>Active Lots</h1>
+        <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
+          <ProductList products={products} />
         </ExplorerWrapper>
       </div>
     </WindowWrapper>

@@ -10,6 +10,6 @@ const Wrapper = styled.div`
   padding: 1rem 2rem;
 `
 
-export default function ImageWrapper({ children }: { children: ReactNode }) {
-  return <Wrapper>{children}</Wrapper>
+export default function ImageWrapper({ style, children }: { style: object; children: ReactNode }) {
+  return <Wrapper style={style}>{children}</Wrapper>
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components/macro'
 
 import ImagesList, { Button } from '@/components/ProductDetail/ImagesList'
 
-type Product = {
+export type Product = {
   product: string
   description: string
   artist: string
