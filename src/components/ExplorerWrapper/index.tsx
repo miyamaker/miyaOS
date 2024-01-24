@@ -12,7 +12,7 @@ const Wrapper = styled.fieldset`
   }
 
   * {
-    font-family: 'pixelmix', sans-serif;
+    font-family: 'W95FA', sans-serif;
   }
 `
 
