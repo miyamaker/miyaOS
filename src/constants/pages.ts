@@ -73,8 +73,8 @@ const Pages: Record<string, Page> = {
     label: 'MiyaAuction',
     icon: AuctionIcon[0],
     minSize: {
-      width: 600,
-      height: 475,
+      width: 800,
+      height: 720,
     },
   },
 }

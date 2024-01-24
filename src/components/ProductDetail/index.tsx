@@ -43,10 +43,6 @@ const Fields = styled.div`
   font-size: 0.7rem;
   width: 25%;
   padding-left: 0.5rem;
-
-  > * + * {
-    margin-top: 0.5rem;
-  }
 `
 
 const Detail = styled.div`
@@ -55,11 +51,8 @@ const Detail = styled.div`
   justify-content: center;
   font-size: 0.7rem;
   width: 75%;
-  padding-left: 0.5rem;
-
-  > * + * {
-    margin-top: 0.5rem;
-  }
+  padding-left: 1.5rem;
+  line-height: 1rem;
 `
 
 const BidWrapper = styled.div`

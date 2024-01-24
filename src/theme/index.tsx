@@ -150,7 +150,11 @@ export const ThemedText = {
 }
 
 export const ThemedGlobalStyle = createGlobalStyle`
-
+  
+@font-face {
+  font-family: 'pixelmix';
+  src: url("/fonts/pixelmix/pixelmix.ttf");
+}
 
 * {
   box-sizing: border-box;

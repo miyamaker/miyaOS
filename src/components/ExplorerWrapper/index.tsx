@@ -10,6 +10,10 @@ const Wrapper = styled.fieldset`
   > legend {
     font-size: 0.75rem;
   }
+
+  * {
+    font-family: 'pixelmix', sans-serif;
+  }
 `
 
 export default function ExplorerWrapper({
