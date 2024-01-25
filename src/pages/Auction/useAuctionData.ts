@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import type { Address } from 'viem'
 import { useContractRead } from 'wagmi'
 
+import { get } from 'lodash'
 import { abi } from './constants'
 
 export function useAuctionData({ address, chainId }: { address: Address; chainId?: number }) {
@@ -13,10 +14,10 @@ export function useAuctionData({ address, chainId }: { address: Address; chainId
   })
 
   return {
-    currentBid: ethers.formatEther(data?.amount || 0) as number,
-    endTime: (data?.endTime || 0) as number,
-    bidIncrement: ethers.formatEther(data?.bidIncrement || 0) as number,
-    reservePrice: ethers.formatEther(data?.reservePrice || 0) as number,
+    currentBid: ethers.formatEther(get(data, 'amount') || 0),
+    endTime: (get(data, 'endTime') || 0) as number,
+    bidIncrement: ethers.formatEther(get(data, 'bidIncrement') || 0),
+    reservePrice: ethers.formatEther(get(data, 'reservePrice') || 0),
     refetch,
   }
 }

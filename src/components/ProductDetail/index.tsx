@@ -164,7 +164,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     },
   })
 
-  const handleCheckBidAmount = (value) => {
+  const handleCheckBidAmount = (value: string) => {
     const re = /^[0-9]+\.?[0-9]*$/
     if (!re.test(value)) return
 
@@ -190,6 +190,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     seconds,
     completed,
   }: {
+    days: number
     hours: number
     minutes: number
     seconds: number
