@@ -1,3 +1,4 @@
+import { get } from 'lodash'
 import { useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
@@ -131,7 +132,15 @@ const Timer = styled.div`
   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 `
 
-export default function ProductDetail({ product }: { product: Product }) {
+export default function ProductDetail({
+  product,
+  setErrorMessage,
+  setErrorName,
+}: {
+  product: Product
+  setErrorMessage: (value: string) => void
+  setErrorName: (value: string) => void
+}) {
   // Network
   const { chain } = useNetwork()
   const miyaTeesAuction = MIYATEES_AUCTION_CONTRACT[chain?.id || mainnet.id] || MIYATEES_AUCTION_CONTRACT[mainnet.id]!
@@ -141,7 +150,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const [transacting, setTransacting] = useState(false)
   const [txHash, setTxHash] = useState('')
-  const [bidAmount, setBidAmount] = useState('0.05')
+  const [bidAmount, setBidAmount] = useState('0.0')
 
   // Get contract data
   const { currentBid, endTime, refetch } = useAuctionData({
@@ -180,6 +189,8 @@ export default function ProductDetail({ product }: { product: Product }) {
     } catch (e) {
       setTransacting(false)
       // warn message
+      setErrorMessage(get(e, 'shortMessage') || '')
+      setErrorName(get(e, 'name') || '')
     }
   }
 
@@ -248,7 +259,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             <Countdown date={endTime * 1000} renderer={renderTimer} />
           </ActionWrapper>
         </BidWrapper>
-        <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>Total offer amount: 0 ETH</div>
+        <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>Total offer amount: {bidAmount} ETH</div>
       </ImageDetailWrapper>
     </>
   )
