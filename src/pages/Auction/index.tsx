@@ -13,7 +13,6 @@ import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
-import { useFullscreen } from '@/store/windows/hooks'
 import type { PageKey } from '@/store/windows/reducer'
 
 const page = Pages.auction
@@ -72,7 +71,6 @@ const ErrorButton = styled.div`
 
 export default function AuctionPage() {
   // Window mgmt
-  const [fullscreen, toggleFullscreen] = useFullscreen(pageId)
   const dispatch = useAppDispatch()
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
@@ -98,9 +96,6 @@ export default function AuctionPage() {
           if (e.cancelable) e.stopPropagation()
           close()
         }}
-        fullscreen={fullscreen}
-        fullscreenBtn
-        onFullscreen={() => toggleFullscreen()}
         minimizeBtn
         onMinimize={(e) => {
           if (e.cancelable) e.stopPropagation()

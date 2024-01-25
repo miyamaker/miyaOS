@@ -170,7 +170,6 @@ export default function ProductDetail({
   const handleCheckBidAmount = (value: string) => {
     const re = /(^[0-9]+\.?[0-9]*$)|(^\.[0-9]+$)/
     if (!re.test(value)) return
-    console.log('value', value)
     setBidAmount(value)
   }
 
