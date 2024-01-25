@@ -1,8 +1,9 @@
+// eslint-disable-next-line no-restricted-imports
 import { ethers } from 'ethers'
+import { get } from 'lodash'
 import type { Address } from 'viem'
 import { useContractRead } from 'wagmi'
 
-import { get } from 'lodash'
 import { abi } from './constants'
 
 export function useAuctionData({ address, chainId }: { address: Address; chainId?: number }) {

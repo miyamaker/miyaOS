@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
@@ -10,16 +10,7 @@ import ImagesList from '@/components/ProductDetail/ImagesList'
 import { MIYATEES_AUCTION_CONTRACT } from '@/constants/contracts'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { useBidTees } from '@/pages/Auction/useBidTees'
-
-export type Product = {
-  id: number
-  product: string
-  description: string
-  artist: string
-  currentBid: number
-  currency: string
-  images: string[]
-}
+import type { Product } from '@/store/auction/reducer'
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -219,6 +210,10 @@ export default function ProductDetail({
       </Timer>
     )
   }
+
+  useEffect(() => {
+    refetch()
+  }, [product, refetch])
 
   return (
     <>

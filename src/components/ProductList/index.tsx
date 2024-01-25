@@ -1,10 +1,13 @@
 import styled from 'styled-components/macro'
 
 import ImageWrapper from '@/components/ImageWrapper'
-import type { Product } from '@/components/ProductDetail'
 import { Button } from '@/components/ProductDetail/ImagesList'
+import { getCurrentNFT } from '@/store/auction/actions'
+import type { Product } from '@/store/auction/reducer'
+import { useAppDispatch } from '@/store/hooks'
 
 const ProductListWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 
@@ -22,6 +25,7 @@ const ProductWrapper = styled.div`
 `
 
 const ImageDetail = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +44,7 @@ const ImageDetail = styled.div`
 `
 
 const Image = styled.img`
-  height: 30%;
+  height: 80%;
 `
 
 const Description = styled.div`
@@ -49,11 +53,17 @@ const Description = styled.div`
 `
 
 export default function ProductList({ products }: { products: Product[] }) {
+  const dispatch = useAppDispatch()
+
+  const handleBid = (id: string) => {
+    dispatch(getCurrentNFT({ id }))
+  }
+
   return (
     <ProductListWrapper>
       {products.map((product: Product, index: number) => (
         <ProductWrapper key={index}>
-          <ImageWrapper style={{ padding: '0.75rem' }}>
+          <ImageWrapper style={{ padding: '0.75rem', height: '80%' }}>
             <ImageDetail>
               <Image src={product.images[0]} alt="Product Image" />
               <Description>{product.product}</Description>
@@ -62,7 +72,9 @@ export default function ProductList({ products }: { products: Product[] }) {
               </Description>
             </ImageDetail>
           </ImageWrapper>
-          <Button style={{ width: '100%', marginTop: '0.25rem' }}>Place bid</Button>
+          <Button onClick={() => handleBid(product.id)} style={{ width: '100%', marginTop: '0.25rem' }}>
+            Bid
+          </Button>
         </ProductWrapper>
       ))}
     </ProductListWrapper>

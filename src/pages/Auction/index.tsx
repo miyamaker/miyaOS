@@ -1,5 +1,4 @@
 import WarningIcon from 'assets/icon/warning.png'
-import Hoodies from 'assets/products/kool-skull/hoodies.png'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
 
@@ -11,7 +10,7 @@ import ProductList from '@/components/ProductList'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
-import { useAppDispatch } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import { useFullscreen } from '@/store/windows/hooks'
 import type { PageKey } from '@/store/windows/reducer'
@@ -70,24 +69,15 @@ const ErrorButton = styled.div`
   align-items: center;
 `
 
-const product = {
-  id: 3,
-  product: 'Miya Hoodie',
-  description: 'a standard piece of clothing with no special features, just like any other hoodie you might find',
-  artist: 'KoolSkull',
-  currentBid: 0.05,
-  currency: 'ETH',
-  images: [Hoodies, Hoodies],
-}
-
-const products = [product, product, product, product, product, product, product]
-
 export default function AuctionPage() {
   // Window mgmt
   const [fullscreen, toggleFullscreen] = useFullscreen(pageId)
   const dispatch = useAppDispatch()
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
+
+  const product = useAppSelector((state) => state.auction.currentProduct)
+  const products = useAppSelector((state) => state.auction.productsList)
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaAuction Error')

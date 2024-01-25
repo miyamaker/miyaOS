@@ -12,7 +12,7 @@ export function useBidTees({ address, bidAmount = '0.05' }: { address: Address; 
     value: parseEther(bidAmount),
   })
 
-  const bidTees = async (input: number) => writeAsync({ args: [input] })
+  const bidTees = async (input: string) => writeAsync({ args: [input] })
 
   return { bidTees }
 }
