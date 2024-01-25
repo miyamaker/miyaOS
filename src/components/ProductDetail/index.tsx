@@ -1,3 +1,4 @@
+import type { FetchBalanceResult } from '@wagmi/core'
 import { get } from 'lodash'
 import { useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
@@ -127,10 +128,12 @@ export default function ProductDetail({
   product,
   setErrorMessage,
   setErrorName,
+  balance,
 }: {
   product: Product
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
+  balance: FetchBalanceResult | undefined
 }) {
   // Network
   const { chain } = useNetwork()
@@ -254,7 +257,9 @@ export default function ProductDetail({
             <Countdown date={endTime * 1000} renderer={renderTimer} />
           </ActionWrapper>
         </BidWrapper>
-        <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>Total offer amount: {bidAmount} ETH</div>
+        <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
+          Total offer amount: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
+        </div>
       </ImageDetailWrapper>
     </>
   )

@@ -10,6 +10,7 @@ import ProductList from '@/components/ProductList'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
+import { useAccount } from '@/context/AccountProvider'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import { useFullscreen } from '@/store/windows/hooks'
@@ -79,6 +80,8 @@ export default function AuctionPage() {
   const product = useAppSelector((state) => state.auction.currentProduct)
   const products = useAppSelector((state) => state.auction.productsList)
 
+  const { balance } = useAccount()
+
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaAuction Error')
 
@@ -116,7 +119,12 @@ export default function AuctionPage() {
         }}
       >
         <ExplorerWrapper style={{ height: '60%' }} title={'Miya Hoodie'}>
-          <ProductDetail product={product} setErrorMessage={setErrorMessage} setErrorName={setErrorName} />
+          <ProductDetail
+            balance={balance}
+            product={product}
+            setErrorMessage={setErrorMessage}
+            setErrorName={setErrorName}
+          />
         </ExplorerWrapper>
         <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
           <ProductList products={products} />
