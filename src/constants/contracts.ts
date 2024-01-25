@@ -5,6 +5,16 @@ interface ContractAddresses {
   [key: number]: Address | ''
 }
 
+export const NFT_CONTRACT: ContractAddresses = {
+  [mainnet.id]: '0x5F4851F2C13FeAbe401E97570EfD13f03660064B',
+  [goerli.id]: '0x5F4851F2C13FeAbe401E97570EfD13f03660064B',
+}
+
+export const MIYATEES_AUCTION_CONTRACT: ContractAddresses = {
+  [mainnet.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
+  [goerli.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
+}
+
 export const FACTORY_CONTRACT: ContractAddresses = {
   [mainnet.id]: '0x37d2127ed8fc713cbb30c8dd2f6ef6d329e43420',
   [goerli.id]: '0x20422d2216c99306bba8a28309bf2abe9f9f2b27',

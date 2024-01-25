@@ -1,5 +1,3 @@
-// import { useAccount } from 'wagmi'
-
 import Hoodies from 'assets/products/kool-skull/hoodies.png'
 
 import ExplorerWrapper from '@/components/ExplorerWrapper'
@@ -17,6 +15,7 @@ const page = Pages.auction
 const pageId = page?.id as PageKey
 
 const product = {
+  id: 3,
   product: 'Miya Hoodie',
   description: 'a standard piece of clothing with no special features, just like any other hoodie you might find',
   artist: 'KoolSkull',
@@ -28,9 +27,6 @@ const product = {
 const products = [product, product, product, product, product, product, product]
 
 export default function AuctionPage() {
-  // Account
-  // const { isConnected, address } = useAccount()
-
   // Window mgmt
   const [fullscreen, toggleFullscreen] = useFullscreen(pageId)
   const dispatch = useAppDispatch()
