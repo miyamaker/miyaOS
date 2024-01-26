@@ -1,9 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
-// eslint-disable-next-line no-restricted-imports
-import { ethers } from 'ethers'
-import { get, remove } from 'lodash'
+import { remove } from 'lodash'
 
-import { NFT_BASE_URI, product, products } from '@/pages/Auction/constants'
+import { product, products } from '@/pages/Auction/constants'
 import { getCurrentNFT, updateAuctionsList } from '@/store/auction/actions'
 
 export type Product = {
@@ -56,30 +54,8 @@ export default createReducer(initialState, (builder) =>
     .addCase(updateAuctionsList, (state, action) => {
       const { auctions } = action.payload
 
-      // eslint-disable-next-line array-callback-return
-      const list: Product[] = []
-      auctions.map(async (auction) => {
-        const nftId = Number(auction?.miyaNFTId ?? '1')
-        const tokenURI = `${NFT_BASE_URI}${nftId}.json`
-
-        const response = await fetch(tokenURI)
-        const data = await response.json()
-
-        list.push({
-          id: nftId.toString(),
-          product: get(data, 'name') || '',
-          description: get(data, 'description') || '',
-          artist: get(data, 'artist') || '',
-          currency: get(data, 'currency') || '',
-          images: [get(data, 'image') || ''],
-          currentBid: Number(ethers.formatEther(get(auction, 'amount') || 0)),
-        })
-
-        console.log(list)
-      })
-
-      const current = list.pop()
+      const current = auctions.pop()
       if (current) state.currentProduct = current
-      state.productsList = [...list]
+      state.productsList = [...auctions]
     })
 )

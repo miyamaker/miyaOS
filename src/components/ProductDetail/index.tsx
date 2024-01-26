@@ -11,8 +11,8 @@ import AuctionButton from '@/components/AuctionButton'
 import ImagesList from '@/components/ProductDetail/ImagesList'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { useBidTees } from '@/pages/Auction/useBidTees'
-import type { Product } from '@/store/auction/reducer'
 import { useAppSelector } from '@/store/hooks'
+import { useGetEndTime } from '@/pages/Auction/useGetEndTime'
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -148,8 +148,7 @@ export default function ProductDetail({
   const product = useAppSelector((state) => state.auction.currentProduct)
 
   // Get contract data
-  const { currentBid, endTime, refetch } = useAuctionData({
-    nftId: product.id,
+  const { endTime, refetch } = useGetEndTime({
     address: auctionContract as Address,
     chainId: chain?.id,
   })
@@ -236,7 +235,7 @@ export default function ProductDetail({
         <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
-            {currentBid} {product.currency}
+            {product.currentBid} {product.currency}
           </Detail>
         </DetailWrapper>
         <DetailWrapper>

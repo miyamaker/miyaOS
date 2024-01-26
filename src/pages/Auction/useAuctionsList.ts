@@ -1,7 +1,7 @@
+import { values } from 'lodash'
 import type { Address } from 'viem'
 import { useContractRead } from 'wagmi'
 
-import { values } from 'lodash'
 import type { Auction } from '@/store/auction/reducer'
 
 import { abi } from './constants'

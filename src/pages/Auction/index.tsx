@@ -16,9 +16,11 @@ import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
 import { useAuctionsList } from '@/pages/Auction/useAuctionsList'
 import { updateAuctionsList } from '@/store/auction/actions'
+import type { Auction, Product } from '@/store/auction/reducer'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
+import { getAuctionsListDetail } from '@/utils/getAuctionsListDetail'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
@@ -84,6 +86,7 @@ export default function AuctionPage() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaAuction Error')
+  const [data, setData] = useState<Auction[]>([])
 
   // Network
   const { chain } = useNetwork()
@@ -100,12 +103,21 @@ export default function AuctionPage() {
     setErrorMessage('')
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleGetAuctionsListDetail = async () => {
+    const result = await getAuctionsListDetail(auctionsList)
+    dispatch(updateAuctionsList({ auctions: result as Product[] }))
+  }
+
   useEffect(() => {
-    if (auctionsList.length) {
-      // update auctionList
-      dispatch(updateAuctionsList({ auctions: auctionsList }))
+    if (auctionsList.length && auctionsList.length !== data.length) {
+      setData(auctionsList)
     }
-  }, [auctionsList, dispatch])
+  }, [auctionsList, data.length])
+
+  useEffect(() => {
+    handleGetAuctionsListDetail()
+  }, [data, handleGetAuctionsListDetail])
 
   return (
     <WindowWrapper>
