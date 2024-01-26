@@ -474,4 +474,4 @@ export const products = [
   },
 ]
 
-export const NFT_BASE_URI = 'https://d3d6dljqjizsii.cloudfront.net/'
+export const NFT_BASE_URI = 'https://ipfs.io/ipfs/bafkreicd2ep76nasgr7hodxszmc5edodqsuq5rhgc5ff5pwewalxj4gyoi/'
