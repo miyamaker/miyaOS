@@ -1,6 +1,8 @@
 import WarningIcon from 'assets/icon/warning.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+import type { Address } from 'viem'
+import { mainnet, useNetwork } from 'wagmi'
 
 import ErrorWindow from '@/components/ErrorWindow'
 import ExplorerWrapper from '@/components/ExplorerWrapper'
@@ -9,11 +11,14 @@ import { Button } from '@/components/ProductDetail/ImagesList'
 import ProductList from '@/components/ProductList'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
+import { MIYATEES_AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
+import { useAuctionsList } from '@/pages/Auction/useAuctionsList'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
+import { updateAuctionsList } from '@/store/auction/actions'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
@@ -83,10 +88,27 @@ export default function AuctionPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaAuction Error')
 
+  // Network
+  const { chain } = useNetwork()
+  const miyaTeesAuction = MIYATEES_AUCTION_CONTRACT[chain?.id || mainnet.id] || MIYATEES_AUCTION_CONTRACT[mainnet.id]!
+
+  // Get contract data
+  const { auctionsList } = useAuctionsList({
+    address: miyaTeesAuction as Address,
+    chainId: chain?.id,
+  })
+
   const handleCloseErrorPopup = () => {
     setErrorName('MiyaAuction Error')
     setErrorMessage('')
   }
+
+  useEffect(() => {
+    if (auctionsList.length) {
+      // update auctionList
+      dispatch(updateAuctionsList({ auctions: auctionsList }))
+    }
+  }, [auctionsList, dispatch])
 
   return (
     <WindowWrapper>
@@ -119,6 +141,8 @@ export default function AuctionPage() {
             product={product}
             setErrorMessage={setErrorMessage}
             setErrorName={setErrorName}
+            chain={chain}
+            auctionContract={miyaTeesAuction}
           />
         </ExplorerWrapper>
         <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>

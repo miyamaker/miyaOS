@@ -6,19 +6,20 @@ import { useContractRead } from 'wagmi'
 
 import { abi } from './constants'
 
-export function useAuctionData({ address, chainId }: { address: Address; chainId?: number }) {
+export function useAuctionData({ nftId, address, chainId }: { nftId: string; address: Address; chainId?: number }) {
   const { data, refetch } = useContractRead({
     address,
     enabled: !!address && !!chainId,
-    functionName: 'auctionData',
+    functionName: 'auctionById',
     abi,
+    args: [nftId],
   })
 
   return {
     currentBid: ethers.formatEther(get(data, 'amount') || 0),
     endTime: (get(data, 'endTime') || 0) as number,
     bidIncrement: ethers.formatEther(get(data, 'bidIncrement') || 0),
-    reservePrice: ethers.formatEther(get(data, 'reservePrice') || 0),
+    bidder: get(data, 'bidder') || '0x',
     refetch,
   }
 }

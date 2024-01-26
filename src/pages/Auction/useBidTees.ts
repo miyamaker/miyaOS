@@ -4,7 +4,7 @@ import { useContractWrite } from 'wagmi'
 
 import { abi } from './constants'
 
-export function useBidTees({ address, bidAmount = '0.05' }: { address: Address; bidAmount: string }) {
+export function useBidTees({ address, bidAmount = '0.01' }: { address: Address; bidAmount: string }) {
   const { writeAsync } = useContractWrite({
     address,
     functionName: 'bidTees',
@@ -12,7 +12,7 @@ export function useBidTees({ address, bidAmount = '0.05' }: { address: Address; 
     value: parseEther(bidAmount),
   })
 
-  const bidTees = async (input: string) => writeAsync({ args: [input] })
+  const bidTees = async (nftId: string) => writeAsync({ args: [nftId] })
 
   return { bidTees }
 }

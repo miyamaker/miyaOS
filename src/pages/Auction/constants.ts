@@ -417,3 +417,5 @@ export const products = [
     images: [TShirt, TShirt],
   },
 ]
+
+export const NFT_BASE_URI = ''

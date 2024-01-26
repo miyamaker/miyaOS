@@ -3,12 +3,12 @@ import { get } from 'lodash'
 import { useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
-import type { Address } from 'viem'
-import { mainnet, useAccount, useNetwork, useWaitForTransaction } from 'wagmi'
+import type { Address, ChainFormatters } from 'viem'
+import type { ChainConfig, ChainConstants } from 'viem/_types/types/chain'
+import { useAccount, useWaitForTransaction } from 'wagmi'
 
 import AuctionButton from '@/components/AuctionButton'
 import ImagesList from '@/components/ProductDetail/ImagesList'
-import { MIYATEES_AUCTION_CONTRACT } from '@/constants/contracts'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { useBidTees } from '@/pages/Auction/useBidTees'
 import type { Product } from '@/store/auction/reducer'
@@ -129,16 +129,16 @@ export default function ProductDetail({
   setErrorMessage,
   setErrorName,
   balance,
+  chain,
+  auctionContract,
 }: {
   product: Product
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
   balance: FetchBalanceResult | undefined
+  chain: (ChainConstants & ChainConfig<ChainFormatters | undefined> & { unsupported?: boolean }) | undefined
+  auctionContract: string
 }) {
-  // Network
-  const { chain } = useNetwork()
-  const miyaTeesAuction = MIYATEES_AUCTION_CONTRACT[chain?.id || mainnet.id] || MIYATEES_AUCTION_CONTRACT[mainnet.id]!
-
   // Account
   const { isConnected } = useAccount()
 
@@ -148,10 +148,11 @@ export default function ProductDetail({
 
   // Get contract data
   const { currentBid, endTime, refetch } = useAuctionData({
-    address: miyaTeesAuction as Address,
+    nftId: product.id,
+    address: auctionContract as Address,
     chainId: chain?.id,
   })
-  const { bidTees } = useBidTees({ address: miyaTeesAuction as Address, bidAmount })
+  const { bidTees } = useBidTees({ address: auctionContract as Address, bidAmount })
 
   useWaitForTransaction({
     hash: (txHash as Address) || '0x',
