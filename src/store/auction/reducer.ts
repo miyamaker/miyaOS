@@ -6,6 +6,7 @@ import { getCurrentNFT, updateAuctionsList } from '@/store/auction/actions'
 
 export type Product = {
   id: string
+  name: string
   product: string
   description: string
   artist: string

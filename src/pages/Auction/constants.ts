@@ -442,7 +442,8 @@ export const abi = [
 
 export const product = {
   id: '3',
-  product: 'Miya Hoodie',
+  name: 'Miya Hoodie',
+  product: 'Hoodie',
   description: 'a standard piece of clothing with no special features, just like any other hoodie you might find',
   artist: 'KoolSkull',
   currentBid: 0.05,
@@ -453,7 +454,8 @@ export const product = {
 export const products = [
   {
     id: '4',
-    product: 'Miya Coat',
+    name: 'Miya Coat',
+    product: 'Coat',
     description: 'a standard piece of clothing with no special features, just like any other coat you might find',
     artist: 'KoolSkull',
     currentBid: 0.0,
@@ -462,7 +464,8 @@ export const products = [
   },
   {
     id: '5',
-    product: 'Miya T-Shirt',
+    name: 'Miya T-Shirt',
+    product: 'T-Shirt',
     description: 'a standard piece of clothing with no special features, just like any other t-shirt you might find',
     artist: 'KoolSkull',
     currentBid: 0.0,

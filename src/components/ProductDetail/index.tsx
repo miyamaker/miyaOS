@@ -229,6 +229,10 @@ export default function ProductDetail({
           <Detail style={{ fontWeight: 'bolder' }}>{product.product}</Detail>
         </DetailWrapper>
         <DetailWrapper>
+          <Fields>Name:</Fields>
+          <Detail style={{ fontWeight: 'bolder' }}>{product.name}</Detail>
+        </DetailWrapper>
+        <DetailWrapper>
           <Fields>Description:</Fields>
           <Detail>{product.description}</Detail>
         </DetailWrapper>
