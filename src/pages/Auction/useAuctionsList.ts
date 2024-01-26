@@ -1,6 +1,8 @@
 import type { Address } from 'viem'
 import { useContractRead } from 'wagmi'
 
+import type { Auction } from '@/store/auction/reducer'
+
 import { abi } from './constants'
 
 export function useAuctionsList({ address, chainId }: { address: Address; chainId?: number }) {
@@ -11,8 +13,10 @@ export function useAuctionsList({ address, chainId }: { address: Address; chainI
     abi,
   })
 
+  const list = data || []
+
   return {
-    auctionsList: data || [],
+    auctionsList: [...[list]] as Auction[],
     refetch,
   }
 }

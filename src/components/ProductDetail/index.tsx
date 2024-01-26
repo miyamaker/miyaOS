@@ -12,6 +12,7 @@ import ImagesList from '@/components/ProductDetail/ImagesList'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { useBidTees } from '@/pages/Auction/useBidTees'
 import type { Product } from '@/store/auction/reducer'
+import { useAppSelector } from '@/store/hooks'
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -125,14 +126,12 @@ const Timer = styled.div`
 `
 
 export default function ProductDetail({
-  product,
   setErrorMessage,
   setErrorName,
   balance,
   chain,
   auctionContract,
 }: {
-  product: Product
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
   balance: FetchBalanceResult | undefined
@@ -145,6 +144,8 @@ export default function ProductDetail({
   const [transacting, setTransacting] = useState(false)
   const [txHash, setTxHash] = useState('')
   const [bidAmount, setBidAmount] = useState('0.0')
+
+  const product = useAppSelector((state) => state.auction.currentProduct)
 
   // Get contract data
   const { currentBid, endTime, refetch } = useAuctionData({

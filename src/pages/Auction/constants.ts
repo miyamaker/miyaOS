@@ -7,18 +7,8 @@ export const abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_miyaTees',
+        name: '_miyaNFT',
         type: 'address',
-      },
-      {
-        internalType: 'uint96',
-        name: 'reservePrice',
-        type: 'uint96',
-      },
-      {
-        internalType: 'uint8',
-        name: 'reservePercentage',
-        type: 'uint8',
       },
     ],
     stateMutability: 'nonpayable',
@@ -27,11 +17,6 @@ export const abi = [
   {
     inputs: [],
     name: 'NotOwner',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'ZeroAddress',
     type: 'error',
   },
   {
@@ -51,6 +36,19 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'nftId',
+        type: 'uint256',
+      },
+    ],
+    name: 'AuctionCreated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
@@ -58,32 +56,6 @@ export const abi = [
       },
     ],
     name: 'AuctionDurationUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'reservePercentage',
-        type: 'uint256',
-      },
-    ],
-    name: 'AuctionReservePercentageUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'reservePrice',
-        type: 'uint256',
-      },
-    ],
-    name: 'AuctionReservePriceUpdated',
     type: 'event',
   },
   {
@@ -114,6 +86,12 @@ export const abi = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'startTime',
+        type: 'uint256',
+      },
       {
         indexed: false,
         internalType: 'uint256',
@@ -156,7 +134,7 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'AUCTION_DURATION',
+    name: 'auctionDuration',
     outputs: [
       {
         internalType: 'uint32',
@@ -170,12 +148,40 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'BID_INCREMENT',
+    name: 'bidIncrement',
     outputs: [
       {
         internalType: 'uint96',
         name: '',
         type: 'uint96',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'endTime',
+    outputs: [
+      {
+        internalType: 'uint40',
+        name: '',
+        type: 'uint40',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'isStart',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -211,18 +217,13 @@ export const abi = [
     constant: true,
   },
   {
-    stateMutability: 'payable',
-    type: 'receive',
-    payable: true,
-  },
-  {
     inputs: [],
-    name: 'hasEnded',
+    name: 'startTime',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'uint40',
         name: '',
-        type: 'bool',
+        type: 'uint40',
       },
     ],
     stateMutability: 'view',
@@ -230,8 +231,19 @@ export const abi = [
     constant: true,
   },
   {
-    inputs: [],
-    name: 'auctionData',
+    stateMutability: 'payable',
+    type: 'receive',
+    payable: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_nftId',
+        type: 'uint256',
+      },
+    ],
+    name: 'auctionById',
     outputs: [
       {
         components: [
@@ -242,23 +254,13 @@ export const abi = [
           },
           {
             internalType: 'uint256',
-            name: 'miyaTeeId',
+            name: 'miyaNFTId',
             type: 'uint256',
           },
           {
             internalType: 'uint96',
             name: 'amount',
             type: 'uint96',
-          },
-          {
-            internalType: 'uint40',
-            name: 'startTime',
-            type: 'uint40',
-          },
-          {
-            internalType: 'uint40',
-            name: 'endTime',
-            type: 'uint40',
           },
           {
             internalType: 'uint96',
@@ -272,7 +274,7 @@ export const abi = [
           },
           {
             internalType: 'address',
-            name: 'miyaTees',
+            name: 'miyaNFT',
             type: 'address',
           },
           {
@@ -282,21 +284,11 @@ export const abi = [
           },
           {
             internalType: 'uint96',
-            name: 'reservePrice',
-            type: 'uint96',
-          },
-          {
-            internalType: 'uint96',
             name: 'bidIncrement',
             type: 'uint96',
           },
-          {
-            internalType: 'uint32',
-            name: 'duration',
-            type: 'uint32',
-          },
         ],
-        internalType: 'struct MiyaTeesAuction.AuctionData',
+        internalType: 'struct MiyaAuction.AuctionData',
         name: 'data',
         type: 'tuple',
       },
@@ -306,10 +298,97 @@ export const abi = [
     constant: true,
   },
   {
+    inputs: [],
+    name: 'auctionsList',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'bidder',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'miyaNFTId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint96',
+            name: 'amount',
+            type: 'uint96',
+          },
+          {
+            internalType: 'uint96',
+            name: 'withdrawable',
+            type: 'uint96',
+          },
+          {
+            internalType: 'bool',
+            name: 'settled',
+            type: 'bool',
+          },
+          {
+            internalType: 'address',
+            name: 'miyaNFT',
+            type: 'address',
+          },
+          {
+            internalType: 'uint8',
+            name: 'reservePercentage',
+            type: 'uint8',
+          },
+          {
+            internalType: 'uint96',
+            name: 'bidIncrement',
+            type: 'uint96',
+          },
+        ],
+        internalType: 'struct MiyaAuction.AuctionData[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'startAuction',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
-        name: 'id',
+        name: '_nftId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: '_reservePercentage',
+        type: 'uint8',
+      },
+    ],
+    name: 'createAuction',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_nftId',
         type: 'uint256',
       },
     ],
@@ -336,21 +415,8 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: 'uint8',
-        name: 'reservePrice',
-        type: 'uint8',
-      },
-    ],
-    name: 'setReservePrice',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint96',
-        name: 'bidIncrement',
+        name: '_bidIncrement',
         type: 'uint96',
       },
     ],
@@ -363,24 +429,11 @@ export const abi = [
     inputs: [
       {
         internalType: 'uint32',
-        name: 'duration',
+        name: '_duration',
         type: 'uint32',
       },
     ],
     name: 'setDuration',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint8',
-        name: 'reservePercentage',
-        type: 'uint8',
-      },
-    ],
-    name: 'setReservePercentage',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -418,4 +471,4 @@ export const products = [
   },
 ]
 
-export const NFT_BASE_URI = ''
+export const NFT_BASE_URI = 'https://d3d6dljqjizsii.cloudfront.net/'

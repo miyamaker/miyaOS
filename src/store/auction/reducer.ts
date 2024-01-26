@@ -1,4 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-restricted-imports
+import { ethers } from 'ethers'
 import { get, remove } from 'lodash'
 
 import { NFT_BASE_URI, product, products } from '@/pages/Auction/constants'
@@ -12,6 +14,17 @@ export type Product = {
   currentBid: number
   currency: string
   images: string[]
+}
+
+export type Auction = {
+  bidder: string
+  miyaNFTId: string
+  amount: number
+  withdrawable: number
+  settled: boolean
+  miyaNFT: string
+  reservePercentage: number
+  bidIncrement: number
 }
 
 export interface AuctionState {
@@ -44,25 +57,27 @@ export default createReducer(initialState, (builder) =>
       const { auctions } = action.payload
 
       // eslint-disable-next-line array-callback-return
-      const list = []
-      let p: Product
+      const list: Product[] = []
       auctions.map(async (auction) => {
-        const tokenURI = `${NFT_BASE_URI}${get(auction, 'miyaNFTId')}.json`
+        const nftId = Number(auction?.miyaNFTId ?? '1')
+        const tokenURI = `${NFT_BASE_URI}${nftId}.json`
 
-        const data = await fetch(tokenURI)
-        p.id = get(data, 'data.id') || ''
-        p.product = get(data, 'data.product') || ''
-        p.description = get(data, 'data.description') || ''
-        p.artist = get(data, 'data.artist') || ''
-        p.currency = get(data, 'data.currency') || ''
-        p.images = get(data, 'data.images') || []
+        const response = await fetch(tokenURI)
+        const data = await response.json()
 
-        p.currentBid = get(auction, 'amount') || 0
-
-        list.push(p)
+        list.push({
+          id: nftId.toString(),
+          product: get(data, 'product') || '',
+          description: get(data, 'description') || '',
+          artist: get(data, 'artist') || '',
+          currency: get(data, 'currency') || '',
+          images: get(data, 'images') || [],
+          currentBid: Number(ethers.formatEther(get(auction, 'amount') || 0)),
+        })
       })
 
-      state.currentProduct = list.pop()
+      const current = list.pop()
+      if (current) state.currentProduct = current
       state.productsList = [...list]
     })
 )

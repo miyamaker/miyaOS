@@ -15,10 +15,10 @@ import { MIYATEES_AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
 import { useAuctionsList } from '@/pages/Auction/useAuctionsList'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { updateAuctionsList } from '@/store/auction/actions'
+import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
-import { updateAuctionsList } from '@/store/auction/actions'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
@@ -80,9 +80,6 @@ export default function AuctionPage() {
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
 
-  const product = useAppSelector((state) => state.auction.currentProduct)
-  const products = useAppSelector((state) => state.auction.productsList)
-
   const { balance } = useAccount()
 
   const [errorMessage, setErrorMessage] = useState('')
@@ -135,10 +132,9 @@ export default function AuctionPage() {
           height: 'calc(100% - 1.5rem)',
         }}
       >
-        <ExplorerWrapper style={{ height: '60%' }} title={'Miya Hoodie'}>
+        <ExplorerWrapper style={{ height: '60%' }} title={'Active item'}>
           <ProductDetail
             balance={balance}
-            product={product}
             setErrorMessage={setErrorMessage}
             setErrorName={setErrorName}
             chain={chain}
@@ -146,7 +142,7 @@ export default function AuctionPage() {
           />
         </ExplorerWrapper>
         <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
-          <ProductList products={products} />
+          <ProductList />
         </ExplorerWrapper>
         {errorMessage && (
           <ErrorWrapper>

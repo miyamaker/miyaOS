@@ -12,7 +12,7 @@ export const NFT_CONTRACT: ContractAddresses = {
 
 export const MIYATEES_AUCTION_CONTRACT: ContractAddresses = {
   [mainnet.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
-  [goerli.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
+  [goerli.id]: '0xDE5863E25Eb9f014324d8bD97B4a632BcA946F32',
 }
 
 export const FACTORY_CONTRACT: ContractAddresses = {

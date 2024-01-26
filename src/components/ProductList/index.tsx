@@ -4,7 +4,7 @@ import ImageWrapper from '@/components/ImageWrapper'
 import { Button } from '@/components/ProductDetail/ImagesList'
 import { getCurrentNFT } from '@/store/auction/actions'
 import type { Product } from '@/store/auction/reducer'
-import { useAppDispatch } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 const ProductListWrapper = styled.div`
   width: 100%;
@@ -52,8 +52,9 @@ const Description = styled.div`
   font-weight: bolder;
 `
 
-export default function ProductList({ products }: { products: Product[] }) {
+export default function ProductList() {
   const dispatch = useAppDispatch()
+  const products = useAppSelector((state) => state.auction.productsList)
 
   const handleBid = (id: string) => {
     dispatch(getCurrentNFT({ id }))
