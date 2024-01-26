@@ -67,13 +67,15 @@ export default createReducer(initialState, (builder) =>
 
         list.push({
           id: nftId.toString(),
-          product: get(data, 'product') || '',
+          product: get(data, 'name') || '',
           description: get(data, 'description') || '',
           artist: get(data, 'artist') || '',
           currency: get(data, 'currency') || '',
-          images: get(data, 'images') || [],
+          images: [get(data, 'image') || ''],
           currentBid: Number(ethers.formatEther(get(auction, 'amount') || 0)),
         })
+
+        console.log(list)
       })
 
       const current = list.pop()
