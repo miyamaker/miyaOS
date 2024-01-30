@@ -6,12 +6,13 @@ import type { Auction } from '@/store/auction/reducer'
 
 import { abi } from './constants'
 
-export function useAuctionsList({ address, chainId }: { address: Address; chainId?: number }) {
+export function useAuctionsList({ nft, address, chainId }: { nft: Address; address: Address; chainId?: number }) {
   const { data, refetch } = useContractRead({
     address,
     enabled: !!address && !!chainId,
-    functionName: 'auctionsList',
+    functionName: 'getActiveAuctionsList',
     abi,
+    args: [nft],
   })
 
   const list = data || []

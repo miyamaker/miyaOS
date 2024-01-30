@@ -1,26 +1,25 @@
 import WarningIcon from 'assets/icon/warning.png'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
+import CollectionsList from '@/components/CollectionsList'
 import ErrorWindow from '@/components/ErrorWindow'
 import ExplorerWrapper from '@/components/ExplorerWrapper'
 import ProductDetail from '@/components/ProductDetail'
 import { Button } from '@/components/ProductDetail/ImagesList'
-import ProductList from '@/components/ProductList'
+import ProductsList from '@/components/ProductsList'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
-import { MIYATEES_AUCTION_CONTRACT } from '@/constants/contracts'
+import { AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
-import { useAuctionsList } from '@/pages/Auction/useAuctionsList'
-import { updateAuctionsList } from '@/store/auction/actions'
-import type { Auction, Product } from '@/store/auction/reducer'
-import { useAppDispatch } from '@/store/hooks'
+import { AUCTION_PAGE_SECTION } from '@/pages/Auction/constants'
+import { useNFTsList } from '@/pages/Auction/useNFTsList'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
-import { getAuctionsListDetail } from '@/utils/getAuctionsListDetail'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
@@ -32,7 +31,6 @@ const ErrorWrapper = styled.div`
   top: 37%;
   left: 25%;
 `
-
 const ErrorContent = styled.div`
   height: 100%;
   display: flex;
@@ -40,7 +38,6 @@ const ErrorContent = styled.div`
   align-items: center;
   justify-content: center;
 `
-
 const ErrorMessage = styled.div`
   height: calc(200% / 3);
   width: 100%;
@@ -67,7 +64,6 @@ const ErrorMessage = styled.div`
     margin-left: 1rem;
   }
 `
-
 const ErrorButton = styled.div`
   height: calc(100% / 3);
   width: 100%;
@@ -86,15 +82,15 @@ export default function AuctionPage() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaAuction Error')
-  const [data, setData] = useState<Auction[]>([])
+  const [pageSection, setPageSection] = useState(AUCTION_PAGE_SECTION.COLLECTIONS_SECTION)
 
   // Network
   const { chain } = useNetwork()
-  const miyaTeesAuction = MIYATEES_AUCTION_CONTRACT[chain?.id || mainnet.id] || MIYATEES_AUCTION_CONTRACT[mainnet.id]!
+  const auctionContract = AUCTION_CONTRACT[chain?.id || mainnet.id] || AUCTION_CONTRACT[mainnet.id]!
 
   // Get contract data
-  const { auctionsList } = useAuctionsList({
-    address: miyaTeesAuction as Address,
+  const { nftsList } = useNFTsList({
+    address: auctionContract as Address,
     chainId: chain?.id,
   })
 
@@ -103,21 +99,35 @@ export default function AuctionPage() {
     setErrorMessage('')
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleGetAuctionsListDetail = async () => {
-    const result = await getAuctionsListDetail(auctionsList)
-    dispatch(updateAuctionsList({ auctions: result as Product[] }))
-  }
-
-  useEffect(() => {
-    if (auctionsList.length && auctionsList.length !== data.length) {
-      setData(auctionsList)
+  const renderSection = () => {
+    switch (pageSection) {
+      case AUCTION_PAGE_SECTION.COLLECTIONS_SECTION:
+        return (
+          <ExplorerWrapper style={{ height: '100%' }} title={'Collections'}>
+            <CollectionsList nfts={nftsList} setPageSection={setPageSection} />
+          </ExplorerWrapper>
+        )
+      case AUCTION_PAGE_SECTION.PRODUCT_SECTION:
+        return (
+          <>
+            <ExplorerWrapper style={{ height: '60%' }} title={'Collections > Detail'} setPageSection={setPageSection}>
+              <ProductDetail
+                balance={balance}
+                setErrorMessage={setErrorMessage}
+                setErrorName={setErrorName}
+                chain={chain}
+                auctionContract={auctionContract as Address}
+              />
+            </ExplorerWrapper>
+            <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
+              <ProductsList auctionContract={auctionContract as Address} chain={chain} />
+            </ExplorerWrapper>
+          </>
+        )
+      default:
+        return <></>
     }
-  }, [auctionsList, data.length])
-
-  useEffect(() => {
-    handleGetAuctionsListDetail()
-  }, [data, handleGetAuctionsListDetail])
+  }
 
   return (
     <WindowWrapper>
@@ -144,18 +154,7 @@ export default function AuctionPage() {
           height: 'calc(100% - 1.5rem)',
         }}
       >
-        <ExplorerWrapper style={{ height: '60%' }} title={'Active item'}>
-          <ProductDetail
-            balance={balance}
-            setErrorMessage={setErrorMessage}
-            setErrorName={setErrorName}
-            chain={chain}
-            auctionContract={miyaTeesAuction}
-          />
-        </ExplorerWrapper>
-        <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
-          <ProductList />
-        </ExplorerWrapper>
+        {renderSection()}
         {errorMessage && (
           <ErrorWrapper>
             <ErrorWindow errorLabel={errorName} handleClose={handleCloseErrorPopup}>

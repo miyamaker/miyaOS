@@ -7,7 +7,7 @@ export const abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_miyaNFT',
+        name: '_owner',
         type: 'address',
       },
     ],
@@ -16,14 +16,69 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'NotOwner',
+    name: 'ActiveAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'AlreadyInitialized',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'EndedAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InactiveAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InsufficientBid',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidTimestamp',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'LockedAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NewOwnerIsZeroAddress',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NoHandoverRequest',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'SettledAuction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'Unauthorized',
     type: 'error',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
@@ -37,9 +92,27 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'address',
+        name: 'nft',
+        type: 'address',
+      },
+      {
+        indexed: true,
         internalType: 'uint256',
-        name: 'nftId',
+        name: 'tokenId',
         type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint40',
+        name: 'startTime',
+        type: 'uint40',
+      },
+      {
+        indexed: false,
+        internalType: 'uint40',
+        name: 'endTime',
+        type: 'uint40',
       },
     ],
     name: 'AuctionCreated',
@@ -49,7 +122,26 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
+        internalType: 'address',
+        name: 'nft',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'AuctionDeleted',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
@@ -63,8 +155,20 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'address',
+        name: 'nft',
+        type: 'address',
+      },
+      {
+        indexed: true,
         internalType: 'uint256',
-        name: 'nftId',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'amount',
         type: 'uint256',
       },
       {
@@ -72,12 +176,6 @@ export const abi = [
         internalType: 'address',
         name: 'winner',
         type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
       },
     ],
     name: 'AuctionSettled',
@@ -87,19 +185,37 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
+        internalType: 'address',
+        name: 'nft',
+        type: 'address',
+      },
+      {
+        indexed: true,
         internalType: 'uint256',
-        name: 'startTime',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'amount',
         type: 'uint256',
       },
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'endTime',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
       },
     ],
-    name: 'AuctionStarted',
+    name: 'BidPlaced',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [],
+    name: 'LockAuction',
     type: 'event',
   },
   {
@@ -107,44 +223,84 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'pendingOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipHandoverCanceled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'pendingOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipHandoverRequested',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'oldOwner',
+        type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'sender',
+        name: 'newOwner',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
     ],
-    name: 'BidPlaced',
+    name: 'OwnershipTransferred',
     type: 'event',
-  },
-  {
-    stateMutability: 'payable',
-    type: 'fallback',
-    payable: true,
   },
   {
     inputs: [],
     name: 'auctionDuration',
     outputs: [
       {
-        internalType: 'uint32',
+        internalType: 'uint40',
         name: '',
-        type: 'uint32',
+        type: 'uint40',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'auctionFunds',
+    outputs: [
+      {
+        internalType: 'uint96',
+        name: '',
+        type: 'uint96',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'auctioncore',
+    outputs: [
+      {
+        internalType: 'contract MiyaAuctionNFT',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -158,49 +314,60 @@ export const abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'endTime',
-    outputs: [
-      {
-        internalType: 'uint40',
-        name: '',
-        type: 'uint40',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'cancelOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
-    constant: true,
   },
   {
-    inputs: [],
-    name: 'isStart',
-    outputs: [
+    inputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'nft',
-    outputs: [
-      {
-        internalType: 'contract IERC721',
-        name: '',
+        internalType: 'address',
+        name: 'pendingOwner',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
+    name: 'completeOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: '',
+        type: 'bytes',
+      },
+    ],
+    name: 'onERC721Received',
+    outputs: [
+      {
+        internalType: 'bytes4',
+        name: '',
+        type: 'bytes4',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -208,42 +375,73 @@ export const abi = [
     outputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'result',
         type: 'address',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'startTime',
-    outputs: [
-      {
-        internalType: 'uint40',
-        name: '',
-        type: 'uint40',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    stateMutability: 'payable',
-    type: 'receive',
-    payable: true,
   },
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'pendingOwner',
+        type: 'address',
+      },
+    ],
+    name: 'ownershipHandoverExpiresAt',
+    outputs: [
+      {
         internalType: 'uint256',
-        name: '_nftId',
+        name: 'result',
         type: 'uint256',
       },
     ],
-    name: 'auctionById',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'requestOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getAuction',
     outputs: [
       {
         components: [
@@ -253,53 +451,48 @@ export const abi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'miyaNFTId',
-            type: 'uint256',
-          },
-          {
             internalType: 'uint96',
             name: 'amount',
             type: 'uint96',
           },
           {
             internalType: 'uint96',
-            name: 'withdrawable',
+            name: 'minPrice',
             type: 'uint96',
+          },
+          {
+            internalType: 'uint40',
+            name: 'startTime',
+            type: 'uint40',
+          },
+          {
+            internalType: 'uint40',
+            name: 'endTime',
+            type: 'uint40',
           },
           {
             internalType: 'bool',
             name: 'settled',
             type: 'bool',
           },
-          {
-            internalType: 'address',
-            name: 'miyaNFT',
-            type: 'address',
-          },
-          {
-            internalType: 'uint8',
-            name: 'reservePercentage',
-            type: 'uint8',
-          },
-          {
-            internalType: 'uint96',
-            name: 'bidIncrement',
-            type: 'uint96',
-          },
         ],
         internalType: 'struct MiyaAuction.AuctionData',
-        name: 'data',
+        name: '',
         type: 'tuple',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
-    inputs: [],
-    name: 'auctionsList',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+    ],
+    name: 'getActiveAuctionsList',
     outputs: [
       {
         components: [
@@ -309,39 +502,29 @@ export const abi = [
             type: 'address',
           },
           {
-            internalType: 'uint256',
-            name: 'miyaNFTId',
-            type: 'uint256',
-          },
-          {
             internalType: 'uint96',
             name: 'amount',
             type: 'uint96',
           },
           {
             internalType: 'uint96',
-            name: 'withdrawable',
+            name: 'minPrice',
             type: 'uint96',
+          },
+          {
+            internalType: 'uint40',
+            name: 'startTime',
+            type: 'uint40',
+          },
+          {
+            internalType: 'uint40',
+            name: 'endTime',
+            type: 'uint40',
           },
           {
             internalType: 'bool',
             name: 'settled',
             type: 'bool',
-          },
-          {
-            internalType: 'address',
-            name: 'miyaNFT',
-            type: 'address',
-          },
-          {
-            internalType: 'uint8',
-            name: 'reservePercentage',
-            type: 'uint8',
-          },
-          {
-            internalType: 'uint96',
-            name: 'bidIncrement',
-            type: 'uint96',
           },
         ],
         internalType: 'struct MiyaAuction.AuctionData[]',
@@ -351,26 +534,149 @@ export const abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+    ],
+    name: 'getSettledAuctionsList',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'bidder',
+            type: 'address',
+          },
+          {
+            internalType: 'uint96',
+            name: 'amount',
+            type: 'uint96',
+          },
+          {
+            internalType: 'uint96',
+            name: 'minPrice',
+            type: 'uint96',
+          },
+          {
+            internalType: 'uint40',
+            name: 'startTime',
+            type: 'uint40',
+          },
+          {
+            internalType: 'uint40',
+            name: 'endTime',
+            type: 'uint40',
+          },
+          {
+            internalType: 'bool',
+            name: 'settled',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct MiyaAuction.AuctionData[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: 'startAuction',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'getNfts',
+    outputs: [
+      {
+        internalType: 'address[]',
+        name: '',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+    ],
+    name: 'getActiveTokenIds',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+    ],
+    name: 'getSettledTokenIds',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+    ],
+    name: 'getAllTokenIds',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: '_nftId',
+        name: '_tokenId',
         type: 'uint256',
       },
       {
-        internalType: 'uint8',
-        name: '_reservePercentage',
-        type: 'uint8',
+        internalType: 'uint96',
+        name: '_minPrice',
+        type: 'uint96',
+      },
+      {
+        internalType: 'uint40',
+        name: '_startTime',
+        type: 'uint40',
       },
     ],
     name: 'createAuction',
@@ -387,26 +693,72 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: '_nftId',
+        name: '_tokenId',
         type: 'uint256',
       },
     ],
-    name: 'bidTees',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-    payable: true,
-  },
-  {
-    inputs: [],
-    name: 'settleAuction',
+    name: 'deleteAuction',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'placeBid',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
     inputs: [],
+    name: 'settleAllAuctions',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_nft',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'settleOneAuction',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+    ],
     name: 'withdrawETH',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -438,10 +790,30 @@ export const abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'lockAuction',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'baseUri_',
+        type: 'string',
+      },
+    ],
+    name: 'updateAuctioncoreUri',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ]
 
 export const product = {
-  id: '3',
+  id: 3,
   name: 'Miya Hoodie',
   product: 'Hoodie',
   description: 'a standard piece of clothing with no special features, just like any other hoodie you might find',
@@ -453,7 +825,7 @@ export const product = {
 
 export const products = [
   {
-    id: '4',
+    id: 4,
     name: 'Miya Coat',
     product: 'Coat',
     description: 'a standard piece of clothing with no special features, just like any other coat you might find',
@@ -463,7 +835,7 @@ export const products = [
     images: [Coat, Coat],
   },
   {
-    id: '5',
+    id: 5,
     name: 'Miya T-Shirt',
     product: 'T-Shirt',
     description: 'a standard piece of clothing with no special features, just like any other t-shirt you might find',
@@ -474,4 +846,9 @@ export const products = [
   },
 ]
 
-export const NFT_BASE_URI = 'https://ipfs.io/ipfs/bafkreicd2ep76nasgr7hodxszmc5edodqsuq5rhgc5ff5pwewalxj4gyoi/'
+export const ADDRESS0 = '0x0000000000000000000000000000000000000000'
+
+export const AUCTION_PAGE_SECTION = {
+  COLLECTIONS_SECTION: 'Collections',
+  PRODUCT_SECTION: 'Detail',
+}

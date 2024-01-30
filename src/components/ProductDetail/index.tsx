@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
 import type { Address, ChainFormatters } from 'viem'
+import { formatUnits } from 'viem'
 import type { ChainConfig, ChainConstants } from 'viem/_types/types/chain'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 
 import AuctionButton from '@/components/AuctionButton'
 import ImagesList from '@/components/ProductDetail/ImagesList'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
-import { useBidTees } from '@/pages/Auction/useBidTees'
+import { usePlaceBid } from '@/pages/Auction/usePlaceBid'
 import { useAppSelector } from '@/store/hooks'
-import { useGetEndTime } from '@/pages/Auction/useGetEndTime'
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -136,23 +136,28 @@ export default function ProductDetail({
   setErrorName: (value: string) => void
   balance: FetchBalanceResult | undefined
   chain: (ChainConstants & ChainConfig<ChainFormatters | undefined> & { unsupported?: boolean }) | undefined
-  auctionContract: string
+  auctionContract: Address
 }) {
   // Account
   const { isConnected } = useAccount()
+
+  const product = useAppSelector((state) => state.auction.currentProduct)
+  const nft = useAppSelector((state) => state.auction.currentNFT)
+  const tokenId = useAppSelector((state) => state.auction.currentTokenId)
+  const nftContract = useAppSelector((state) => state.auction.currentNFTContract)
 
   const [transacting, setTransacting] = useState(false)
   const [txHash, setTxHash] = useState('')
   const [bidAmount, setBidAmount] = useState('0.0')
 
-  const product = useAppSelector((state) => state.auction.currentProduct)
-
   // Get contract data
-  const { endTime, refetch } = useGetEndTime({
-    address: auctionContract as Address,
+  const { currentBid, endTime, refetch } = useAuctionData({
+    nft: nftContract,
+    tokenId,
+    address: auctionContract,
     chainId: chain?.id,
   })
-  const { bidTees } = useBidTees({ address: auctionContract as Address, bidAmount })
+  const { placeBid } = usePlaceBid({ address: auctionContract, bidAmount })
 
   useWaitForTransaction({
     hash: (txHash as Address) || '0x',
@@ -178,7 +183,7 @@ export default function ProductDetail({
     if (!isConnected) return
     setTransacting(true)
     try {
-      const result = await bidTees(product.id)
+      const result = await placeBid(nftContract, tokenId)
       setTxHash(result.hash)
     } catch (e) {
       setTransacting(false)
@@ -225,6 +230,10 @@ export default function ProductDetail({
       </ImagesListWrapper>
       <ImageDetailWrapper>
         <DetailWrapper>
+          <Fields>Collection:</Fields>
+          <Detail style={{ fontWeight: 'bolder' }}>{nft.name}</Detail>
+        </DetailWrapper>
+        <DetailWrapper>
           <Fields>Product:</Fields>
           <Detail style={{ fontWeight: 'bolder' }}>{product.product}</Detail>
         </DetailWrapper>
@@ -239,7 +248,7 @@ export default function ProductDetail({
         <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
-            {product.currentBid} {product.currency}
+            {formatUnits(currentBid, 0)} {product.currency}
           </Detail>
         </DetailWrapper>
         <DetailWrapper>

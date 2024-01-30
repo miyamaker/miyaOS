@@ -1,19 +1,22 @@
-// eslint-disable-next-line no-restricted-imports
-import { ethers } from 'ethers'
-import { get } from 'lodash'
+type Attribute = {
+  trait_type: string
+  value: string
+}
 
-import { NFT_BASE_URI } from '@/pages/Auction/constants'
-import type { Auction } from '@/store/auction/reducer'
+type NFTMetaData = {
+  name: string
+  description: string
+  images: string[]
+  attributes: Attribute[]
+}
 
-export async function getAuctionsListDetail(auctions: Auction[]) {
-  const d = auctions.map(async (auction) => {
-    const nftId = Number(auction?.miyaNFTId ?? '1')
-    const tokenURI = `${NFT_BASE_URI}${nftId}.json`
+export async function getAuctionsListDetail(tokenIds: number[], baseURI: string) {
+  return tokenIds.map((tokenId) => {
+    const tokenURI = `${baseURI}${tokenId}`
 
-    const response = await fetch(tokenURI)
-    const data = await response.json()
-
-    const attributes = get(data, 'attributes') || []
+    const { name, description, images, attributes } = JSON.parse(
+      tokenURI.split('data:application/json;utf8,')[1] as string
+    ) as NFTMetaData
 
     let artist = ''
     let currency = 'ETH'
@@ -35,16 +38,13 @@ export async function getAuctionsListDetail(auctions: Auction[]) {
     }
 
     return {
-      id: nftId.toString(),
-      name: get(data, 'name') || '',
+      id: tokenId,
+      name,
       product,
-      description: get(data, 'description') || '',
+      description,
       artist,
       currency,
-      images: [get(data, 'image') || ''],
-      currentBid: Number(ethers.formatEther(get(auction, 'amount') || 0)),
+      images,
     }
   })
-
-  return Promise.all(d)
 }
