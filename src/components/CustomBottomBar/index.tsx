@@ -14,7 +14,7 @@ interface CustomBottomBarProps {
 }
 
 const ParentContainer = styled.div`
-  margin-top: 255px;
+  margin-top: 265px;
 `
 
 const BottomBarMenuStyled = styled.div`
@@ -57,7 +57,7 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
       subMenu: settingsSubMenu,
     },
 
-    { id: '4', menu: 'shutdown', icon: Shutdown, name: '<u>C</u>onnect Wallet' },
+    { id: '4', menu: 'shutdown', icon: Shutdown, name: '<u>M</u>ints' },
     { id: '5', menu: 'startButton', component: <StartButton />, name: '<u>S</u>tart' },
   ]
 

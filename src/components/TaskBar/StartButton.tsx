@@ -28,16 +28,17 @@ export default function StartButton() {
               {connected && !chain?.unsupported && <></>}
               {(() => {
                 const buttonStyle = {
-                  height: '100%',
+                  height: '400%',
                   paddingLeft: 6,
                   paddingRight: 10,
-                  width: '100%', // Set the width to 100% for a wider button
+                  width: '100%',
+                  // Set the width to 100% for a wider button
                 }
 
                 if (!connected) {
                   return (
                     <HighlightButton onClick={openConnectModal} className="free-height free-width" style={buttonStyle}>
-                      <span style={{ marginTop: -1 }}>🖤 Start</span>
+                      <span style={{ marginTop: -1 }}>Click to Connect Wallet</span>
                     </HighlightButton>
                   )
                 }
@@ -53,7 +54,7 @@ export default function StartButton() {
                 return (
                   <div style={{ height: '100%' }}>
                     <HighlightButton className="free-height free-width" style={buttonStyle}>
-                      <span style={{ marginTop: -1 }}>🖤 Start</span>
+                      <span style={{ marginTop: -1 }}>Click to Connect Wallet</span>
                     </HighlightButton>
                   </div>
                 )
