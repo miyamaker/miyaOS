@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import MiyaLogo from 'assets/134321870.png'
-import CreateNew from 'assets/create_new.png?preset=thumbnail&resize=true'
 import Folder from 'assets/folder.png?preset=thumbnail&resize=true'
 import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
+import CreateNew from 'assets/miyamints1.png?preset=thumbnail&resize=true'
 import { debounce } from 'lodash'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
-import CustomBottomBar from '@/components/CustomBottomBar'
 import DynamicWrapper from '@/components/DynamicWrapper'
 import OsLoader from '@/components/OsLoader'
 import TaskBar from '@/components/TaskBar'
@@ -77,38 +76,21 @@ const Icons = styled.div`
   }
 `
 
-const BottomBarContainer = styled.div`
-  width: 100%; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
-  background-color: #c1c1c1; /* Adjust the background color as needed */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px; /* Adjust the padding as needed */
-  position: absolute;
-  bottom: 0;
-  left: 0;
-`
-
-const handleSelected = (selectedItem: string) => {
-  // Perform actions based on the selected item
-  console.log(`Selected menu item: ${selectedItem}`)
-  // You can add more logic here based on the selected item
-}
-
+// const ComponentPage = Pages.components
 const UploaderPage = Pages.uploader
-
-const DesktopIconMemoized = React.memo(DesktopIcon)
+const ManagePage = Pages.manager
 
 export default function OperatingSystem() {
   const [bottomBarVisible, setBottomBarVisible] = useState(false)
   const location = useLocation()
+  /* Responsiveness stuff */
   const { width, height } = useWindowSize()
   const [, isMobile] = useMemo(() => {
     const result = getMediaKey(width)
     return [result, ['upToExtraSmall', 'upToSmall'].includes(result)]
   }, [width])
 
+  /* Redux stuff */
   const dispatch = useAppDispatch()
   const [windows, zindex, fullScreen, minimized] = useWindows()
   const firstLoad = useAppSelector((state) => state.experience.firstLoad)
@@ -128,10 +110,6 @@ export default function OperatingSystem() {
       })
     )
   }
-
-  const handleToggleBottomBar = debounce(() => {
-    setBottomBarVisible((prevVisible) => !prevVisible)
-  }, 300) // Adjust the debounce time as needed
 
   useEffect(() => {
     const page = Object.values(Pages).find((p) => p.path === location.pathname)
@@ -156,6 +134,10 @@ export default function OperatingSystem() {
     dispatch(minimizeWindow({ value: id }))
   }
 
+  const handleToggleBottomBar = debounce(() => {
+    setBottomBarVisible((prevVisible) => !prevVisible)
+  }, 300) // Adjust the debounce time as needed
+
   const MemoizedWindows = useMemo(() => {
     return windows.map((window) => {
       const page = Pages[window]!
@@ -174,7 +156,7 @@ export default function OperatingSystem() {
         </Fragment>
       )
     })
-  }, [windows, zindex, fullScreen, isMobile, minimized, dispatch])
+  }, [windows, zindex, fullScreen, isMobile, minimized])
 
   return (
     <div className="bwindow" style={{ height: '100%', overflow: 'hidden', position: 'relative', zIndex: 0 }}>
@@ -201,40 +183,44 @@ export default function OperatingSystem() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIconMemoized normalState={MiyaLogo} onClick={() => handleOpen('home')}>
+                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
                   MiyaNet
                   <br />
                   Explorer
-                </DesktopIconMemoized>
-                <DesktopIconMemoized
+                </DesktopIcon>
+                <DesktopIcon
                   normalState={UploaderPage?.icon?.src}
                   onClick={() => handleOpen(UploaderPage?.id as PageKey)}
                 >
                   {UploaderPage?.label}
-                </DesktopIconMemoized>
+                </DesktopIcon>
+                <DesktopIcon normalState={ManagePage?.icon?.src} onClick={() => handleOpen(ManagePage?.id as PageKey)}>
+                  {ManagePage?.label}
+                </DesktopIcon>
               </div>
-              <DesktopIconMemoized normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
-                My Collections
-              </DesktopIconMemoized>
 
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIconMemoized
+                <DesktopIcon
                   normalState={CreateNew[0]?.src}
                   onClick={() => handleOpen('mint')}
                   realignment={'0 -10px 0 0'}
                 >
                   MiyaMints.exe
-                </DesktopIconMemoized>
-                {/* Additional DesktopIcons can be added here */}
+                </DesktopIcon>
+                {/*
+                <DesktopIcon
+                  normalState={ComponentPage?.icon?.src}
+                  onClick={() => handleOpen(ComponentPage?.id as PageKey)}
+                >
+                  {ComponentPage?.label}
+                </DesktopIcon> 
+                */}
+                <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
+                  My collections
+                </DesktopIcon>
               </div>
             </div>
           </div>
-          {bottomBarVisible && (
-            <CustomBottomBar
-              bottomBarVisible={bottomBarVisible}
-              setSelected={(selectedItem) => console.log(`Selected: ${selectedItem}`)}
-            />
-          )}
         </Icons>
       </Foreground>
       <TaskBar
