@@ -8,7 +8,6 @@ import { useWaves } from '@/store/experience/hooks'
 
 import { ButtonIcon, HighlightButton } from '../Button'
 import { VerticalSeparator } from '../Separator'
-import StartButton from './StartButton'
 
 const NoScroll = styled.div`
   overflow: hidden;
@@ -67,10 +66,12 @@ export default function TaskBar({
   active,
   focus,
   onClick,
+  toggleBottomBar, // Add this prop
 }: {
   active: string[]
   focus: string | undefined
   onClick: (id: string) => void
+  toggleBottomBar: () => void // Add this prop type
 }) {
   const [waves, toggleWaves] = useWaves()
   const { block } = useAccount()
@@ -78,9 +79,16 @@ export default function TaskBar({
   return (
     <NoScroll>
       <TaskBarStyled>
+        <HighlightButton
+          onClick={toggleBottomBar}
+          className="free-height free-width"
+          style={{ height: '100%', paddingLeft: 6, paddingRight: 10 }}
+        >
+          <span style={{ marginTop: -1 }}>🖤 Start</span>
+        </HighlightButton>
         <Row>
-          <StartButton />
           <VerticalSeparator />
+
           <ButtonContainer>
             {active.map((id) => {
               const page = Pages[id]!
@@ -106,6 +114,7 @@ export default function TaskBar({
             })}
           </ButtonContainer>
         </Row>
+
         <Row>
           <VerticalSeparator />
           <InsetContainer>

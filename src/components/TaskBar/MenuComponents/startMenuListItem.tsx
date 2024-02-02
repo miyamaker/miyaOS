@@ -1,20 +1,19 @@
-import { MdArrowRight } from "react-icons/md";
-import styled, { createGlobalStyle } from "styled-components/macro";
-import { useState } from "react";
+import { useState } from 'react'
+import { MdArrowRight } from 'react-icons/md'
+import styled from 'styled-components/macro'
 
 // Define interface for props
 interface IStartMenuListItemProps {
-  haveSub: boolean | undefined;
-  onSelected: (selected: string) => void;
-  onShowSide: (showSide: boolean) => void;
-  icon: any;
-  name: string;
-  menu: string;
-  subMenu?: React.ReactNode; // Allow subMenu to be optional
+  haveSub: boolean | undefined
+  onSelected: (selected: string) => void
+  onShowSide: (showSide: boolean) => void
+  icon: any
+  name: string
+  menu: string
+  subMenu?: React.ReactNode // Allow subMenu to be optional
 }
 
 // Include the Google Font VT323 using createGlobalStyle
-
 
 // Define styled components
 const StartMenuListItemContainer = styled.div`
@@ -32,12 +31,12 @@ const StartMenuListItemContainer = styled.div`
     border: none; /* Add this line to remove the border on hover */
     color: white;
   }
-`;
+`
 
 const MenuItemText = styled.div`
   font-size: 22px;
   margin-left: 16px; /* Adjust margin as needed */
-`;
+`
 
 const IconContainer = styled.div`
   display: flex;
@@ -55,23 +54,23 @@ const IconContainer = styled.div`
       border: none; /* Remove the border on hover */
     }
   }
-`;
+`
 
 const ArrowContainer = styled.div`
   margin-left: auto; /* Move to the right end */
-  transform: scale(3.0); /* Adjust the scale as needed */
+  transform: scale(3); /* Adjust the scale as needed */
   margin-top: 6px;
-`;
+`
 
 const SubMenuContainer = styled.div<{ show?: boolean }>`
   position: absolute;
   top: 0;
   left: 100%; /* Position to the right of the menu item */
-  display: ${(props) => (props.show ? "block" : "none")};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   background-color: #adaac9;
   color: black;
   /* Additional styling for the submenu */
-`;
+`
 
 // Export the functional component
 export const StartMenuListItem = ({
@@ -83,27 +82,26 @@ export const StartMenuListItem = ({
   menu,
   subMenu,
 }: IStartMenuListItemProps) => {
-  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenu, setShowSubMenu] = useState(false)
 
   return (
     <>
-      
       <StartMenuListItemContainer
         onMouseEnter={() => {
           if (haveSub) {
-            setShowSubMenu(true);
-            onShowSide(true);
+            setShowSubMenu(true)
+            onShowSide(true)
           }
         }}
         onMouseLeave={() => {
           if (haveSub) {
-            setShowSubMenu(false);
-            onShowSide(false);
+            setShowSubMenu(false)
+            onShowSide(false)
           }
         }}
         onClick={() => {
           if (!haveSub) {
-            onSelected(menu);
+            onSelected(menu)
           }
         }}
       >
@@ -113,11 +111,9 @@ export const StartMenuListItem = ({
         <MenuItemText>
           <span dangerouslySetInnerHTML={{ __html: name }}></span>
         </MenuItemText>
-        <ArrowContainer>
-          {haveSub && <MdArrowRight className="text-black" />}
-        </ArrowContainer>
+        <ArrowContainer>{haveSub && <MdArrowRight className="text-black" />}</ArrowContainer>
         <SubMenuContainer show={showSubMenu}>{subMenu}</SubMenuContainer>
       </StartMenuListItemContainer>
     </>
-  );
-};
+  )
+}
