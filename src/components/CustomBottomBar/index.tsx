@@ -47,7 +47,7 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
       id: '3',
       menu: 'cp',
       icon: Setting,
-      name: '<u>S</u>ettings',
+      name: '<u>A</u>pplications',
       haveSub: true,
       subMenu: settingsSubMenu,
     },
