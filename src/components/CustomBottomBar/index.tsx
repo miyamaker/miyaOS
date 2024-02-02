@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 import Paper from '../TaskBar/MenuComponents/book.png'
-// Import your icons/images here
 import Tree from '../TaskBar/MenuComponents/discord.png'
 import Setting from '../TaskBar/MenuComponents/settings.png'
 import Shutdown from '../TaskBar/MenuComponents/shutdown.png'
@@ -14,14 +13,12 @@ interface CustomBottomBarProps {
 }
 
 const ParentContainer = styled.div`
-  /* Add any additional styling for the parent container */
-  margin-top: 137px; /* Adjust the margin-top value as needed */
+  margin-top: 137px;
 `
 
 const BottomBarMenuStyled = styled.div`
-  /* Customize the styling for the menu items */
   background-color: #adaac9;
-  width: 20%; /* Adjust as needed */
+  width: 20%;
   border-bottom: 2px solid #555;
   border-right: 3px solid #090808;
 `
@@ -31,7 +28,6 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
 
   const settingsSubMenu = (
     <div>
-      {/* Additional menu items for the "Settings" sub-menu */}
       <StartMenuListItem
         haveSub={false}
         onSelected={(selected) => setSelected(selected)}
@@ -45,16 +41,17 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
   )
 
   const menuItems = [
-    { menu: 'farm', icon: Tree, name: '<u>D</u>iscord' },
-    { menu: 'paper', icon: Paper, name: '<u>D</u>ocs' },
+    { id: '1', menu: 'farm', icon: Tree, name: '<u>D</u>iscord' },
+    { id: '2', menu: 'paper', icon: Paper, name: '<u>D</u>ocs' },
     {
+      id: '3',
       menu: 'cp',
       icon: Setting,
       name: '<u>S</u>ettings',
       haveSub: true,
       subMenu: settingsSubMenu,
     },
-    { menu: 'shutdown', icon: Shutdown, name: '<u>C</u>onnect Wallet' },
+    { id: '4', menu: 'shutdown', icon: Shutdown, name: '<u>C</u>onnect Wallet' },
   ]
 
   if (!bottomBarVisible) {
@@ -64,8 +61,9 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
   return (
     <ParentContainer>
       <BottomBarMenuStyled>
-        {menuItems.map((item, index) => (
+        {menuItems.map((item) => (
           <StartMenuListItem
+            key={item.id}
             haveSub={item.haveSub}
             onSelected={(selected) => setSelected(selected)}
             onShowSide={(showSide) => setShowSide(showSide)}

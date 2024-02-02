@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
+import CustomBottomBar from '@/components/CustomBottomBar'
 import DynamicWrapper from '@/components/DynamicWrapper'
 import OsLoader from '@/components/OsLoader'
 import TaskBar from '@/components/TaskBar'
@@ -111,6 +112,10 @@ export default function OperatingSystem() {
     )
   }
 
+  const handleToggleBottomBar = debounce(() => {
+    setBottomBarVisible((prevVisible) => !prevVisible)
+  }, 300) // Adjust the debounce time as needed
+
   useEffect(() => {
     const page = Object.values(Pages).find((p) => p.path === location.pathname)
     if (!page || !width) return
@@ -133,10 +138,6 @@ export default function OperatingSystem() {
 
     dispatch(minimizeWindow({ value: id }))
   }
-
-  const handleToggleBottomBar = debounce(() => {
-    setBottomBarVisible((prevVisible) => !prevVisible)
-  }, 300) // Adjust the debounce time as needed
 
   const MemoizedWindows = useMemo(() => {
     return windows.map((window) => {
@@ -221,6 +222,12 @@ export default function OperatingSystem() {
               </div>
             </div>
           </div>
+          {bottomBarVisible && (
+            <CustomBottomBar
+              bottomBarVisible={bottomBarVisible}
+              setSelected={(selectedItem) => console.log(`Selected: ${selectedItem}`)}
+            />
+          )}
         </Icons>
       </Foreground>
       <TaskBar
