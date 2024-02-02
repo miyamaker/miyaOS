@@ -6,6 +6,7 @@ import Tree from '../TaskBar/MenuComponents/discord.png'
 import Setting from '../TaskBar/MenuComponents/settings.png'
 import Shutdown from '../TaskBar/MenuComponents/shutdown.png'
 import { StartMenuListItem } from '../TaskBar/MenuComponents/startMenuListItem'
+import StartButton from '../TaskBar/StartButton'
 
 interface CustomBottomBarProps {
   setSelected: (selected: string) => void
@@ -13,7 +14,7 @@ interface CustomBottomBarProps {
 }
 
 const ParentContainer = styled.div`
-  margin-top: 285px;
+  margin-top: 255px;
 `
 
 const BottomBarMenuStyled = styled.div`
@@ -25,12 +26,16 @@ const BottomBarMenuStyled = styled.div`
 
 const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBarVisible }) => {
   const [showSide, setShowSide] = useState(false)
+  const [showConnectWalletModal, setShowConnectWalletModal] = useState(false)
 
   const settingsSubMenu = (
     <div>
       <StartMenuListItem
         haveSub={false}
-        onSelected={(selected) => setSelected(selected)}
+        onSelected={(selected) => {
+          setSelected(selected)
+          setShowConnectWalletModal(selected === 'C') // Show Connect Wallet modal when 'Connect Wallet' is selected
+        }}
         onShowSide={(showSide) => setShowSide(showSide)}
         icon={Setting}
         name="<u>C</u>ollections"
@@ -51,7 +56,9 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
       haveSub: true,
       subMenu: settingsSubMenu,
     },
+
     { id: '4', menu: 'shutdown', icon: Shutdown, name: '<u>C</u>onnect Wallet' },
+    { id: '5', menu: 'startButton', component: <StartButton />, name: '<u>S</u>tart' },
   ]
 
   if (!bottomBarVisible) {
@@ -62,18 +69,34 @@ const CustomBottomBar: React.FC<CustomBottomBarProps> = ({ setSelected, bottomBa
     <ParentContainer>
       <BottomBarMenuStyled>
         {menuItems.map((item) => (
-          <StartMenuListItem
-            key={item.id}
-            haveSub={item.haveSub}
-            onSelected={(selected) => setSelected(selected)}
-            onShowSide={(showSide) => setShowSide(showSide)}
-            icon={item.icon}
-            name={item.name}
-            menu={item.menu}
-            subMenu={item.subMenu}
-          />
+          <React.Fragment key={item.id}>
+            {item.component ? (
+              item.component
+            ) : (
+              <StartMenuListItem
+                haveSub={item.haveSub}
+                onSelected={(selected) => {
+                  setSelected(selected)
+                  setShowConnectWalletModal(selected === 'C')
+                }}
+                onShowSide={(showSide) => setShowSide(showSide)}
+                icon={item.icon}
+                name={item.name}
+                menu={item.menu}
+                subMenu={item.subMenu}
+              />
+            )}
+          </React.Fragment>
         ))}
       </BottomBarMenuStyled>
+
+      {/* Connect Wallet modal content */}
+      {showConnectWalletModal && (
+        <div>
+          {/* Add your Connect Wallet modal content here */}
+          Connect Wallet Modal
+        </div>
+      )}
     </ParentContainer>
   )
 }

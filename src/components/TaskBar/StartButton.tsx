@@ -3,7 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { HighlightButton } from '../Button'
 
 export default function StartButton() {
-  // const { disconnect } = useDisconnect()
+  // const { disconnect } = useDisconnect();
 
   return (
     <>
@@ -11,6 +11,7 @@ export default function StartButton() {
         {({ account, chain, openChainModal, openConnectModal, mounted }) => {
           const ready = mounted
           const connected = ready && account && chain
+
           return (
             <div
               {...(!ready
@@ -26,13 +27,16 @@ export default function StartButton() {
             >
               {connected && !chain?.unsupported && <></>}
               {(() => {
+                const buttonStyle = {
+                  height: '100%',
+                  paddingLeft: 6,
+                  paddingRight: 10,
+                  width: '100%', // Set the width to 100% for a wider button
+                }
+
                 if (!connected) {
                   return (
-                    <HighlightButton
-                      onClick={openConnectModal}
-                      className="free-height free-width"
-                      style={{ height: '100%', paddingLeft: 6, paddingRight: 10 }}
-                    >
+                    <HighlightButton onClick={openConnectModal} className="free-height free-width" style={buttonStyle}>
                       <span style={{ marginTop: -1 }}>🖤 Start</span>
                     </HighlightButton>
                   )
@@ -40,11 +44,7 @@ export default function StartButton() {
 
                 if (chain.unsupported) {
                   return (
-                    <HighlightButton
-                      onClick={openChainModal}
-                      className="free-height free-width"
-                      style={{ height: '100%', paddingLeft: 10, paddingRight: 10 }}
-                    >
+                    <HighlightButton onClick={openChainModal} className="free-height free-width" style={buttonStyle}>
                       <span style={{ marginTop: -1 }}>Wrong network</span>
                     </HighlightButton>
                   )
@@ -52,10 +52,7 @@ export default function StartButton() {
 
                 return (
                   <div style={{ height: '100%' }}>
-                    <HighlightButton
-                      className="free-height free-width"
-                      style={{ height: '100%', paddingLeft: 6, paddingRight: 10 }}
-                    >
+                    <HighlightButton className="free-height free-width" style={buttonStyle}>
                       <span style={{ marginTop: -1 }}>🖤 Start</span>
                     </HighlightButton>
                   </div>
