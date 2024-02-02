@@ -13,7 +13,7 @@ interface CustomBottomBarProps {
 }
 
 const ParentContainer = styled.div`
-  margin-top: 137px;
+  margin-top: 285px;
 `
 
 const BottomBarMenuStyled = styled.div`
