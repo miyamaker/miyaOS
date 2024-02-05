@@ -6,12 +6,12 @@ interface ContractAddresses {
 }
 
 export const AUCTION_CONTRACT: ContractAddresses = {
-  [mainnet.id]: '0xc5def3e07c426dd40248e694e5f428b04c52a129',
+  [mainnet.id]: '0x5892Cad52d9e6bDd757947B56E2760E0DcE21CE9',
   [sepolia.id]: '0xc5def3e07c426dd40248e694e5f428b04c52a129',
 }
 
 export const DEFAULT_NFT_CONTRACT: ContractAddresses = {
-  [mainnet.id]: '0x2e28b5cc90d8a9e4d661417568eb83bdd2df26c3',
+  [mainnet.id]: '0xaE6f241885d5eeD67ca97728d4e423Aaf9D81C59',
   [sepolia.id]: '0x2e28b5cc90d8a9e4d661417568eb83bdd2df26c3',
 }
 
