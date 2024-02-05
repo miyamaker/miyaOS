@@ -264,6 +264,15 @@ export default function ProductDetail({
           <Detail>{currentAuctionToken.description || description}</Detail>
         </DetailWrapper>
         <DetailWrapper>
+          <Fields>Dimensions:</Fields>
+          <Detail>
+            {getTokenAttribute(
+              currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
+              'Dimensions'
+            )}
+          </Detail>
+        </DetailWrapper>
+        <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
             {formatUnits(currentBid, 0)}{' '}
