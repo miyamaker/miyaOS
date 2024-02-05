@@ -1,8 +1,8 @@
+import { useFetch } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { useContractReads } from 'wagmi'
-import { useFetch } from 'usehooks-ts'
 
-import type { ContractMetadata } from '@/store/auction/reducer'
+import type { ContractMetadata } from '@/store/collections/reducer'
 
 export function useNFT({ address }: { address: Address }) {
   const { data } = useContractReads({
@@ -43,8 +43,8 @@ export function useNFT({ address }: { address: Address }) {
     ],
   })
 
-  let contractUri = data?.[0]?.result as string | ''
-  const symbol = data?.[1]?.result as string | ''
+  let contractUri = (data?.[0]?.result as string) || ''
+  const symbol = (data?.[1]?.result as string) || ''
 
   if (contractUri.includes('ipfs://')) {
     const uri = contractUri.replace('ipfs://', '')

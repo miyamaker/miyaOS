@@ -1,5 +1,5 @@
 import WarningIcon from 'assets/icon/warning.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
@@ -17,6 +17,7 @@ import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
 import { AUCTION_PAGE_SECTION } from '@/pages/Auction/constants'
 import { useNFTsList } from '@/pages/Auction/useNFTsList'
+import { setNFTsList } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
@@ -128,6 +129,10 @@ export default function AuctionPage() {
         return <></>
     }
   }
+
+  useEffect(() => {
+    dispatch(setNFTsList({ nfts: nftsList as Address[] }))
+  }, [dispatch, nftsList])
 
   return (
     <WindowWrapper>

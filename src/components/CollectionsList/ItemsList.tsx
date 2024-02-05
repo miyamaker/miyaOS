@@ -3,7 +3,7 @@ import type { Address } from 'viem'
 
 import { AUCTION_PAGE_SECTION } from '@/pages/Auction/constants'
 import { useNFT } from '@/pages/Auction/useNFT'
-import { setCurrentNFT } from '@/store/auction/actions'
+import { setCurrentNFT } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
 
 const Items = styled.div`

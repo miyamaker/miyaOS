@@ -12,7 +12,9 @@ import AuctionButton from '@/components/AuctionButton'
 import ImagesList from '@/components/ProductDetail/ImagesList'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { usePlaceBid } from '@/pages/Auction/usePlaceBid'
+import { useToken } from '@/pages/Auction/useToken'
 import { useAppSelector } from '@/store/hooks'
+import { getTokenAttribute } from '@/utils/getTokenAttribute'
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -125,6 +127,14 @@ const Timer = styled.div`
   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 `
 
+const SettleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  margin-top: 1rem;
+`
+
 export default function ProductDetail({
   setErrorMessage,
   setErrorName,
@@ -141,10 +151,12 @@ export default function ProductDetail({
   // Account
   const { isConnected } = useAccount()
 
-  const product = useAppSelector((state) => state.auction.currentProduct)
-  const nft = useAppSelector((state) => state.auction.currentNFT)
-  const tokenId = useAppSelector((state) => state.auction.currentTokenId)
-  const nftContract = useAppSelector((state) => state.auction.currentNFTContract)
+  const nft = useAppSelector((state) => state.collections.currentNFT)
+  const currentAuctionToken = useAppSelector((state) => state.collections.currentToken)
+  const tokenId = useAppSelector((state) => state.collections.currentTokenId)
+  const nftContract = useAppSelector((state) => state.collections.currentNFTContract)
+  const tokenIds = useAppSelector((state) => state.auction.currentTokenIds)
+  const tokenURIs = useAppSelector((state) => state.auction.currentTokenURIs)
 
   const [transacting, setTransacting] = useState(false)
   const [txHash, setTxHash] = useState('')
@@ -153,11 +165,12 @@ export default function ProductDetail({
   // Get contract data
   const { currentBid, endTime, refetch } = useAuctionData({
     nft: nftContract,
-    tokenId,
+    tokenId: tokenId || tokenIds[0] || 1,
     address: auctionContract,
     chainId: chain?.id,
   })
   const { placeBid } = usePlaceBid({ address: auctionContract, bidAmount })
+  const { name, description, image, attributes } = useToken({ tokenURI: tokenURIs[0] || '', isFetch: !!tokenId })
 
   useWaitForTransaction({
     hash: (txHash as Address) || '0x',
@@ -221,58 +234,83 @@ export default function ProductDetail({
 
   useEffect(() => {
     refetch()
-  }, [product, refetch])
+  }, [currentAuctionToken, refetch])
 
   return (
     <>
       <ImagesListWrapper>
-        <ImagesList images={product.images} />
+        <ImagesList images={[currentAuctionToken.image || image]} />
       </ImagesListWrapper>
       <ImageDetailWrapper>
         <DetailWrapper>
           <Fields>Collection:</Fields>
           <Detail style={{ fontWeight: 'bolder' }}>{nft.name}</Detail>
         </DetailWrapper>
-        <DetailWrapper>
-          <Fields>Product:</Fields>
-          <Detail style={{ fontWeight: 'bolder' }}>{product.product}</Detail>
-        </DetailWrapper>
+        {/* <DetailWrapper> */}
+        {/*  <Fields>Product:</Fields> */}
+        {/*  <Detail style={{ fontWeight: 'bolder' }}> */}
+        {/*    {getTokenAttribute( */}
+        {/*      currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes, */}
+        {/*      'Group' */}
+        {/*    )} */}
+        {/*  </Detail> */}
+        {/* </DetailWrapper> */}
         <DetailWrapper>
           <Fields>Name:</Fields>
-          <Detail style={{ fontWeight: 'bolder' }}>{product.name}</Detail>
+          <Detail style={{ fontWeight: 'bolder' }}>{currentAuctionToken.name || name}</Detail>
         </DetailWrapper>
         <DetailWrapper>
           <Fields>Description:</Fields>
-          <Detail>{product.description}</Detail>
+          <Detail>{currentAuctionToken.description || description}</Detail>
         </DetailWrapper>
         <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
-            {formatUnits(currentBid, 0)} {product.currency}
+            {formatUnits(currentBid, 0)}{' '}
+            {getTokenAttribute(
+              currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
+              'Currency'
+            )}
           </Detail>
         </DetailWrapper>
         <DetailWrapper>
           <Fields>Artist:</Fields>
-          <Detail style={{ textTransform: 'uppercase', fontWeight: 'bolder' }}>{product.artist}</Detail>
+          <Detail style={{ textTransform: 'uppercase', fontWeight: 'bolder' }}>
+            {getTokenAttribute(
+              currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
+              'Artist'
+            )}
+          </Detail>
         </DetailWrapper>
-        <div style={{ width: '100%', fontSize: '0.75rem', textAlign: 'end', paddingRight: '1rem' }}>Time left:</div>
-        <BidWrapper>
-          <InputWrapper>
-            <TextInput
-              onChange={(event) => handleCheckBidAmount(event.target.value)}
-              style={{ width: '70%' }}
-              placeholder="Type price..."
-            />
-            <Text style={{ width: '30%' }}>{product.currency}</Text>
-          </InputWrapper>
-          <ActionWrapper>
-            <AuctionButton handleBid={handleBid} isConnected={isConnected} transacting={transacting} />
-            <Countdown date={endTime * 1000} renderer={renderTimer} />
-          </ActionWrapper>
-        </BidWrapper>
-        <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
-          Total offer amount: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
-        </div>
+        {endTime * 1000 > new Date().getTime() ? (
+          <>
+            <div style={{ width: '100%', fontSize: '0.75rem', textAlign: 'end', paddingRight: '1rem' }}>Time left:</div>
+            <BidWrapper>
+              <InputWrapper>
+                <TextInput
+                  onChange={(event) => handleCheckBidAmount(event.target.value)}
+                  style={{ width: '70%' }}
+                  placeholder="Type price..."
+                />
+                <Text style={{ width: '30%' }}>
+                  {getTokenAttribute(
+                    currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
+                    'Currency'
+                  )}
+                </Text>
+              </InputWrapper>
+              <ActionWrapper>
+                <AuctionButton handleBid={handleBid} isConnected={isConnected} transacting={transacting} />
+                <Countdown date={endTime * 1000} renderer={renderTimer} />
+              </ActionWrapper>
+            </BidWrapper>
+            <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
+              Total offer amount: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
+            </div>
+          </>
+        ) : (
+          <SettleWrapper>This auction have been end.</SettleWrapper>
+        )}
       </ImageDetailWrapper>
     </>
   )

@@ -3,7 +3,7 @@ import { useContractReads } from 'wagmi'
 
 import type { Auction } from '@/store/auction/reducer'
 
-import { ADDRESS0 } from './constants'
+import { abi, ADDRESS0 } from './constants'
 
 export function useAuctionData({
   nft,
@@ -108,12 +108,12 @@ export function useAuctionData({
   const bidIncrement = data?.[1]?.result as bigint
 
   return {
-    bidder: auction.bidder || ADDRESS0,
-    currentBid: (auction.amount || 0n) as bigint,
-    minPrice: (auction.minPrice || 0n) as bigint,
-    startTime: (auction.startTime || 0) as number,
-    endTime: (auction.endTime || 0) as number,
-    settled: (auction.settled || false) as boolean,
+    bidder: auction?.bidder || ADDRESS0,
+    currentBid: (auction?.amount || 0n) as bigint,
+    minPrice: (auction?.minPrice || 0n) as bigint,
+    startTime: (auction?.startTime || 0) as number,
+    endTime: (auction?.endTime || 0) as number,
+    settled: (auction?.settled || false) as boolean,
     bidIncrement: bidIncrement || 0n,
     refetch,
   }
