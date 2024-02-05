@@ -1,11 +1,12 @@
 import type { Address } from 'viem'
 import { useContractReads } from 'wagmi'
+import { useFetch } from 'usehooks-ts'
 
 import type { ContractMetadata } from '@/store/auction/reducer'
 
-export function useNFT({ address, chainId }: { address: Address; chainId?: number }) {
+export function useNFT({ address }: { address: Address }) {
   const { data } = useContractReads({
-    enabled: !!address && !!chainId,
+    enabled: !!address,
     contracts: [
       {
         address,
@@ -39,34 +40,36 @@ export function useNFT({ address, chainId }: { address: Address; chainId?: numbe
           },
         ],
       },
-      {
-        address,
-        functionName: 'totalSupply',
-        abi: [
-          {
-            inputs: [],
-            name: 'totalSupply',
-            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-            stateMutability: 'view',
-            type: 'function',
-          },
-        ],
-      },
     ],
   })
 
-  const contractUri = data?.[0]?.result as string | ''
+  let contractUri = data?.[0]?.result as string | ''
   const symbol = data?.[1]?.result as string | ''
-  const supply = data?.[2]?.result as bigint | 0n
 
-  if (contractUri) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { name, description, image, external_link, collaborators } = JSON.parse(
-      (contractUri as string).split('data:application/json;utf8,')[1] as string
-    ) as ContractMetadata
-
-    return { name, symbol, description, image, externalLink: external_link, collaborators, supply }
+  if (contractUri.includes('ipfs://')) {
+    const uri = contractUri.replace('ipfs://', '')
+    const cid = uri.split('/')[0]
+    const contractFile = uri.split('/')[1]
+    contractUri = `https://${cid}.ipfs.nftstorage.link/${contractFile}`
   }
 
-  return { name: '', symbol: '', description: '', image: '', externalLink: '', collaborators: [], supply: 0n }
+  const { data: contractMetadata, error } = useFetch<ContractMetadata>(contractUri)
+
+  if (error) {
+    return { name: '', symbol: '', description: '', image: '', externalLink: '', collaborators: [] }
+  }
+
+  let imageUri = (contractMetadata?.image || '').replace('ipfs://', '')
+  const cid = imageUri.split('/')[0]
+  const imageFile = imageUri.split('/')[1]
+  imageUri = `https://${cid}.ipfs.nftstorage.link/${imageFile}`
+
+  return {
+    name: contractMetadata?.name || '',
+    symbol,
+    description: contractMetadata?.description || '',
+    image: imageUri,
+    externalLink: contractMetadata?.external_link || '',
+    collaborators: contractMetadata?.collaborators || [],
+  }
 }

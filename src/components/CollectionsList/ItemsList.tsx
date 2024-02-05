@@ -1,4 +1,3 @@
-import numeral from 'numeral'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
@@ -21,10 +20,24 @@ const Items = styled.div`
 `
 const Item = styled.div`
   display: flex;
+  padding: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1rem;
+`
+const LinkItem = styled.a`
+  display: flex;
   align-items: center;
   padding: 0.5rem;
-  line-height: 1.25rem;
-  overflow-x: scroll;
+  text-decoration: none;
+`
+
+const ImageItem = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-weight: bolder;
 
   > img {
     width: 3rem;
@@ -39,17 +52,11 @@ const Item = styled.div`
     margin-left: 1rem;
   }
 `
-const LinkItem = styled.a`
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  text-decoration: none;
-`
 
 export default function ItemsList({ nft, setPageSection }: { nft: string; setPageSection: (section: string) => void }) {
   const dispatch = useAppDispatch()
 
-  const { name, symbol, description, image, externalLink, collaborators, supply } = useNFT({ address: nft as Address })
+  const { name, symbol, description, image, externalLink, collaborators } = useNFT({ address: nft as Address })
 
   const handleClick = () => {
     setPageSection(AUCTION_PAGE_SECTION.PRODUCT_SECTION)
@@ -63,17 +70,16 @@ export default function ItemsList({ nft, setPageSection }: { nft: string; setPag
 
   return (
     <Items onClick={handleClick}>
-      <Item style={{ width: '30%' }}>
+      <ImageItem style={{ width: '35%' }}>
         <img src={image} alt={name} />
         <div>
           {name} ({symbol})
         </div>
-      </Item>
-      <Item style={{ width: '30%' }}>{description}</Item>
+      </ImageItem>
+      <Item style={{ width: '40%' }}>{description}</Item>
       <LinkItem style={{ width: '25%' }} href={externalLink} target="_blank" rel="noreferrer noopener">
         {externalLink.replace('https://', '')}
       </LinkItem>
-      <Item style={{ width: '15%' }}>{numeral(supply).format('0,0[.]00')}</Item>
     </Items>
   )
 }

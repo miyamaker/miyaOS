@@ -38,10 +38,10 @@ const ItemsListWrapper = styled.div`
 `
 
 const Headers = [
-  { title: 'Name', width: '30%' },
+  { title: 'Name', width: '35%' },
   { title: 'Description', width: '40%' },
-  { title: 'Website', width: '30%' },
-  { title: 'Supply', width: '15%' },
+  { title: 'Website', width: '25%' },
+  // { title: 'Supply', width: '15%' },
 ]
 
 const ITEM_PER_PAGE = 6

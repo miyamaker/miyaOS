@@ -12,7 +12,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import merge from 'lodash.merge'
 import { Provider } from 'react-redux'
-import { goerli } from 'viem/chains'
+import { goerli, sepolia } from 'viem/chains'
 import { configureChains, createConfig, mainnet, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -21,7 +21,7 @@ import Router from './Router'
 import store from './store'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 
-const { chains, publicClient } = configureChains([mainnet, goerli], [publicProvider()], {
+const { chains, publicClient } = configureChains([mainnet, goerli, sepolia], [publicProvider()], {
   pollingInterval: 10_000,
   stallTimeout: 5000,
 })

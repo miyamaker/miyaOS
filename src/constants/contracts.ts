@@ -1,18 +1,18 @@
 import type { Address } from 'viem'
-import { goerli, mainnet } from 'viem/chains'
+import { goerli, mainnet, sepolia } from 'viem/chains'
 
 interface ContractAddresses {
   [key: number]: Address | ''
 }
 
 export const AUCTION_CONTRACT: ContractAddresses = {
-  [mainnet.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
-  [goerli.id]: '0xDE5863E25Eb9f014324d8bD97B4a632BcA946F32',
+  [mainnet.id]: '0xc5def3e07c426dd40248e694e5f428b04c52a129',
+  [sepolia.id]: '0xc5def3e07c426dd40248e694e5f428b04c52a129',
 }
 
 export const DEFAULT_NFT_CONTRACT: ContractAddresses = {
-  [mainnet.id]: '0x4CF30e8b0A9496353F9Dbd8baB34480Bf38DA970',
-  [goerli.id]: '0xDE5863E25Eb9f014324d8bD97B4a632BcA946F32',
+  [mainnet.id]: '0x2e28b5cc90d8a9e4d661417568eb83bdd2df26c3',
+  [sepolia.id]: '0x2e28b5cc90d8a9e4d661417568eb83bdd2df26c3',
 }
 
 export const FACTORY_CONTRACT: ContractAddresses = {

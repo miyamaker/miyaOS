@@ -17,7 +17,7 @@ import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
 import { AUCTION_PAGE_SECTION } from '@/pages/Auction/constants'
 import { useNFTsList } from '@/pages/Auction/useNFTsList'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
 
