@@ -275,7 +275,7 @@ export default function ProductDetail({
         <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
-            {formatUnits(currentBid, 0)}{' '}
+            {formatUnits(currentBid, 18)}{' '}
             {getTokenAttribute(
               currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
               'Currency'
