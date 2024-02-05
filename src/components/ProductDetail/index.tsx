@@ -314,7 +314,7 @@ export default function ProductDetail({
               </ActionWrapper>
             </BidWrapper>
             <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
-              Total offer amount: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
+              Wallet Balance: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
             </div>
           </>
         ) : (
