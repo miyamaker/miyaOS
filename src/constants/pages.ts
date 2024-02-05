@@ -1,8 +1,9 @@
-import MiyaLogo from 'assets/134321870.png?preset=icon&resize=true'
+import AuctionIcon from 'assets/auction_icon.png?preset=icon&resize=true'
 import ExecutableIcon from 'assets/create_new.png?preset=icon&resize=true'
 import GearIcon from 'assets/executable_gear.png?preset=icon&resize=true'
 import ManageIcon from 'assets/miya_website_logo_2-removebg-preview.png?preset=icon&resize=true'
 import MintIcon from 'assets/miyamints1.png?preset=icon&resize=true'
+import MiyaLogo from 'assets/134321870.png?preset=icon&resize=true'
 
 export type Page = {
   id: string
@@ -64,6 +65,16 @@ const Pages: Record<string, Page> = {
     minSize: {
       width: 600,
       height: 475,
+    },
+  },
+  auction: {
+    id: 'auction',
+    path: '/auction',
+    label: 'MiyaAuction',
+    icon: AuctionIcon[0],
+    minSize: {
+      width: 800,
+      height: 720,
     },
   },
 }

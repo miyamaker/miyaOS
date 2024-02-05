@@ -150,7 +150,11 @@ export const ThemedText = {
 }
 
 export const ThemedGlobalStyle = createGlobalStyle`
-
+  
+@font-face {
+  font-family: 'W95FA';
+  src: url("/fonts/w95fa/w95fa.woff");
+}
 
 * {
   box-sizing: border-box;

@@ -4,13 +4,17 @@ import { load, save } from 'redux-localstorage-simple'
 
 import experience from './experience/reducer'
 import windows from './windows/reducer'
+import auction from './auction/reducer'
+import collections from './collections/reducer'
 
-const PERSISTED_KEYS: string[] = ['experience', 'windows']
+const PERSISTED_KEYS: string[] = ['experience', 'windows', 'auction', 'collections']
 
 const store = configureStore({
   reducer: {
     experience,
     windows,
+    auction,
+    collections,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: true }).concat(save({ states: PERSISTED_KEYS, debounce: 1000 })),
