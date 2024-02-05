@@ -309,7 +309,7 @@ export default function ProductDetail({
             </div>
           </>
         ) : (
-          <SettleWrapper>This auction have been end.</SettleWrapper>
+          <SettleWrapper>This auction has yet to start.</SettleWrapper>
         )}
       </ImageDetailWrapper>
     </>
