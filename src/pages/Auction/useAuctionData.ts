@@ -3,7 +3,7 @@ import { useContractReads } from 'wagmi'
 
 import type { Auction } from '@/store/auction/reducer'
 
-import { abi, ADDRESS0 } from './constants'
+import { ADDRESS0 } from './constants'
 
 export function useAuctionData({
   nft,

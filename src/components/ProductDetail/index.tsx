@@ -6,7 +6,7 @@ import styled from 'styled-components/macro'
 import type { Address, ChainFormatters } from 'viem'
 import { formatUnits } from 'viem'
 import type { ChainConfig, ChainConstants } from 'viem/_types/types/chain'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useEnsName, useWaitForTransaction } from 'wagmi'
 
 import AuctionButton from '@/components/AuctionButton'
 import ImagesList from '@/components/ProductDetail/ImagesList'
@@ -163,7 +163,7 @@ export default function ProductDetail({
   const [bidAmount, setBidAmount] = useState('0.0')
 
   // Get contract data
-  const { currentBid, endTime, refetch } = useAuctionData({
+  const { currentBid, endTime, bidder, refetch } = useAuctionData({
     nft: nftContract,
     tokenId: tokenId || tokenIds[0] || 1,
     address: auctionContract,
@@ -171,6 +171,10 @@ export default function ProductDetail({
   })
   const { placeBid } = usePlaceBid({ address: auctionContract, bidAmount })
   const { name, description, image, attributes } = useToken({ tokenURI: tokenURIs[0] || '', isFetch: !!tokenId })
+
+  const highestBidderENS = useEnsName({
+    address: bidder as Address,
+  })
 
   useWaitForTransaction({
     hash: (txHash as Address) || '0x',
@@ -261,7 +265,21 @@ export default function ProductDetail({
         </DetailWrapper>
         <DetailWrapper>
           <Fields>Description:</Fields>
-          <Detail>{currentAuctionToken.description || description}</Detail>
+          <Detail
+            style={{
+              height: '8vh',
+              overflowX: 'scroll',
+              justifyContent: 'start',
+              paddingTop: '0.5rem',
+              paddingBottom: '0.5rem',
+            }}
+          >
+            {currentAuctionToken.description || description}
+          </Detail>
+        </DetailWrapper>
+        <DetailWrapper>
+          <Fields>Highest bidder:</Fields>
+          <Detail style={{ fontWeight: 'bolder' }}>{highestBidderENS?.data || bidder}</Detail>
         </DetailWrapper>
         <DetailWrapper>
           <Fields>Dimensions:</Fields>
@@ -275,7 +293,7 @@ export default function ProductDetail({
         <DetailWrapper>
           <Fields>Current bid:</Fields>
           <Detail>
-            {formatUnits(currentBid, 0)}{' '}
+            {formatUnits(currentBid, 18)}{' '}
             {getTokenAttribute(
               currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
               'Currency'
