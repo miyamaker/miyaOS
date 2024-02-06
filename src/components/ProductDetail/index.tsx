@@ -3,9 +3,8 @@ import { get } from 'lodash'
 import { useEffect, useState } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
-import type { Address, ChainFormatters } from 'viem'
+import type { Address } from 'viem'
 import { formatUnits } from 'viem'
-import type { ChainConfig, ChainConstants } from 'viem/_types/types/chain'
 import { useAccount, useEnsName, useWaitForTransaction } from 'wagmi'
 
 import AuctionButton from '@/components/AuctionButton'
@@ -139,13 +138,11 @@ export default function ProductDetail({
   setErrorMessage,
   setErrorName,
   balance,
-  chain,
   auctionContract,
 }: {
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
   balance: FetchBalanceResult | undefined
-  chain: (ChainConstants & ChainConfig<ChainFormatters | undefined> & { unsupported?: boolean }) | undefined
   auctionContract: Address
 }) {
   // Account
@@ -167,7 +164,6 @@ export default function ProductDetail({
     nft: nftContract,
     tokenId: tokenId || tokenIds[0] || 1,
     address: auctionContract,
-    chainId: chain?.id,
   })
   const { placeBid } = usePlaceBid({ address: auctionContract, bidAmount })
   const { name, description, image, attributes } = useToken({ tokenURI: tokenURIs[0] || '', isFetch: !!tokenId })
