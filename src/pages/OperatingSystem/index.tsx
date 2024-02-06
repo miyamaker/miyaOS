@@ -189,6 +189,10 @@ export default function OperatingSystem() {
                 >
                   {UploaderPage?.label}
                 </DesktopIcon>
+                <DesktopIcon normalState={ManagePage?.icon?.src} onClick={() => handleOpen(ManagePage?.id as PageKey)}>
+                  {' '}
+                  {ManagePage?.label}{' '}
+                </DesktopIcon>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
@@ -209,6 +213,12 @@ export default function OperatingSystem() {
                 */}
                 <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
                   My collections
+                </DesktopIcon>
+                <DesktopIcon
+                  normalState={AuctionPage?.icon?.src}
+                  onClick={() => handleOpen(AuctionPage?.id as PageKey)}
+                >
+                  {AuctionPage?.label}
                 </DesktopIcon>
               </div>
             </div>
