@@ -92,7 +92,6 @@ export default function AuctionPage() {
   // Get contract data
   const { nftsList } = useNFTsList({
     address: auctionContract as Address,
-    chainId: chain?.id,
   })
 
   const handleCloseErrorPopup = () => {
@@ -116,12 +115,11 @@ export default function AuctionPage() {
                 balance={balance}
                 setErrorMessage={setErrorMessage}
                 setErrorName={setErrorName}
-                chain={chain}
                 auctionContract={auctionContract as Address}
               />
             </ExplorerWrapper>
             <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
-              <ProductsList auctionContract={auctionContract as Address} chain={chain} />
+              <ProductsList auctionContract={auctionContract as Address} />
             </ExplorerWrapper>
           </>
         )

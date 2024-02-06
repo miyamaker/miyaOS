@@ -3,21 +3,11 @@ import { useContractReads } from 'wagmi'
 
 import type { Auction } from '@/store/auction/reducer'
 
-import { abi, ADDRESS0 } from './constants'
+import { ADDRESS0 } from './constants'
 
-export function useAuctionData({
-  nft,
-  tokenId,
-  address,
-  chainId,
-}: {
-  nft: Address
-  tokenId: number
-  address: Address
-  chainId?: number
-}) {
+export function useAuctionData({ nft, tokenId, address }: { nft: Address; tokenId: number; address: Address }) {
   const { data, refetch } = useContractReads({
-    enabled: !!address && !!chainId,
+    enabled: !!address,
     contracts: [
       {
         address,

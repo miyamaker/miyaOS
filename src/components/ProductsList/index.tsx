@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components/macro'
-import type { Address, ChainFormatters } from 'viem'
-import type { ChainConfig, ChainConstants } from 'viem/_types/types/chain'
+import type { Address } from 'viem'
 
 import AuctionProduct from '@/components/ProductsList/AuctionProduct'
 import { useTokenIds } from '@/pages/Auction/useTokenIds'
 import { setCurrentTokenIdsList } from '@/store/auction/actions'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { useToken } from '@/pages/Auction/useToken'
 
 const ProductsListWrapper = styled.div`
   width: 100%;
@@ -22,13 +20,7 @@ const ProductsListWrapper = styled.div`
   }
 `
 
-export default function ProductsList({
-  auctionContract,
-  chain,
-}: {
-  auctionContract: Address
-  chain: (ChainConstants & ChainConfig<ChainFormatters | undefined> & { unsupported?: boolean }) | undefined
-}) {
+export default function ProductsList({ auctionContract }: { auctionContract: Address }) {
   const dispatch = useAppDispatch()
 
   const nftContract = useAppSelector((state) => state.collections.currentNFTContract)
@@ -36,7 +28,6 @@ export default function ProductsList({
   const { tokenIds, tokenURIs } = useTokenIds({
     nft: nftContract,
     address: auctionContract,
-    chainId: chain?.id,
   })
 
   useEffect(() => {

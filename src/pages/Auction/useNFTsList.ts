@@ -4,10 +4,10 @@ import { useContractRead } from 'wagmi'
 
 import { abi } from './constants'
 
-export function useNFTsList({ address, chainId }: { address: Address; chainId?: number }) {
+export function useNFTsList({ address }: { address: Address }) {
   const { data } = useContractRead({
     address,
-    enabled: !!address && !!chainId,
+    enabled: !!address,
     functionName: 'getNfts',
     abi,
   })
