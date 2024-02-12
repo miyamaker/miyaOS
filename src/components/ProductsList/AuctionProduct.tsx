@@ -10,6 +10,10 @@ import { getTokenAttribute } from '@/utils/getTokenAttribute'
 const ProductWrapper = styled.div`
   width: 25%;
   padding: 0.5rem;
+
+  @media only screen and (max-width: 640px) {
+    width: 50%;
+  }
 `
 
 const ImageDetail = styled.div`

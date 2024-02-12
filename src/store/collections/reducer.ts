@@ -5,7 +5,7 @@ import { mainnet } from 'wagmi'
 import { DEFAULT_NFT_CONTRACT } from '@/constants/contracts'
 import { setCurrentNFT, setCurrentToken, setNFTsList } from '@/store/collections/actions'
 
-type Attribute = {
+export type Attribute = {
   trait_type: string
   value: string
 }

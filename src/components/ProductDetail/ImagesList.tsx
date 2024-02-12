@@ -5,6 +5,15 @@ import styled from 'styled-components/macro'
 
 import ImageWrapper from '@/components/ImageWrapper'
 
+const ImagesListWrapper = styled.div`
+  width: 100%;
+
+  @media only screen and (max-width: 640px) {
+    width: 40%;
+    height: 100%;
+  }
+`
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -143,10 +152,14 @@ export default function ImagesList({ images }: { images: string[] }) {
   }, [])
 
   return (
-    <>
+    <ImagesListWrapper>
       <ImageWrapper>
         <Images>
-          <img src={images[currentCounter - 1]} alt="Images" />
+          {/*<img src={images[currentCounter - 1]} alt="Images" />*/}
+          <img
+            src="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png"
+            alt="Images"
+          />
           <Counter>
             {currentCounter} of {totalImages}
           </Counter>
@@ -160,6 +173,6 @@ export default function ImagesList({ images }: { images: string[] }) {
           <Icon src={ChevronRightIcon} alt="Chevron Right Icon" />
         </Button>
       </ButtonContainer>
-    </>
+    </ImagesListWrapper>
   )
 }

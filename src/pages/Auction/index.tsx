@@ -1,6 +1,7 @@
 import WarningIcon from 'assets/icon/warning.png'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+import { useWindowSize } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
@@ -75,6 +76,7 @@ const ErrorButton = styled.div`
 
 export default function AuctionPage() {
   // Window mgmt
+  const { width } = useWindowSize()
   const dispatch = useAppDispatch()
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
@@ -110,7 +112,11 @@ export default function AuctionPage() {
       case AUCTION_PAGE_SECTION.PRODUCT_SECTION:
         return (
           <>
-            <ExplorerWrapper style={{ height: '60%' }} title={'Collections > Detail'} setPageSection={setPageSection}>
+            <ExplorerWrapper
+              style={{ height: width > 640 ? '60%' : '70%' }}
+              title={'Collections > Detail'}
+              setPageSection={setPageSection}
+            >
               <ProductDetail
                 balance={balance}
                 setErrorMessage={setErrorMessage}
@@ -118,7 +124,7 @@ export default function AuctionPage() {
                 auctionContract={auctionContract as Address}
               />
             </ExplorerWrapper>
-            <ExplorerWrapper style={{ height: '40%' }} title={'Active lots'}>
+            <ExplorerWrapper style={{ height: width > 640 ? '40%' : '30%' }} title={'Active lots'}>
               <ProductsList auctionContract={auctionContract as Address} />
             </ExplorerWrapper>
           </>
