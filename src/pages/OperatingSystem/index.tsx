@@ -27,7 +27,7 @@ import Windows from './Windows'
 const Foreground = styled.div`
   position: relative;
   z-index: 1;
-  height: calc(100vh - 32px);
+  height: calc(100svh - 32px);
   pointer-events: none;
   * {
     pointer-events: auto;
@@ -190,7 +190,8 @@ export default function OperatingSystem() {
                   {UploaderPage?.label}
                 </DesktopIcon>
                 <DesktopIcon normalState={ManagePage?.icon?.src} onClick={() => handleOpen(ManagePage?.id as PageKey)}>
-                  {ManagePage?.label}
+                  {' '}
+                  {ManagePage?.label}{' '}
                 </DesktopIcon>
               </div>
 

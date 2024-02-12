@@ -88,14 +88,6 @@ const Detail = styled.div`
   }
 `
 
-const SettleWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bolder;
-  margin-top: 1rem;
-`
-
 export default function ProductDetail({
   setErrorMessage,
   setErrorName,
@@ -234,7 +226,7 @@ export default function ProductDetail({
           </Detail>
         </DetailWrapper>
         <DetailWrapper>
-          <Fields>Current bid:</Fields>
+          <Fields>Final bid:</Fields>
           <Detail>
             {formatUnits(currentBid, 18)}{' '}
             {getTokenAttribute(

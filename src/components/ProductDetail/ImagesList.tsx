@@ -155,11 +155,7 @@ export default function ImagesList({ images }: { images: string[] }) {
     <ImagesListWrapper>
       <ImageWrapper>
         <Images>
-          {/*<img src={images[currentCounter - 1]} alt="Images" />*/}
-          <img
-            src="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png"
-            alt="Images"
-          />
+          <img src={images[currentCounter - 1]} alt="Images" />
           <Counter>
             {currentCounter} of {totalImages}
           </Counter>
