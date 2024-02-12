@@ -852,3 +852,7 @@ export const AUCTION_PAGE_SECTION = {
   COLLECTIONS_SECTION: 'Collections',
   PRODUCT_SECTION: 'Detail',
 }
+
+export const ERROR_MESSAGES = {
+  AUCTION_ENDED: 'This auction has ended.',
+}

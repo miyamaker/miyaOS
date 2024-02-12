@@ -16,7 +16,7 @@ import WindowWrapper from '@/components/WindowWrapper'
 import { AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
-import { AUCTION_PAGE_SECTION } from '@/pages/Auction/constants'
+import { AUCTION_PAGE_SECTION, ERROR_MESSAGES } from '@/pages/Auction/constants'
 import { useNFTsList } from '@/pages/Auction/useNFTsList'
 import { setNFTsList } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
@@ -99,6 +99,10 @@ export default function AuctionPage() {
   const handleCloseErrorPopup = () => {
     setErrorName('MiyaAuction Error')
     setErrorMessage('')
+
+    if (errorMessage === ERROR_MESSAGES.AUCTION_ENDED) {
+      setPageSection(AUCTION_PAGE_SECTION.COLLECTIONS_SECTION)
+    }
   }
 
   const renderSection = () => {
