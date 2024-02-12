@@ -84,7 +84,7 @@ export default function BidContainer({
   currentAuctionToken,
   attributes,
 }: {
-  handleCheckBidAmount: (string) => void
+  handleCheckBidAmount: (value: string) => void
   handleBid: () => void
   isConnected: boolean
   transacting: boolean
@@ -141,7 +141,7 @@ export default function BidContainer({
           </InputWrapper>
           <ActionWrapper>
             <AuctionButton handleBid={handleBid} isConnected={isConnected} transacting={transacting} />
-            <Countdown date={endTime * 1000} renderer={renderTimer} />
+            <Countdown date={endTime ? endTime * 1000 : 0} renderer={renderTimer} />
           </ActionWrapper>
         </BidWrapper>
         <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
@@ -169,7 +169,7 @@ export default function BidContainer({
           </Text>
         </InputWrapper>
         <ActionWrapper>
-          <Countdown date={endTime * 1000} renderer={renderTimer} />
+          <Countdown date={endTime ? endTime * 1000 : 0} renderer={renderTimer} />
         </ActionWrapper>
       </BidWrapper>
       <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
