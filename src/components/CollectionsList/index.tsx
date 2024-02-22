@@ -21,6 +21,10 @@ const HeadersWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+
+  @media only screen and (max-width: 640px) {
+    display: none;
+  }
 `
 const Header = styled.div`
   width: 25%;
@@ -35,6 +39,10 @@ const ItemsListWrapper = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 640px) {
+    overflow-y: scroll;
+  }
 `
 
 const Headers = [

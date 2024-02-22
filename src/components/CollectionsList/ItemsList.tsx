@@ -17,26 +17,43 @@ const Items = styled.div`
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
+
+  @media only screen and (max-width: 640px) {
+    flex-direction: column;
+    height: 50%;
+  }
 `
 const Item = styled.div`
+  width: 40%;
   display: flex;
   padding: 0.5rem;
   overflow-x: auto;
   font-size: 0.85rem;
   line-height: 1rem;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    text-align: justify;
+  }
 `
 const LinkItem = styled.a`
+  width: 25%;
   display: flex;
   align-items: center;
   padding: 0.5rem;
   text-decoration: none;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    justify-content: center;
+  }
 `
 
-const ImageItem = styled.a`
+const ImageItem = styled.div`
+  width: 35%;
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  text-decoration: none;
   font-weight: bolder;
 
   > img {
@@ -50,6 +67,23 @@ const ImageItem = styled.a`
   }
   > * + * {
     margin-left: 1rem;
+  }
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+
+    > img {
+      width: 90%;
+      height: 80%;
+    }
+
+    > * + * {
+      margin-top: 0.5rem;
+      margin-left: 0;
+    }
   }
 `
 
@@ -70,14 +104,14 @@ export default function ItemsList({ nft, setPageSection }: { nft: string; setPag
 
   return (
     <Items onClick={handleClick}>
-      <ImageItem style={{ width: '35%' }}>
+      <ImageItem>
         <img src={image} alt={name} />
         <div>
           {name} ({symbol})
         </div>
       </ImageItem>
-      <Item style={{ width: '40%' }}>{description}</Item>
-      <LinkItem style={{ width: '25%' }} href={externalLink} target="_blank" rel="noreferrer noopener">
+      <Item>{description}</Item>
+      <LinkItem href={externalLink} target="_blank" rel="noreferrer noopener">
         {externalLink.replace('https://', '')}
       </LinkItem>
     </Items>

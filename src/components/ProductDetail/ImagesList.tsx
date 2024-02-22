@@ -5,6 +5,15 @@ import styled from 'styled-components/macro'
 
 import ImageWrapper from '@/components/ImageWrapper'
 
+const ImagesListWrapper = styled.div`
+  width: 100%;
+
+  @media only screen and (max-width: 640px) {
+    width: 40%;
+    height: 100%;
+  }
+`
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -143,7 +152,7 @@ export default function ImagesList({ images }: { images: string[] }) {
   }, [])
 
   return (
-    <>
+    <ImagesListWrapper>
       <ImageWrapper>
         <Images>
           <img src={images[currentCounter - 1]} alt="Images" />
@@ -160,6 +169,6 @@ export default function ImagesList({ images }: { images: string[] }) {
           <Icon src={ChevronRightIcon} alt="Chevron Right Icon" />
         </Button>
       </ButtonContainer>
-    </>
+    </ImagesListWrapper>
   )
 }

@@ -1,19 +1,31 @@
 import type { FetchBalanceResult } from '@wagmi/core'
 import { get } from 'lodash'
 import { useEffect, useState } from 'react'
-import Countdown, { zeroPad } from 'react-countdown'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 import { formatUnits } from 'viem'
 import { useAccount, useEnsName, useWaitForTransaction } from 'wagmi'
 
-import AuctionButton from '@/components/AuctionButton'
+import BidContainer from '@/components/ProductDetail/BidContainer'
 import ImagesList from '@/components/ProductDetail/ImagesList'
+import { ERROR_MESSAGES } from '@/pages/Auction/constants'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { usePlaceBid } from '@/pages/Auction/usePlaceBid'
 import { useToken } from '@/pages/Auction/useToken'
 import { useAppSelector } from '@/store/hooks'
 import { getTokenAttribute } from '@/utils/getTokenAttribute'
+
+const ProductDetailWrapper = styled.div`
+  display: flex;
+
+  @media only screen and (max-width: 640px) {
+    flex-direction: column;
+
+    > * + * {
+      margin-top: 0.5rem;
+    }
+  }
+`
 
 const ImagesListWrapper = styled.div`
   height: 100%;
@@ -23,6 +35,11 @@ const ImagesListWrapper = styled.div`
   align-items: center;
   background: transparent;
   width: 33.3333%;
+
+  @media only screen and (max-width: 640px) {
+    height: 30%;
+    width: 100%;
+  }
 `
 const ImageDetailWrapper = styled.div`
   height: 100%;
@@ -30,6 +47,10 @@ const ImageDetailWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 66.6666%;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+  }
 `
 
 const DetailWrapper = styled.div`
@@ -47,6 +68,10 @@ const Fields = styled.div`
   font-size: 0.9rem;
   width: 25%;
   padding-left: 0.5rem;
+
+  @media only screen and (max-width: 640px) {
+    width: 35%;
+  }
 `
 
 const Detail = styled.div`
@@ -57,81 +82,10 @@ const Detail = styled.div`
   width: 75%;
   padding-left: 1.5rem;
   line-height: 1rem;
-`
 
-const BidWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem 0 1rem;
-`
-
-const InputWrapper = styled.div`
-  width: 50%;
-  display: flex;
-`
-
-const ActionWrapper = styled.div`
-  width: 50%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-
-  > * + * {
-    margin-left: 0.5rem;
+  @media only screen and (max-width: 640px) {
+    width: 65%;
   }
-`
-
-const TextInput = styled.input.attrs({ type: 'text' })`
-  width: 100%;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  border: none;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  line-height: 2;
-
-  &:disabled,
-  &:read-only {
-    background-color: #c0c0c0;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`
-
-const Text = styled.div`
-  width: 100%;
-  border: none;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-  background-color: #c0c0c0;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const Timer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.7rem;
-  font-size: 0.7rem;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-`
-
-const SettleWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bolder;
-  margin-top: 1rem;
 `
 
 export default function ProductDetail({
@@ -206,38 +160,23 @@ export default function ProductDetail({
     }
   }
 
-  const renderTimer = ({
-    days,
-    hours,
-    minutes,
-    seconds,
-    completed,
-  }: {
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
-    completed: boolean
-  }) => {
-    if (completed) {
-      // Render a completed state
-      return <Timer>00h:00m:00s</Timer>
-    }
-
-    // Render a countdown
-    return (
-      <Timer>
-        {zeroPad(days)}d:{zeroPad(hours)}h:{zeroPad(minutes)}m:{zeroPad(seconds)}s
-      </Timer>
-    )
-  }
-
   useEffect(() => {
     refetch()
   }, [currentAuctionToken, refetch])
 
+  useEffect(() => {
+    if (endTime * 1000 < new Date().getTime()) {
+      setErrorMessage(ERROR_MESSAGES.AUCTION_ENDED)
+      setErrorName('MiyaAuction Notice')
+    }
+  }, [endTime, setErrorMessage, setErrorName])
+
+  if (endTime * 1000 < new Date().getTime()) {
+    return <ProductDetailWrapper />
+  }
+
   return (
-    <>
+    <ProductDetailWrapper>
       <ImagesListWrapper>
         <ImagesList images={[currentAuctionToken.image || image]} />
       </ImagesListWrapper>
@@ -305,36 +244,17 @@ export default function ProductDetail({
             )}
           </Detail>
         </DetailWrapper>
-        {endTime * 1000 > new Date().getTime() ? (
-          <>
-            <div style={{ width: '100%', fontSize: '0.75rem', textAlign: 'end', paddingRight: '1rem' }}>Time left:</div>
-            <BidWrapper>
-              <InputWrapper>
-                <TextInput
-                  onChange={(event) => handleCheckBidAmount(event.target.value)}
-                  style={{ width: '70%' }}
-                  placeholder="Type price..."
-                />
-                <Text style={{ width: '30%' }}>
-                  {getTokenAttribute(
-                    currentAuctionToken.attributes.length > 0 ? currentAuctionToken.attributes : attributes,
-                    'Currency'
-                  )}
-                </Text>
-              </InputWrapper>
-              <ActionWrapper>
-                <AuctionButton handleBid={handleBid} isConnected={isConnected} transacting={transacting} />
-                <Countdown date={endTime * 1000} renderer={renderTimer} />
-              </ActionWrapper>
-            </BidWrapper>
-            <div style={{ width: '50%', fontSize: '0.75rem', textAlign: 'end' }}>
-              Wallet Balance: {balance ? Number(balance.formatted).toFixed(3) : 0.0} ETH
-            </div>
-          </>
-        ) : (
-          <SettleWrapper>This auction has ended.</SettleWrapper>
-        )}
+        <BidContainer
+          handleCheckBidAmount={handleCheckBidAmount}
+          handleBid={handleBid}
+          isConnected={isConnected}
+          transacting={transacting}
+          balance={balance}
+          currentAuctionToken={currentAuctionToken}
+          attributes={attributes}
+          endTime={endTime}
+        />
       </ImageDetailWrapper>
-    </>
+    </ProductDetailWrapper>
   )
 }
