@@ -74,6 +74,14 @@ const Timer = styled.div`
   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 `
 
+const SettleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  margin-top: 1rem;
+`
+
 export default function BidContainer({
   handleCheckBidAmount,
   handleBid,
@@ -119,6 +127,10 @@ export default function BidContainer({
         {zeroPad(days)}d:{zeroPad(hours)}h:{zeroPad(minutes)}m:{zeroPad(seconds)}s
       </Timer>
     )
+  }
+
+  if (endTime * 1000 <= new Date().getTime()) {
+    return <SettleWrapper>This auction has ended.</SettleWrapper>
   }
 
   if (width > 640) {

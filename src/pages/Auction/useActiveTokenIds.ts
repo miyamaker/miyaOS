@@ -5,7 +5,7 @@ import { useContractRead, useContractReads } from 'wagmi'
 
 import { abi } from './constants'
 
-export function useTokenIds({ nft, address }: { nft: Address; address: Address }) {
+export function useActiveTokenIds({ nft, address }: { nft: Address; address: Address }) {
   const { data } = useContractRead({
     address,
     enabled: !!address,

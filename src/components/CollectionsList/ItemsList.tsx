@@ -57,8 +57,8 @@ const ImageItem = styled.div`
   font-weight: bolder;
 
   > img {
-    width: 3rem;
-    height: 3rem;
+    width: 8rem;
+    height: 4.5rem;
     margin: 0;
     border: none;
   }

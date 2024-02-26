@@ -8,7 +8,6 @@ import { useAccount, useEnsName, useWaitForTransaction } from 'wagmi'
 
 import BidContainer from '@/components/ProductDetail/BidContainer'
 import ImagesList from '@/components/ProductDetail/ImagesList'
-import { ERROR_MESSAGES } from '@/pages/Auction/constants'
 import { useAuctionData } from '@/pages/Auction/useAuctionData'
 import { usePlaceBid } from '@/pages/Auction/usePlaceBid'
 import { useToken } from '@/pages/Auction/useToken'
@@ -164,16 +163,16 @@ export default function ProductDetail({
     refetch()
   }, [currentAuctionToken, refetch])
 
-  useEffect(() => {
-    if (endTime * 1000 < new Date().getTime()) {
-      setErrorMessage(ERROR_MESSAGES.AUCTION_ENDED)
-      setErrorName('MiyaAuction Notice')
-    }
-  }, [endTime, setErrorMessage, setErrorName])
-
-  if (endTime * 1000 < new Date().getTime()) {
-    return <ProductDetailWrapper />
-  }
+  // useEffect(() => {
+  //   if (endTime * 1000 < new Date().getTime()) {
+  //     setErrorMessage(ERROR_MESSAGES.AUCTION_ENDED)
+  //     setErrorName('MiyaAuction Notice')
+  //   }
+  // }, [endTime, setErrorMessage, setErrorName])
+  //
+  // if (endTime * 1000 < new Date().getTime()) {
+  //   return <ProductDetailWrapper />
+  // }
 
   return (
     <ProductDetailWrapper>

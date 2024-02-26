@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
 import AuctionProduct from '@/components/ProductsList/AuctionProduct'
-import { useTokenIds } from '@/pages/Auction/useTokenIds'
+import { useAllTokenIds } from '@/pages/Auction/useAllTokenIds'
 import { setCurrentTokenIdsList } from '@/store/auction/actions'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
@@ -25,7 +25,7 @@ export default function ProductsList({ auctionContract }: { auctionContract: Add
 
   const nftContract = useAppSelector((state) => state.collections.currentNFTContract)
 
-  const { tokenIds, tokenURIs } = useTokenIds({
+  const { tokenIds, tokenURIs } = useAllTokenIds({
     nft: nftContract,
     address: auctionContract,
   })
