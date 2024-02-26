@@ -129,7 +129,7 @@ export default function BidContainer({
     )
   }
 
-  if (endTime * 1000 <= new Date().getTime()) {
+  if (!endTime || endTime * 1000 <= new Date().getTime()) {
     return <SettleWrapper>This auction has ended.</SettleWrapper>
   }
 
