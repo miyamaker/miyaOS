@@ -1,12 +1,11 @@
 import WarningIcon from 'assets/icon/warning.png'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
 import CollectionsList from '@/components/CollectionsList'
-import ErrorWindow from '@/components/ErrorWindow'
+import { ErrorButton, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import ExplorerWrapper from '@/components/ExplorerWrapper'
 import ProductDetail from '@/components/ProductDetail'
 import { Button } from '@/components/ProductDetail/ImagesList'
@@ -25,54 +24,6 @@ import type { PageKey } from '@/store/windows/reducer'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
-
-const ErrorWrapper = styled.div`
-  width: 50%;
-  height: 26%;
-  position: absolute;
-  top: 37%;
-  left: 25%;
-`
-const ErrorContent = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-const ErrorMessage = styled.div`
-  height: calc(200% / 3);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-
-  > img {
-    width: 3rem;
-    height: 3rem;
-    border: none;
-    margin: 0;
-  }
-
-  > div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-    overflow: scroll;
-  }
-
-  > * + * {
-    margin-left: 1rem;
-  }
-`
-const ErrorButton = styled.div`
-  height: calc(100% / 3);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
 export default function AuctionPage() {
   // Window mgmt
