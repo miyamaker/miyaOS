@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
-import AuctionProduct from '@/components/ProductsList/AuctionProduct'
+import AuctionProduct from '@/pages/Auction/ProductsList/AuctionProduct'
 import { useAllTokenIds } from '@/pages/Auction/useAllTokenIds'
 import { setCurrentTokenIdsList } from '@/store/auction/actions'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'

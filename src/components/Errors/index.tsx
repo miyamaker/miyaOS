@@ -1,4 +1,4 @@
-export { ErrorButton } from './ErrorButton'
+export { ErrorButton, ErrorButtonWrapper } from './ErrorButton'
 export { ErrorContent } from './ErrorContent'
 export { ErrorMessage } from './ErrorMessage'
 export { default as ErrorWindow } from './ErrorWindow'

@@ -1,15 +1,21 @@
 import WarningIcon from 'assets/icon/warning.png'
 import { useState } from 'react'
 
-import { ErrorButton, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
-import { Button } from '@/components/ProductDetail/ImagesList'
+import {
+  ErrorButton,
+  ErrorButtonWrapper,
+  ErrorContent,
+  ErrorMessage,
+  ErrorWindow,
+  ErrorWrapper,
+} from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
 const page = Pages.explorer
 const pageId = page?.id as PageKey
@@ -98,11 +104,11 @@ export default function ExplorerPage() {
                   <img src={WarningIcon} alt="Error icon" />
                   <div>{errorMessage}</div>
                 </ErrorMessage>
-                <ErrorButton>
-                  <Button style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
+                <ErrorButtonWrapper>
+                  <ErrorButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
                     OK
-                  </Button>
-                </ErrorButton>
+                  </ErrorButton>
+                </ErrorButtonWrapper>
               </ErrorContent>
             </ErrorWindow>
           </ErrorWrapper>

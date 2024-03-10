@@ -1,9 +1,9 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import type { MouseEventHandler } from 'react'
 
-import { Button } from '@/components/ProductDetail/ImagesList'
+import { Button } from '@/pages/Auction/ProductDetail/ImagesList'
 
-import { HighlightButton } from '../Button'
+import { HighlightButton } from '../../../components/Button'
 
 export default function AuctionButton({
   handleBid,

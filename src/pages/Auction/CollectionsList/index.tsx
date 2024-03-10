@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components/macro'
 
-import ItemsList from '@/components/CollectionsList/ItemsList'
-import Pagination from '@/components/CollectionsList/Pagination'
+import ItemsList from '@/pages/Auction/CollectionsList/ItemsList'
+import Pagination from '@/pages/Auction/CollectionsList/Pagination'
 
 const CollectionsListWrapper = styled.div`
   width: 100%;

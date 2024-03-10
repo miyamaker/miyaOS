@@ -4,18 +4,24 @@ import { useWindowSize } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
-import CollectionsList from '@/components/CollectionsList'
-import { ErrorButton, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
-import ExplorerWrapper from '@/components/ExplorerWrapper'
-import ProductDetail from '@/components/ProductDetail'
-import { Button } from '@/components/ProductDetail/ImagesList'
-import ProductsList from '@/components/ProductsList'
+import {
+  ErrorButton,
+  ErrorButtonWrapper,
+  ErrorContent,
+  ErrorMessage,
+  ErrorWindow,
+  ErrorWrapper,
+} from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import { AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
+import CollectionsList from '@/pages/Auction/CollectionsList'
 import { AUCTION_PAGE_SECTION, ERROR_MESSAGES } from '@/pages/Auction/constants'
+import ExplorerWrapper from '@/pages/Auction/ExplorerWrapper'
+import ProductDetail from '@/pages/Auction/ProductDetail'
+import ProductsList from '@/pages/Auction/ProductsList'
 import { useNFTsList } from '@/pages/Auction/useNFTsList'
 import { setNFTsList } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
@@ -127,11 +133,11 @@ export default function AuctionPage() {
                   <img src={WarningIcon} alt="Error icon" />
                   <div>{errorMessage}</div>
                 </ErrorMessage>
-                <ErrorButton>
-                  <Button style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
+                <ErrorButtonWrapper>
+                  <ErrorButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
                     OK
-                  </Button>
-                </ErrorButton>
+                  </ErrorButton>
+                </ErrorButtonWrapper>
               </ErrorContent>
             </ErrorWindow>
           </ErrorWrapper>

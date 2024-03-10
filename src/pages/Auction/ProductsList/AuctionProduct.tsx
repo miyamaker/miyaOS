@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 
-import ImageWrapper from '@/components/ImageWrapper'
-import { Button } from '@/components/ProductDetail/ImagesList'
+import ImageWrapper from '@/pages/Auction/ImageWrapper'
+import { Button } from '@/pages/Auction/ProductDetail/ImagesList'
 import { useToken } from '@/pages/Auction/useToken'
 import { setCurrentToken } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'

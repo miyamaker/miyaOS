@@ -3,7 +3,7 @@ import ChevronRightIcon from 'assets/chevron-right-icon.svg'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components/macro'
 
-import { Button } from '@/components/ProductDetail/ImagesList'
+import { Button } from '@/pages/Auction/ProductDetail/ImagesList'
 
 const PaginateWrapper = styled.div`
   height: 10%;
