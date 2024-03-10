@@ -4,14 +4,8 @@ import { useWindowSize } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
-import {
-  ErrorButton,
-  ErrorButtonWrapper,
-  ErrorContent,
-  ErrorMessage,
-  ErrorWindow,
-  ErrorWrapper,
-} from '@/components/Errors'
+import { NormalButton } from '@/components/Button/NormalButton'
+import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import { AUCTION_CONTRACT } from '@/constants/contracts'
@@ -134,9 +128,9 @@ export default function AuctionPage() {
                   <div>{errorMessage}</div>
                 </ErrorMessage>
                 <ErrorButtonWrapper>
-                  <ErrorButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
+                  <NormalButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
                     OK
-                  </ErrorButton>
+                  </NormalButton>
                 </ErrorButtonWrapper>
               </ErrorContent>
             </ErrorWindow>

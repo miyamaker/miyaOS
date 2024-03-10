@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 
+import { NormalButton } from '@/components/Button/NormalButton'
 import ImageWrapper from '@/pages/Auction/ImageWrapper'
-import { Button } from '@/pages/Auction/ProductDetail/ImagesList'
 import { useToken } from '@/pages/Auction/useToken'
 import { setCurrentToken } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
@@ -70,9 +70,9 @@ export default function AuctionProduct({ tokenId, tokenURI }: { tokenId: number;
           {/* </Description> */}
         </ImageDetail>
       </ImageWrapper>
-      <Button onClick={handleBid} style={{ width: '100%', marginTop: '0.25rem' }}>
+      <NormalButton onClick={handleBid} style={{ width: '100%', marginTop: '0.25rem' }}>
         Bid
-      </Button>
+      </NormalButton>
     </ProductWrapper>
   )
 }

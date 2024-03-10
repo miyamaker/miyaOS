@@ -1,7 +1,8 @@
-import ChevronLeftIcon from 'assets/chevron-left-icon.svg'
-import ChevronRightIcon from 'assets/chevron-right-icon.svg'
+import NextIcon from 'assets/explorer/icon/next.svg'
+import PreviousIcon from 'assets/explorer/icon/previous.svg'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
+
 import { NormalButton } from '@/components/Button/NormalButton'
 
 const PaginateWrapper = styled.div`
@@ -96,15 +97,23 @@ export default function Pagination({
 
   return (
     <PaginateWrapper>
-      <Counter>
-        {currentPage} of {totalPages}
-      </Counter>
       <ButtonContainer>
-        <NormalButton ref={previousButtonRef} onClick={() => handleClickButton('previous')}>
-          <Icon src={ChevronLeftIcon} alt="Chevron Left Icon" />
+        <NormalButton
+          style={{ borderRadius: '50%', boxShadow: 'none', padding: '0' }}
+          ref={previousButtonRef}
+          onClick={() => handleClickButton('previous')}
+        >
+          <Icon src={PreviousIcon} alt="Previous Icon" />
         </NormalButton>
-        <NormalButton ref={nextButtonRef} onClick={() => handleClickButton('next')}>
-          <Icon src={ChevronRightIcon} alt="Chevron Right Icon" />
+        <Counter>
+          {currentPage} / {totalPages}
+        </Counter>
+        <NormalButton
+          style={{ borderRadius: '50%', boxShadow: 'none', padding: '0' }}
+          ref={nextButtonRef}
+          onClick={() => handleClickButton('next')}
+        >
+          <Icon src={NextIcon} alt="Next Icon" />
         </NormalButton>
       </ButtonContainer>
     </PaginateWrapper>

@@ -1,17 +1,12 @@
 import WarningIcon from 'assets/icon/warning.png'
 import { useState } from 'react'
 
-import {
-  ErrorButton,
-  ErrorButtonWrapper,
-  ErrorContent,
-  ErrorMessage,
-  ErrorWindow,
-  ErrorWrapper,
-} from '@/components/Errors'
+import { NormalButton } from '@/components/Button/NormalButton'
+import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
+import Collection from '@/pages/Explorer/Collection'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
@@ -28,7 +23,7 @@ export default function ExplorerPage() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaExplorer Error')
-  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)
+  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
 
   const handleCloseErrorPopup = () => {
     setErrorName('MiyaExplorer Error')
@@ -46,15 +41,7 @@ export default function ExplorerPage() {
           </div>
         )
       case EXPLORER_PAGE_SECTION.COLLECTION_SECTION:
-        return (
-          <div>
-            <h1>Collection section</h1>
-            <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)}>
-              Collections section
-            </button>
-            <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>NFT detail</button>
-          </div>
-        )
+        return <Collection />
       case EXPLORER_PAGE_SECTION.NFT_SECTION:
         return (
           <div>
@@ -105,9 +92,9 @@ export default function ExplorerPage() {
                   <div>{errorMessage}</div>
                 </ErrorMessage>
                 <ErrorButtonWrapper>
-                  <ErrorButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
+                  <NormalButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
                     OK
-                  </ErrorButton>
+                  </NormalButton>
                 </ErrorButtonWrapper>
               </ErrorContent>
             </ErrorWindow>
