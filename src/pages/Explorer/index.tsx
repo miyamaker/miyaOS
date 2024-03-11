@@ -8,6 +8,7 @@ import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
 import Collection from '@/pages/Explorer/Collection'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import NFTDetail from '@/pages/Explorer/NFT'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
@@ -23,7 +24,7 @@ export default function ExplorerPage() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaExplorer Error')
-  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
+  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.NFT_SECTION)
 
   const handleCloseErrorPopup = () => {
     setErrorName('MiyaExplorer Error')
@@ -41,17 +42,9 @@ export default function ExplorerPage() {
           </div>
         )
       case EXPLORER_PAGE_SECTION.COLLECTION_SECTION:
-        return <Collection />
+        return <Collection setPageSection={setPageSection} />
       case EXPLORER_PAGE_SECTION.NFT_SECTION:
-        return (
-          <div>
-            <h1>NFT section</h1>
-            <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)}>
-              Collections section
-            </button>
-            <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}>Collection detail</button>
-          </div>
-        )
+        return <NFTDetail setPageSection={setPageSection} />
       default:
         return <></>
     }

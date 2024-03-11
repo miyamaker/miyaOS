@@ -6,8 +6,10 @@ import NFTImage from 'assets/explorer/sample/milady.png'
 import type { CSSProperties } from 'react'
 import styled from 'styled-components/macro'
 
+import Dialog from '@/components/Dialog'
 import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
 import MintButton from '@/pages/Explorer/Button/MintButton'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
 const Container = styled.div`
   height: 100%;
@@ -108,20 +110,6 @@ const MintInfoWrapper = styled.div`
   padding: 0.55rem;
 `
 
-const MintInfos = styled.div`
-  height: 100%;
-  overflow-y: scroll;
-  background-color: #000;
-  color: #fff;
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 5px solid rgba(93, 90, 90, 0.1);
-
-  > * + * {
-    margin-top: 0.75rem;
-  }
-`
-
 const socialLinks = [
   {
     name: 'twitter',
@@ -145,7 +133,13 @@ const socialLinks = [
   },
 ]
 
-export default function CollectionDetail({ style }: { style?: CSSProperties }) {
+export default function CollectionDetail({
+  style,
+  setPageSection,
+}: {
+  style?: CSSProperties
+  setPageSection: (section: string) => void
+}) {
   return (
     <Container style={style}>
       <ImageDetailContainer>
@@ -161,8 +155,8 @@ export default function CollectionDetail({ style }: { style?: CSSProperties }) {
           </SocialList>
         </ImageDetailWrapper>
         <ConnectButtonWrapper>
-          <ConnectButton text="Back" />
-          <ConnectButton text="Connect" />
+          <ConnectButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
+          <ConnectButton text="Connect" handleClick={() => {}} />
         </ConnectButtonWrapper>
       </ImageDetailContainer>
       <MintDetail>
@@ -172,12 +166,12 @@ export default function CollectionDetail({ style }: { style?: CSSProperties }) {
           ))}
         </MintWrapper>
         <MintInfoWrapper>
-          <MintInfos>
+          <Dialog>
             <p>Radbro Webring</p>
             <p>Radbro Webring</p>
             <p>Radbro Webring</p>
             <p>Radbro Webring</p>
-          </MintInfos>
+          </Dialog>
         </MintInfoWrapper>
       </MintDetail>
     </Container>

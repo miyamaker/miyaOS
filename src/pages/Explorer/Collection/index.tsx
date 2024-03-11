@@ -14,12 +14,12 @@ const CollectionContainer = styled.div`
   align-items: center;
 `
 
-export default function Collection() {
+export default function Collection({ setPageSection }: { setPageSection: (section: string) => void }) {
   const { width } = useWindowSize()
   return (
     <CollectionContainer>
-      <CollectionDetail style={{ height: width > 640 ? '55%' : '65%' }} />
-      <RecentMint style={{ height: width > 640 ? '45%' : '35%' }} />
+      <CollectionDetail style={{ height: width > 640 ? '55%' : '65%' }} setPageSection={setPageSection} />
+      <RecentMint style={{ height: width > 640 ? '45%' : '35%' }} setPageSection={setPageSection} />
     </CollectionContainer>
   )
 }

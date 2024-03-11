@@ -1,8 +1,8 @@
-import styled from 'styled-components/macro'
 import BackgroundButton from 'assets/explorer/background/background_button.png'
+import styled from 'styled-components/macro'
 
 const Button = styled.button`
-  background-color: #ff407d;
+  background-color: #f36391;
   background-image: url(${BackgroundButton});
   background-blend-mode: overlay;
   background-size: 100% 100%;

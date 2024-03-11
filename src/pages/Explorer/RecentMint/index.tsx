@@ -95,7 +95,13 @@ const sample = [
 
 const ITEM_PER_PAGE = 8
 
-export default function RecentMint({ style }: { style?: CSSProperties }) {
+export default function RecentMint({
+  style,
+  setPageSection,
+}: {
+  style?: CSSProperties
+  setPageSection: (section: string) => void
+}) {
   const totalPages = Math.ceil(sample.length / ITEM_PER_PAGE)
   const [currentCounter, setCurrentCounter] = useState<number>(1)
   return (
@@ -105,7 +111,7 @@ export default function RecentMint({ style }: { style?: CSSProperties }) {
         {sample
           .slice(ITEM_PER_PAGE * (currentCounter - 1), ITEM_PER_PAGE * currentCounter)
           .map(({ tokenId, image, name }, index) => (
-            <NFTItem tokenId={tokenId} image={image} name={name} key={index} />
+            <NFTItem tokenId={tokenId} image={image} name={name} key={index} setPageSection={setPageSection} />
           ))}
       </NFTList>
       <Pagination totalPages={totalPages} currentPage={currentCounter} setCurrentCounter={setCurrentCounter} />

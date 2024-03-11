@@ -1,8 +1,11 @@
 import styled from 'styled-components/macro'
 
+import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+
 const Container = styled.div`
   width: 25%;
   padding: 0.75rem;
+  cursor: pointer;
 
   @media only screen and (max-width: 640px) {
     width: 50%;
@@ -33,9 +36,19 @@ const Description = styled.div`
   font-weight: bolder;
 `
 
-export default function NFTItem({ tokenId, image, name }: { tokenId: number; image: string; name: string }) {
+export default function NFTItem({
+  tokenId,
+  image,
+  name,
+  setPageSection,
+}: {
+  tokenId: number
+  image: string
+  name: string
+  setPageSection: (section: string) => void
+}) {
   return (
-    <Container>
+    <Container onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>
       <Wrapper>
         <Image src={image} alt={name} />
         <DescriptionWrapper>
