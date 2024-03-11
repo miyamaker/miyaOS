@@ -16,8 +16,9 @@ const Button = styled.button`
   text-transform: uppercase;
   font-size: 0.65rem;
 
+  border: none;
   border-radius: 50%;
-  box-shadow: 3px 2px #272526;
+  box-shadow: 4px 2px #272526;
 `
 
 export default function ConnectButton({ text }: { text: string }) {

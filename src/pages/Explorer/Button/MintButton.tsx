@@ -16,6 +16,7 @@ const Button = styled.button`
   text-transform: uppercase;
   font-size: 0.65rem;
 
+  border: none;
   border-radius: 10px;
   box-shadow: 4px 6px #272526;
 `

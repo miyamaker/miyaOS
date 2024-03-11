@@ -199,4 +199,49 @@ img {
 img:hover {
   border: 1px solid purple;
 }
+
+/* Scrollbar Width */
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset 1px 1px #818181, inset -2px -2px #818181,
+  inset 1px 1px #dfdfdf;
+}
+
+::-webkit-scrollbar-button {
+  display: block;
+  background-color: #c0c0c0;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset 1px 1px #818181, inset -2px -2px #818181,
+  inset 1px 1px #dfdfdf;
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url('src/assets/icon/caret_up.svg');
+  background-size: 100%;
+}
+
+::-webkit-scrollbar-button:vertical:start:increment {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-size: 100%;
+  background-image: url('src/assets/icon/caret_down.svg');
+}
 `
