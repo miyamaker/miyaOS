@@ -21,7 +21,7 @@ export default function Dialog({
   style,
 }: {
   children: ReactNode
-  className?: HTMLAttributes<HTMLDivElement>
+  className?: string
   style?: CSSProperties
 }) {
   return (

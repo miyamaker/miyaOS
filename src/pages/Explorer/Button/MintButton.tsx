@@ -21,6 +21,6 @@ const Button = styled.button`
   box-shadow: 4px 6px #272526;
 `
 
-export default function MintButton({ text }: { text: string }) {
-  return <Button>{text}</Button>
+export default function MintButton({ text, className }: { text: string; className?: string }) {
+  return <Button className={className}>{text}</Button>
 }

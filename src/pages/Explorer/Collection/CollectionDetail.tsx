@@ -15,6 +15,15 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+
+  @media only screen and (max-width: 640px) {
+    flex-direction: column;
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 const ImageDetailContainer = styled.div`
@@ -22,6 +31,10 @@ const ImageDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+  }
 `
 
 const ImageDetailWrapper = styled.div`
@@ -31,6 +44,25 @@ const ImageDetailWrapper = styled.div`
   > * + * {
     margin-top: 0.5rem;
   }
+
+  @media only screen and (max-width: 640px) {
+    display: flex;
+    width: 100%;
+  }
+`
+const ImageDetailGroup = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (max-width: 640px) {
+    width: 85%;
+  }
+`
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 90%;
 `
 
 const MintDetail = styled.div`
@@ -41,17 +73,25 @@ const MintDetail = styled.div`
   > * + * {
     margin-top: 0.75rem;
   }
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+  }
 `
 
 const CollectionName = styled.div`
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-align: center;
   text-transform: uppercase;
+  font-weight: bolder;
 `
 
 const CollectionImage = styled.img`
-  width: 100%;
-  height: 80%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   border-radius: 5%;
   border: none;
 
@@ -68,6 +108,17 @@ const SocialList = styled.div`
   > * + * {
     margin-left: 0.25rem;
   }
+
+  @media only screen and (max-width: 640px) {
+    width: 15%;
+    flex-direction: column;
+    justify-content: center;
+
+    > * + * {
+      margin-left: 0;
+      margin-top: 0.5rem;
+    }
+  }
 `
 
 const SocialItem = styled.a``
@@ -82,6 +133,11 @@ const Icon = styled.img`
 
   :hover {
     border: none;
+  }
+
+  @media only screen and (max-width: 640px) {
+    width: 2rem;
+    height: 2rem;
   }
 `
 
@@ -103,6 +159,29 @@ const MintWrapper = styled.div`
   > * + * {
     margin-top: 0.75rem;
   }
+
+  @media only screen and (max-width: 640px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    > * + * {
+      margin-top: 0;
+    }
+  }
+`
+const ButtonWrapper = styled.div`
+  width: 30%;
+  height: 25%;
+  padding: 0.75rem;
+  @media only screen and (max-width: 640px) {
+    width: 40%;
+    height: 50%;
+  }
+`
+const Button = styled(MintButton)`
+  width: 100%;
+  height: 100%;
 `
 
 const MintInfoWrapper = styled.div`
@@ -144,8 +223,12 @@ export default function CollectionDetail({
     <Container style={style}>
       <ImageDetailContainer>
         <ImageDetailWrapper>
-          <CollectionName>RADBRO WEBRING</CollectionName>
-          <CollectionImage src={NFTImage} alt="RADBRO WEBRING" />
+          <ImageDetailGroup>
+            <CollectionName>RADBRO WEBRING</CollectionName>
+            <ImageWrapper>
+              <CollectionImage src={NFTImage} alt="RADBRO WEBRING" />
+            </ImageWrapper>
+          </ImageDetailGroup>
           <SocialList>
             {socialLinks.map(({ name, image, link }, index) => (
               <SocialItem href={link} target="_blank" key={index}>
@@ -162,7 +245,9 @@ export default function CollectionDetail({
       <MintDetail>
         <MintWrapper>
           {[1, 5, 10, 100].map((item, index) => (
-            <MintButton text={item > 1 ? `Mint x${item}` : 'Mint'} key={index} />
+            <ButtonWrapper>
+              <Button text={item > 1 ? `Mint x${item}` : 'Mint'} key={index} />
+            </ButtonWrapper>
           ))}
         </MintWrapper>
         <MintInfoWrapper>
