@@ -27,7 +27,7 @@ const NFTList = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   -ms-overflow-style: none;
 
   ::-webkit-scrollbar {

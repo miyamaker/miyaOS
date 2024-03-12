@@ -88,7 +88,7 @@ const TraitWrapper = styled.div`
   height: 100%;
   padding: 0.5rem;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 
   ::-webkit-scrollbar {
@@ -119,7 +119,7 @@ const TraitValue = styled.div`
   color: #fff;
   font-size: 0.75rem;
 
-  overflow-x: scroll;
+  overflow-x: auto;
 
   ::-webkit-scrollbar {
     display: none;
