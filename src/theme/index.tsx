@@ -156,6 +156,11 @@ export const ThemedGlobalStyle = createGlobalStyle`
   src: url("/fonts/w95fa/w95fa.woff");
 }
 
+@font-face {
+  font-family: 'Revalia';
+  src: url("/fonts/Revalia/Revalia.ttf");
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Hiragino Kaku Gothic Pro W3', Osaka, Meiryo, 'MS PGothic', arial, helvetica, clean, sans-serif;
