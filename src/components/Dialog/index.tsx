@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react'
 import styled from 'styled-components/macro'
 
 const Container = styled.div`
@@ -15,6 +15,18 @@ const Container = styled.div`
   }
 `
 
-export default function Dialog({ children, style }: { children: ReactNode; style?: CSSProperties }) {
-  return <Container style={style}>{children}</Container>
+export default function Dialog({
+  children,
+  className,
+  style,
+}: {
+  children: ReactNode
+  className?: HTMLAttributes<HTMLDivElement>
+  style?: CSSProperties
+}) {
+  return (
+    <Container className={className} style={style}>
+      {children}
+    </Container>
+  )
 }

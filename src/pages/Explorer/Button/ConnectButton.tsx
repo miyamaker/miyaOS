@@ -7,8 +7,8 @@ const Button = styled.button`
   background-blend-mode: overlay;
   background-size: 100% 100%;
 
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
 
   color: white;
   text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,

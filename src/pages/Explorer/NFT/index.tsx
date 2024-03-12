@@ -5,6 +5,7 @@ import { useWindowSize } from 'usehooks-ts'
 import Dialog from '@/components/Dialog'
 import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import { Component } from 'react'
 
 const Container = styled.div`
   height: 100%;
@@ -25,15 +26,50 @@ const DetailWrapper = styled.div`
   > * + * {
     margin-left: 1rem;
   }
+
+  @media only screen and (max-width: 640px) {
+    flex-direction: column;
+    > * + * {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+`
+const ImageWrapper = styled.div`
+  width: 40%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: 640px) {
+    width: 80%;
+    height: 40%;
+    align-items: start;
+  }
 `
 const Image = styled.img`
-  width: 40%;
-  height: 55%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   border: none;
   margin: 0;
 
   :hover {
     border: none;
+  }
+`
+
+const MetadataWrapper = styled(Dialog)`
+  width: 60%;
+  height: 90%;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    height: 60%;
   }
 `
 
@@ -58,6 +94,10 @@ const TraitWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  @media only screen and (max-width: 640px) {
+    width: calc(100% / 2);
+  }
 `
 const Trait = styled.div`
   width: 100%;
@@ -72,10 +112,12 @@ const Trait = styled.div`
 const TraitTitle = styled.div`
   text-align: center;
   color: #808080;
+  font-size: 0.85rem;
 `
 const TraitValue = styled.div`
   text-align: center;
   color: #fff;
+  font-size: 0.75rem;
 
   overflow-x: scroll;
 
@@ -108,8 +150,10 @@ export default function NFTDetail({ setPageSection }: { setPageSection: (section
   return (
     <Container>
       <DetailWrapper style={{ height: width > 640 ? '75%' : '85%' }}>
-        <Image src={NFTImage} alt="NFT" />
-        <Dialog style={{ width: '60%', height: '60%', fontSize: '0.75rem' }}>
+        <ImageWrapper>
+          <Image src={NFTImage} alt="NFT" />
+        </ImageWrapper>
+        <MetadataWrapper>
           <div>Radbro #123</div>
           <div>By RadBroDeployer</div>
           <div>Radbros on chain. Just tell to check the chain. Radbros get $RAD.</div>
@@ -123,7 +167,7 @@ export default function NFTDetail({ setPageSection }: { setPageSection: (section
               </TraitWrapper>
             ))}
           </Traits>
-        </Dialog>
+        </MetadataWrapper>
       </DetailWrapper>
       <ButtonWrapper style={{ height: width > 640 ? '25%' : '15%' }}>
         <ConnectButton text="Exit" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)} />
