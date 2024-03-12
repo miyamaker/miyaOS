@@ -41,7 +41,7 @@ const ItemsListWrapper = styled.div`
   flex-direction: column;
 
   @media only screen and (max-width: 640px) {
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 `
 

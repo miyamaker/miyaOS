@@ -17,8 +17,15 @@ const Wrapper = styled.div`
   background-color: #262626;
 `
 
-const Image = styled.img`
+const ImageWrapper = styled.div`
   height: 80%;
+  width: 100%;
+`
+const Image = styled.img`
+  height: auto;
+  width: auto;
+  max-height: 100%;
+  max-width: 100%;
   border: none;
 
   :hover {
@@ -50,7 +57,9 @@ export default function NFTItem({
   return (
     <Container onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>
       <Wrapper>
-        <Image src={image} alt={name} />
+        <ImageWrapper>
+          <Image src={image} alt={name} />
+        </ImageWrapper>
         <DescriptionWrapper>
           <Description>#{tokenId}</Description>
           <Description>{name}</Description>

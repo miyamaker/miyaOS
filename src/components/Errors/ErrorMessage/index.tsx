@@ -19,7 +19,7 @@ export const ErrorMessage = styled.div`
     display: flex;
     align-items: center;
     font-size: 0.8rem;
-    overflow: scroll;
+    overflow: auto;
   }
 
   > * + * {
