@@ -89,10 +89,15 @@ const CollectionListContainer = styled.div`
 const CollectionListWrapper = styled.div`
   width: 90%;
   height: 80%;
-  margin-bottom: 3rem;
   border: none;
   background: rgba(39, 37, 38, 0.9);
   box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
+`
+
+const CollectionListItemContainer = styled.div`
+  width: 100%;
+  height: 90%;
+  margin-bottom: 3rem;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -113,7 +118,7 @@ const CollectionSearch = styled.input`
   }
 `
 
-const CollectionItemContainer = styled.div`
+const CollectionListItemWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -171,27 +176,31 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
       <CollectionListContainer>
         <CollectionListWrapper>
           <CollectionSearch type="text" placeholder="Search for collection..." />
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CollectionItemContainer>
-              <CollectionItemIcon>
-                <img src={NFT1} alt="NFT" />
-              </CollectionItemIcon>
-              <CollectionItemNameWrapper>
-                <CollectionApprovedName>Collection Approved {index + 1}</CollectionApprovedName>
-              </CollectionItemNameWrapper>
-            </CollectionItemContainer>
-          ))}
+          <CollectionListItemContainer>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CollectionListItemWrapper>
+                <CollectionItemIcon>
+                  <img src={NFT1} alt="NFT" />
+                </CollectionItemIcon>
+                <CollectionItemNameWrapper>
+                  <CollectionApprovedName>Collection Approved {index + 1}</CollectionApprovedName>
+                </CollectionItemNameWrapper>
+              </CollectionListItemWrapper>
+            ))}
 
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CollectionItemContainer>
-              <CollectionItemIcon>
-                <img src={NFT2} alt="NFT" />
-              </CollectionItemIcon>
-              <CollectionItemNameWrapper>
-                <CollectionCommunityName>Collection Community Collection Community {index + 1}</CollectionCommunityName>
-              </CollectionItemNameWrapper>
-            </CollectionItemContainer>
-          ))}
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CollectionListItemWrapper>
+                <CollectionItemIcon>
+                  <img src={NFT2} alt="NFT" />
+                </CollectionItemIcon>
+                <CollectionItemNameWrapper>
+                  <CollectionCommunityName>
+                    Collection Community Collection Community {index + 1}
+                  </CollectionCommunityName>
+                </CollectionItemNameWrapper>
+              </CollectionListItemWrapper>
+            ))}
+          </CollectionListItemContainer>
         </CollectionListWrapper>
       </CollectionListContainer>
     </Wrapper>
