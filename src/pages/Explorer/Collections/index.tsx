@@ -73,6 +73,8 @@ const CollectionDescription = styled.div`
     margin-top: 1rem;
     padding: 0.5rem;
     border-radius: 8px;
+    text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
+      -1px 1px #000;
   }
 `
 
@@ -130,13 +132,13 @@ const CollectionListItemWrapper = styled.div`
 
 const CollectionItemNameWrapper = styled.div`
   width: 70%;
-
-  > p {
-    font-size: 0.6rem;
-    text-wrap: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
+  font-size: 0.6rem;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: bolder;
+  text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
+    -1px 1px #000;
 `
 
 const CollectionCommunityName = styled.p`
@@ -183,7 +185,7 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
                   <img src={NFT1} alt="NFT" />
                 </CollectionItemIcon>
                 <CollectionItemNameWrapper>
-                  <CollectionApprovedName>Collection Approved {index + 1}</CollectionApprovedName>
+                  <CollectionApprovedName>collection approved {index + 1}</CollectionApprovedName>
                 </CollectionItemNameWrapper>
               </CollectionListItemWrapper>
             ))}
@@ -195,7 +197,7 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
                 </CollectionItemIcon>
                 <CollectionItemNameWrapper>
                   <CollectionCommunityName>
-                    Collection Community Collection Community {index + 1}
+                    collection community collection community {index + 1}
                   </CollectionCommunityName>
                 </CollectionItemNameWrapper>
               </CollectionListItemWrapper>
