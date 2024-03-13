@@ -1,7 +1,3 @@
-import Coat from 'assets/products/kool-skull/coat.png'
-import Hoodies from 'assets/products/kool-skull/hoodies.png'
-import TShirt from 'assets/products/kool-skull/t-shirt.png'
-
 export const abi = [
   {
     inputs: [
@@ -809,40 +805,6 @@ export const abi = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-  },
-]
-
-export const product = {
-  id: 3,
-  name: 'Miya Hoodie',
-  product: 'Hoodie',
-  description: 'a standard piece of clothing with no special features, just like any other hoodie you might find',
-  artist: 'KoolSkull',
-  currentBid: 0.05,
-  currency: 'ETH',
-  images: [Hoodies, Hoodies],
-}
-
-export const products = [
-  {
-    id: 4,
-    name: 'Miya Coat',
-    product: 'Coat',
-    description: 'a standard piece of clothing with no special features, just like any other coat you might find',
-    artist: 'KoolSkull',
-    currentBid: 0.0,
-    currency: 'ETH',
-    images: [Coat, Coat],
-  },
-  {
-    id: 5,
-    name: 'Miya T-Shirt',
-    product: 'T-Shirt',
-    description: 'a standard piece of clothing with no special features, just like any other t-shirt you might find',
-    artist: 'KoolSkull',
-    currentBid: 0.0,
-    currency: 'ETH',
-    images: [TShirt, TShirt],
   },
 ]
 

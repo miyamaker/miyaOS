@@ -52,7 +52,7 @@ export default function ExplorerWrapper({
     return (
       <legend style={{ backgroundColor: '#a9a3c9' }}>
         {titleSeparate.map((item, index) => {
-          if (index === titleSeparate.length - 1) return <div>{item}</div>
+          if (index === titleSeparate.length - 1) return <div key={index}>{item}</div>
           return (
             <>
               <div key={index} onClick={() => handleClick(item)}>

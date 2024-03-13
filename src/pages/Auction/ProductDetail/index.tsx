@@ -23,6 +23,11 @@ const ProductDetailWrapper = styled.div`
     > * + * {
       margin-top: 0.5rem;
     }
+
+    overflow-y: auto;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 `
 
@@ -36,7 +41,7 @@ const ImagesListWrapper = styled.div`
   width: 33.3333%;
 
   @media only screen and (max-width: 640px) {
-    height: 30%;
+    height: auto;
     width: 100%;
   }
 `
@@ -202,7 +207,7 @@ export default function ProductDetail({
           <Detail
             style={{
               height: '8vh',
-              overflowX: 'scroll',
+              overflowX: 'auto',
               justifyContent: 'start',
               paddingTop: '0.5rem',
               paddingBottom: '0.5rem',

@@ -39,7 +39,7 @@ const ImageDetailContainer = styled.div`
 
 const ImageDetailWrapper = styled.div`
   width: 60%;
-  height: 70%;
+  height: 75%;
 
   > * + * {
     margin-top: 0.5rem;
@@ -52,12 +52,13 @@ const ImageDetailWrapper = styled.div`
 `
 const ImageDetailGroup = styled.div`
   width: 100%;
-  height: 100%;
+  height: 85%;
   display: flex;
   flex-direction: column;
 
   @media only screen and (max-width: 640px) {
-    width: 85%;
+    width: 100%;
+    height: 100%;
   }
 `
 const ImageWrapper = styled.div`
@@ -143,7 +144,7 @@ const Icon = styled.img`
 
 const ConnectButtonWrapper = styled.div`
   width: 60%;
-  height: 30%;
+  height: 25%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -172,11 +173,12 @@ const MintWrapper = styled.div`
 `
 const ButtonWrapper = styled.div`
   width: 30%;
-  height: 25%;
-  padding: 0.75rem;
+  height: 50%;
+
   @media only screen and (max-width: 640px) {
     width: 40%;
     height: 50%;
+    padding: 0.75rem;
   }
 `
 const Button = styled(MintButton)`
@@ -245,8 +247,8 @@ export default function CollectionDetail({
       <MintDetail>
         <MintWrapper>
           {[1, 5, 10, 100].map((item, index) => (
-            <ButtonWrapper>
-              <Button text={item > 1 ? `Mint x${item}` : 'Mint'} key={index} />
+            <ButtonWrapper key={index}>
+              <Button text={item > 1 ? `Mint x${item}` : 'Mint'} />
             </ButtonWrapper>
           ))}
         </MintWrapper>

@@ -3,13 +3,14 @@ import ChevronRightIcon from 'assets/chevron-right-icon.svg'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components/macro'
 
+import { NormalButton } from '@/components/Button/NormalButton'
 import ImageWrapper from '@/pages/Auction/ImageWrapper'
 
 const ImagesListWrapper = styled.div`
   width: 100%;
 
   @media only screen and (max-width: 640px) {
-    width: 40%;
+    width: 60%;
     height: 100%;
   }
 `
@@ -39,14 +40,16 @@ const Icon = styled.img`
 `
 
 const Images = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  height: 90%;
   border: none;
 
   > img {
     border: none;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
   }
 
   > img:hover {
@@ -109,18 +112,18 @@ export default function ImagesList({ images }: { images: string[] }) {
       <ImageWrapper>
         <Images>
           <img src={images[currentCounter - 1]} alt="Images" />
-          <Counter>
-            {currentCounter} of {totalImages}
-          </Counter>
         </Images>
+        <Counter>
+          {currentCounter} of {totalImages}
+        </Counter>
       </ImageWrapper>
       <ButtonContainer>
-        <Button ref={previousButtonRef} onClick={() => handleClickButton('previous')}>
+        <NormalButton ref={previousButtonRef} onClick={() => handleClickButton('previous')}>
           <Icon src={ChevronLeftIcon} alt="Chevron Left Icon" />
-        </Button>
-        <Button ref={nextButtonRef} onClick={() => handleClickButton('next')}>
+        </NormalButton>
+        <NormalButton ref={nextButtonRef} onClick={() => handleClickButton('next')}>
           <Icon src={ChevronRightIcon} alt="Chevron Right Icon" />
-        </Button>
+        </NormalButton>
       </ButtonContainer>
     </ImagesListWrapper>
   )

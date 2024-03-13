@@ -7,7 +7,7 @@ import { setCurrentNFT } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
 
 const Items = styled.div`
-  height: 16.6666%;
+  height: 25%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -56,15 +56,6 @@ const ImageItem = styled.div`
   padding: 0.5rem;
   font-weight: bolder;
 
-  > img {
-    width: 8rem;
-    height: 4.5rem;
-    margin: 0;
-    border: none;
-  }
-  > img:hover {
-    border: none;
-  }
   > * + * {
     margin-left: 1rem;
   }
@@ -75,16 +66,37 @@ const ImageItem = styled.div`
     justify-content: center;
     height: 50%;
 
-    > img {
-      width: 90%;
-      height: 80%;
-    }
-
     > * + * {
       margin-top: 0.5rem;
       margin-left: 0;
     }
   }
+`
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    border: none;
+  }
+  > img:hover {
+    border: none;
+  }
+
+  //@media only screen and (max-width: 640px) {
+  //  > img {
+  //    width: 90%;
+  //    height: 80%;
+  //  }
+  //}
 `
 
 export default function ItemsList({ nft, setPageSection }: { nft: string; setPageSection: (section: string) => void }) {
@@ -105,7 +117,9 @@ export default function ItemsList({ nft, setPageSection }: { nft: string; setPag
   return (
     <Items onClick={handleClick}>
       <ImageItem>
-        <img src={image} alt={name} />
+        <ImageWrapper>
+          <img src={image} alt={name} />
+        </ImageWrapper>
         <div>
           {name} ({symbol})
         </div>
