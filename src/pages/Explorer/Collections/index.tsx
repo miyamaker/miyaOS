@@ -87,8 +87,8 @@ const CollectionListContainer = styled.div`
 `
 
 const CollectionListWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 80%;
   margin-bottom: 3rem;
   border: none;
   background: rgba(39, 37, 38, 0.9);
