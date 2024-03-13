@@ -57,6 +57,7 @@ const Image = styled.img`
   object-fit: contain;
   border: none;
   margin: 0;
+  border-radius: 5px;
 
   :hover {
     border: none;
@@ -84,7 +85,7 @@ const Traits = styled.div`
   flex-wrap: wrap;
 `
 const TraitWrapper = styled.div`
-  width: calc(100% / 3);
+  width: calc(100% / 2);
   height: 100%;
   padding: 0.5rem;
 
@@ -95,9 +96,9 @@ const TraitWrapper = styled.div`
     display: none;
   }
 
-  @media only screen and (max-width: 640px) {
-    width: calc(100% / 2);
-  }
+  //@media only screen and (max-width: 640px) {
+  //  width: calc(100% / 2);
+  //}
 `
 const Trait = styled.div`
   width: 100%;
@@ -108,6 +109,10 @@ const Trait = styled.div`
 
   border-radius: 8px;
   border: 1px solid #8d8d8d;
+
+  > * + * {
+    margin-top: 0.25rem;
+  }
 `
 const TraitTitle = styled.div`
   text-align: center;

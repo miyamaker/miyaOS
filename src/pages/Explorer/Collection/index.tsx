@@ -12,14 +12,18 @@ const CollectionContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  > * + * {
+    margin-top: 0.5rem;
+  }
 `
 
 export default function Collection({ setPageSection }: { setPageSection: (section: string) => void }) {
   const { width } = useWindowSize()
   return (
     <CollectionContainer>
-      <CollectionDetail style={{ height: width > 640 ? '55%' : '65%' }} setPageSection={setPageSection} />
-      <RecentMint style={{ height: width > 640 ? '45%' : '35%' }} setPageSection={setPageSection} />
+      <CollectionDetail style={{ height: width > 640 ? '60%' : '65%' }} setPageSection={setPageSection} />
+      <RecentMint style={{ height: width > 640 ? '40%' : '35%' }} setPageSection={setPageSection} />
     </CollectionContainer>
   )
 }

@@ -22,7 +22,6 @@ const pageId = page?.id as PageKey
 const Background = styled.div`
   height: calc(100% - 1.5rem);
   width: 100%;
-  gap: 1rem;
 
   position: relative;
   overflow: hidden;
@@ -41,6 +40,11 @@ const Background = styled.div`
     background-position: 50% 0;
     background-size: cover;
   }
+
+  * {
+    font-family: 'Revalia', sans-serif;
+    letter-spacing: 1px;
+  }
 `
 const Container = styled.div`
   position: relative;
@@ -48,7 +52,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 0.5rem;
   gap: 1rem;
-  height: calc(100% - 1.5rem);
+  height: 100%;
 `
 
 export default function ExplorerPage() {
