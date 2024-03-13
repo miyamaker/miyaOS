@@ -61,6 +61,7 @@ const CollectionTitle = styled.h1`
   font-weight: bolder;
   text-transform: uppercase;
   margin-bottom: 1rem;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
 `
 
 const CollectionDescription = styled.div`
