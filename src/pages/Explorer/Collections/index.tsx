@@ -42,29 +42,6 @@ const ConnectButtonWrapper = styled.div`
   }
 `
 
-const CollectionListContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  padding: 1rem;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-const CollectionListWrapper = styled.div`
-  width: 80%;
-  height: 75%;
-  background: rgba(39, 37, 38, 0.9);
-  margin-bottom: 3rem;
-  border: none;
-
-  box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
-
-  overflow-y: scroll;
-  overflow-x: hidden;
-`
-
 const ImageItem = styled.img`
   border-radius: 8px;
   width: 75%;
@@ -99,6 +76,28 @@ const CollectionDescription = styled.div`
   }
 `
 
+const CollectionListContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+const CollectionListWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-bottom: 3rem;
+  border: none;
+  background: rgba(39, 37, 38, 0.9);
+  box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+`
+
 const CollectionSearch = styled.input`
   width: 100%;
   height: 1.3rem;
@@ -118,14 +117,14 @@ const CollectionItemContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+
+  :hover {
+    cursor: pointer;
+  }
 `
 
 const CollectionItemNameWrapper = styled.div`
   width: 70%;
-
-  > p:hover {
-    cursor: pointer;
-  }
 
   > p {
     font-size: 0.6rem;
@@ -149,11 +148,6 @@ const CollectionItemIcon = styled.div`
     width: 50%;
     height: 50%;
     border: none;
-  }
-
-  > img:hover {
-    border: none;
-    cursor: pointer;
   }
 `
 
