@@ -6,11 +6,13 @@ import NFT1 from '@/assets/explorer/sample/nft_1.png'
 import NFT2 from '@/assets/explorer/sample/nft_2.png'
 import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import CollectionsItems from './CollectionsItems'
 
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: row;
 
   * {
     font-family: Revalia;
@@ -23,10 +25,11 @@ const CollectionsInfoContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  padding: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
 `
 
 const ConnectButtonWrapper = styled.div`
@@ -42,27 +45,29 @@ const ConnectButtonWrapper = styled.div`
   }
 `
 
-const ImageItem = styled.img`
-  border-radius: 8px;
-  width: 75%;
-  height: 40%;
+const CollectionImage = styled.img`
   border: none;
-  margin: 0;
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+  border: none;
+  border-radius: 5%;
 
   :hover {
     border: none;
   }
 `
 const CollectionTitle = styled.h1`
-  display: flex;
+  font-weight: bolder;
   text-transform: uppercase;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 `
 
 const CollectionDescription = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
 
   > p {
     text-align: center;
@@ -70,9 +75,8 @@ const CollectionDescription = styled.div`
     text-transform: uppercase;
     background-color: rgba(39, 37, 38, 0.8);
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.6);
-    margin-top: 1rem;
-    padding: 0.5rem;
-    border-radius: 8px;
+    padding: 1rem;
+    border-radius: 5%;
     text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
       -1px 1px #000;
   }
@@ -82,18 +86,20 @@ const CollectionListContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  padding: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
 `
 
 const CollectionListWrapper = styled.div`
-  width: 90%;
-  height: 80%;
+  width: 75%;
+  height: 75%;
   border: none;
   background: rgba(39, 37, 38, 0.9);
   box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
+  margin-bottom: 4rem;
 `
 
 const CollectionListItemContainer = styled.div`
@@ -120,53 +126,24 @@ const CollectionSearch = styled.input`
   }
 `
 
-const CollectionListItemWrapper = styled.div`
+const CollectionInfoWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
-
-  :hover {
-    cursor: pointer;
-  }
-`
-
-const CollectionItemNameWrapper = styled.div`
-  width: 70%;
-  font-size: 0.6rem;
-  text-wrap: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-weight: bolder;
-  text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
-    -1px 1px #000;
-`
-
-const CollectionCommunityName = styled.p`
-  color: rgba(158, 240, 26, 1);
-`
-
-const CollectionApprovedName = styled.p`
-  color: rgba(130, 106, 237, 1);
-`
-
-const CollectionItemIcon = styled.div`
-  width: 30%;
-  > img {
-    width: 50%;
-    height: 50%;
-    border: none;
-  }
+  justify-content: center;
 `
 
 export default function Collections({ setPageSection }: { setPageSection: (section: string) => void }) {
   return (
     <Wrapper>
       <CollectionsInfoContainer>
-        <CollectionTitle>WHO IS THE MIYAMAKER</CollectionTitle>
-        <ImageItem src={CollectionsImage} />
-        <CollectionDescription>
-          <p> MINT BY selecting a collection from the list at right</p>
-        </CollectionDescription>
+        <CollectionInfoWrapper>
+          <CollectionTitle>WHO IS THE MIYAMAKER</CollectionTitle>
+          <CollectionImage src={CollectionsImage} />
+          <CollectionDescription>
+            <p> MINT BY selecting a collection from the list at right</p>
+          </CollectionDescription>
+        </CollectionInfoWrapper>
         <ConnectButtonWrapper>
           <ConnectButton text="Exit" handleClick={() => console.log('click')}></ConnectButton>
           <ConnectButton
@@ -179,28 +156,16 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
         <CollectionListWrapper>
           <CollectionSearch type="text" placeholder="Search for collection..." />
           <CollectionListItemContainer>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CollectionListItemWrapper>
-                <CollectionItemIcon>
-                  <img src={NFT1} alt="NFT" />
-                </CollectionItemIcon>
-                <CollectionItemNameWrapper>
-                  <CollectionApprovedName>collection approved {index + 1}</CollectionApprovedName>
-                </CollectionItemNameWrapper>
-              </CollectionListItemWrapper>
-            ))}
-
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CollectionListItemWrapper>
-                <CollectionItemIcon>
-                  <img src={NFT2} alt="NFT" />
-                </CollectionItemIcon>
-                <CollectionItemNameWrapper>
-                  <CollectionCommunityName>
-                    collection community collection community {index + 1}
-                  </CollectionCommunityName>
-                </CollectionItemNameWrapper>
-              </CollectionListItemWrapper>
+            {Array.from({ length: 20 }).map((_, index) => (
+              <CollectionsItems
+                key={index}
+                collectionImage={index % 2 === 0 ? NFT1 : NFT2}
+                collectionName={
+                  index % 2 === 0 ? `approved collection ${index + 1}` : `community collection ${index + 1}`
+                }
+                isApprovedCollection={index % 2 === 0}
+                setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
+              ></CollectionsItems>
             ))}
           </CollectionListItemContainer>
         </CollectionListWrapper>
