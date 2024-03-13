@@ -1,11 +1,11 @@
-import styled from 'styled-components/macro'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-
 import CollectionsImage from 'assets/explorer/sample/collections.jpeg'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
+import styled from 'styled-components/macro'
+
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import NFT1 from '@/assets/explorer/sample/nft_1.png'
 import NFT2 from '@/assets/explorer/sample/nft_2.png'
+import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
 const Wrapper = styled.div`
   height: 100%;
