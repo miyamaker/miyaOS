@@ -1,9 +1,8 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import type { MouseEventHandler } from 'react'
 
-import { Button } from '@/pages/Auction/ProductDetail/ImagesList'
-
-import { HighlightButton } from '../../../components/Button'
+import { HighlightButton } from '@/components/Button'
+import { NormalButton } from '@/components/Button/NormalButton'
 
 export default function AuctionButton({
   handleBid,
@@ -16,9 +15,9 @@ export default function AuctionButton({
 }) {
   if (isConnected) {
     return (
-      <Button disabled={transacting} onClick={handleBid} style={{ padding: '0.7rem', fontSize: '0.65rem' }}>
+      <NormalButton disabled={transacting} onClick={handleBid} style={{ padding: '0.7rem', fontSize: '0.65rem' }}>
         {transacting ? 'Transacting...' : `Place bid`}
-      </Button>
+      </NormalButton>
     )
   }
 

@@ -52,7 +52,7 @@ const Headers = [
   // { title: 'Supply', width: '15%' },
 ]
 
-const ITEM_PER_PAGE = 6
+const ITEM_PER_PAGE = 4
 
 export default function CollectionsList({
   nfts,

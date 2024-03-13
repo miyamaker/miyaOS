@@ -22,21 +22,30 @@ const ImageDetail = styled.div`
   flex-direction: column;
   align-items: center;
 
-  > img {
-    border: none;
-  }
-
-  > img:hover {
-    border: none;
-  }
-
   > * + * {
     margin-top: 0.5rem;
   }
 `
 
-const Image = styled.img`
+const Wrapper = styled.div`
+  width: 100%;
   height: 80%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const Image = styled.img`
+  height: auto;
+  width: auto;
+  max-height: 100%;
+  max-width: 100%;
+  border: none;
+
+  :hover {
+    border: none;
+  }
 `
 
 const Description = styled.div`
@@ -62,7 +71,9 @@ export default function AuctionProduct({ tokenId, tokenURI }: { tokenId: number;
     <ProductWrapper>
       <ImageWrapper style={{ padding: '0.75rem', height: '80%' }}>
         <ImageDetail>
-          <Image src={image} alt={name} />
+          <Wrapper>
+            <Image src={image} alt={name} />
+          </Wrapper>
           <Description>{name}</Description>
           <Description>{getTokenAttribute(attributes, 'Artist')}</Description>
           {/* <Description> */}
