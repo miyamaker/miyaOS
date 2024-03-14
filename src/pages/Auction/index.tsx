@@ -1,22 +1,21 @@
 import WarningIcon from 'assets/icon/warning.png'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 import type { Address } from 'viem'
 import { mainnet, useNetwork } from 'wagmi'
 
-import CollectionsList from '@/components/CollectionsList'
-import ErrorWindow from '@/components/ErrorWindow'
-import ExplorerWrapper from '@/components/ExplorerWrapper'
-import ProductDetail from '@/components/ProductDetail'
-import { Button } from '@/components/ProductDetail/ImagesList'
-import ProductsList from '@/components/ProductsList'
+import { NormalButton } from '@/components/Button/NormalButton'
+import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import { AUCTION_CONTRACT } from '@/constants/contracts'
 import Pages from '@/constants/pages'
 import { useAccount } from '@/context/AccountProvider'
+import CollectionsList from '@/pages/Auction/CollectionsList'
 import { AUCTION_PAGE_SECTION, ERROR_MESSAGES } from '@/pages/Auction/constants'
+import ExplorerWrapper from '@/pages/Auction/ExplorerWrapper'
+import ProductDetail from '@/pages/Auction/ProductDetail'
+import ProductsList from '@/pages/Auction/ProductsList'
 import { useNFTsList } from '@/pages/Auction/useNFTsList'
 import { setNFTsList } from '@/store/collections/actions'
 import { useAppDispatch } from '@/store/hooks'
@@ -25,54 +24,6 @@ import type { PageKey } from '@/store/windows/reducer'
 
 const page = Pages.auction
 const pageId = page?.id as PageKey
-
-const ErrorWrapper = styled.div`
-  width: 50%;
-  height: 26%;
-  position: absolute;
-  top: 37%;
-  left: 25%;
-`
-const ErrorContent = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-const ErrorMessage = styled.div`
-  height: calc(200% / 3);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-
-  > img {
-    width: 3rem;
-    height: 3rem;
-    border: none;
-    margin: 0;
-  }
-
-  > div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-    overflow: scroll;
-  }
-
-  > * + * {
-    margin-left: 1rem;
-  }
-`
-const ErrorButton = styled.div`
-  height: calc(100% / 3);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
 export default function AuctionPage() {
   // Window mgmt
@@ -176,11 +127,11 @@ export default function AuctionPage() {
                   <img src={WarningIcon} alt="Error icon" />
                   <div>{errorMessage}</div>
                 </ErrorMessage>
-                <ErrorButton>
-                  <Button style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
+                <ErrorButtonWrapper>
+                  <NormalButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
                     OK
-                  </Button>
-                </ErrorButton>
+                  </NormalButton>
+                </ErrorButtonWrapper>
               </ErrorContent>
             </ErrorWindow>
           </ErrorWrapper>
