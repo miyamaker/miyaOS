@@ -3,6 +3,8 @@ import type { TextProps as TextPropsOriginal } from 'rebass'
 import { Text } from 'rebass'
 import type { DefaultTheme } from 'styled-components/macro'
 import styled, { createGlobalStyle, css, ThemeProvider as StyledComponentsThemeProvider } from 'styled-components/macro'
+import CaretUpIcon from 'assets/icon/caret_up.svg'
+import CaretDownIcon from 'assets/icon/caret_down.svg'
 
 import type { Colors } from './styled'
 
@@ -233,7 +235,7 @@ img:hover {
 }
 
 ::-webkit-scrollbar-button:vertical:start:decrement {
-  background-image: url('src/assets/icon/caret_up.svg');
+  background-image: url(${CaretUpIcon});
   background-size: 100%;
 }
 
@@ -247,6 +249,6 @@ img:hover {
 
 ::-webkit-scrollbar-button:vertical:end:increment {
   background-size: 100%;
-  background-image: url('src/assets/icon/caret_down.svg');
+  background-image: url(${CaretDownIcon});
 }
 `

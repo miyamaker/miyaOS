@@ -1,8 +1,8 @@
+import BackgroundImage from 'assets/explorer/background/background.png'
 import WarningIcon from 'assets/icon/warning.png'
 import { useState } from 'react'
-
 import styled from 'styled-components/macro'
-import BackgroundImage from 'assets/explorer/background/background.png'
+
 import { NormalButton } from '@/components/Button/NormalButton'
 import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
