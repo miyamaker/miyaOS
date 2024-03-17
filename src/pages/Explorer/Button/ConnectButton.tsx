@@ -20,6 +20,10 @@ const Button = styled.button`
   border-radius: 50%;
   box-shadow: 4px 2px #272526;
   cursor: pointer;
+
+  :hover {
+    filter: brightness(120%);
+  }
 `
 
 export default function ConnectButton({ text, handleClick }: { text: string; handleClick: () => void }) {

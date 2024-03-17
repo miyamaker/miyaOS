@@ -63,7 +63,7 @@ export default function ExplorerPage() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaExplorer Error')
-  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
+  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)
 
   const handleCloseErrorPopup = () => {
     setErrorName('MiyaExplorer Error')
@@ -73,14 +73,7 @@ export default function ExplorerPage() {
   const renderSection = () => {
     switch (pageSection) {
       case EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION:
-        return (
-          <Collections setPageSection={setPageSection}></Collections>
-          // <div>
-          //   <h1>Collections section</h1>
-          //   <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}>Collection detail</button>
-          //   <button onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>NFT detail</button>
-          // </div>
-        )
+        return <Collections setPageSection={setPageSection} closeWindow={close}></Collections>
       case EXPLORER_PAGE_SECTION.COLLECTION_SECTION:
         return <Collection setPageSection={setPageSection} />
       case EXPLORER_PAGE_SECTION.NFT_SECTION:

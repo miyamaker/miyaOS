@@ -258,6 +258,8 @@ export default function CollectionDetail({
             <p>Radbro Webring</p>
             <p>Radbro Webring</p>
             <p>Radbro Webring</p>
+            <p>Radbro Webring</p>
+            <p>Radbro Webring</p>
           </Dialog>
         </MintInfoWrapper>
       </MintDetail>

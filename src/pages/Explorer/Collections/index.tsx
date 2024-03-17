@@ -6,6 +6,7 @@ import NFT1 from '@/assets/explorer/sample/nft_1.png'
 import NFT2 from '@/assets/explorer/sample/nft_2.png'
 import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+
 import CollectionsItems from './CollectionsItems'
 
 const Wrapper = styled.div`
@@ -15,7 +16,6 @@ const Wrapper = styled.div`
   flex-direction: row;
 
   * {
-    font-family: Revalia;
     font-size: 0.8rem;
     line-height: 1rem;
   }
@@ -50,7 +50,6 @@ const CollectionImage = styled.img`
   width: 75%;
   height: 75%;
   object-fit: contain;
-  border: none;
   border-radius: 5%;
 
   :hover {
@@ -61,7 +60,7 @@ const CollectionTitle = styled.h1`
   font-weight: bolder;
   text-transform: uppercase;
   margin-bottom: 1rem;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 1);
 `
 
 const CollectionDescription = styled.div`
@@ -75,7 +74,7 @@ const CollectionDescription = styled.div`
     color: white;
     text-transform: uppercase;
     background-color: rgba(39, 37, 38, 0.8);
-    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
     padding: 1rem;
     border-radius: 5%;
     text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
@@ -98,17 +97,17 @@ const CollectionListWrapper = styled.div`
   width: 75%;
   height: 75%;
   border: none;
+  padding: 0.5rem;
   background: rgba(39, 37, 38, 0.9);
-  box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
   margin-bottom: 4rem;
 `
 
 const CollectionListItemContainer = styled.div`
   width: 100%;
-  height: 90%;
-  margin-bottom: 3rem;
+  height: calc(100% - 1.3rem);
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `
 
@@ -134,7 +133,13 @@ const CollectionInfoWrapper = styled.div`
   justify-content: center;
 `
 
-export default function Collections({ setPageSection }: { setPageSection: (section: string) => void }) {
+export default function Collections({
+  setPageSection,
+  closeWindow,
+}: {
+  setPageSection: (section: string) => void
+  closeWindow: () => void
+}) {
   return (
     <Wrapper>
       <CollectionsInfoContainer>
@@ -146,7 +151,7 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
           </CollectionDescription>
         </CollectionInfoWrapper>
         <ConnectButtonWrapper>
-          <ConnectButton text="Exit" handleClick={() => console.log('click')}></ConnectButton>
+          <ConnectButton text="Exit" handleClick={closeWindow}></ConnectButton>
           <ConnectButton
             text="Connect"
             handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
@@ -166,7 +171,7 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
                 }
                 isApprovedCollection={index % 2 === 0}
                 setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
-              ></CollectionsItems>
+              />
             ))}
           </CollectionListItemContainer>
         </CollectionListWrapper>

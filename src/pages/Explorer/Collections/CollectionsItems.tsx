@@ -1,24 +1,25 @@
-import CollectionsImage from 'assets/explorer/sample/collections.jpeg'
 import styled from 'styled-components/macro'
 
-import SearchIcon from '@/assets/explorer/icon/search.svg'
-import NFT1 from '@/assets/explorer/sample/nft_1.png'
-import NFT2 from '@/assets/explorer/sample/nft_2.png'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
 const CollectionListItemWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  cursor: pointer;
+
+  padding: 0.5rem;
+
+  > * + * {
+    margin-left: 0.5rem;
+  }
 
   :hover {
-    cursor: pointer;
+    background-color: rgba(39, 37, 38, 0.75);
   }
 `
 
 const CollectionItemNameWrapper = styled.div`
-  width: 70%;
+  width: 75%;
   font-size: 0.6rem;
   font-weight: bolder;
   text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
@@ -40,11 +41,14 @@ const CollectionCommunityName = styled.p`
 `
 
 const CollectionItemIcon = styled.div`
-  width: 30%;
+  width: 25%;
   > img {
-    width: 50%;
-    height: 50%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     border: none;
+    margin: 0;
   }
 `
 
@@ -59,13 +63,12 @@ export default function CollectionsItems({
   isApprovedCollection: boolean
   setPageSection: (section: string) => void
 }) {
-  console.log('CollectionsItems')
   return (
-    <CollectionListItemWrapper>
+    <CollectionListItemWrapper onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}>
       <CollectionItemIcon>
         <img src={collectionImage} alt="NFT" />
       </CollectionItemIcon>
-      <CollectionItemNameWrapper onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}>
+      <CollectionItemNameWrapper>
         {isApprovedCollection ? (
           <CollectionApprovedName>{collectionName}</CollectionApprovedName>
         ) : (

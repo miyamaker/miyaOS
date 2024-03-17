@@ -22,8 +22,8 @@ export default function Collection({ setPageSection }: { setPageSection: (sectio
   const { width } = useWindowSize()
   return (
     <CollectionContainer>
-      <CollectionDetail style={{ height: width > 640 ? '60%' : '65%' }} setPageSection={setPageSection} />
-      <RecentMint style={{ height: width > 640 ? '40%' : '35%' }} setPageSection={setPageSection} />
+      <CollectionDetail style={{ height: width > 640 ? '58%' : '65%' }} setPageSection={setPageSection} />
+      <RecentMint style={{ height: width > 640 ? '42%' : '35%' }} setPageSection={setPageSection} />
     </CollectionContainer>
   )
 }

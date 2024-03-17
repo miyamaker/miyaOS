@@ -175,7 +175,7 @@ export default function NFTDetail({ setPageSection }: { setPageSection: (section
         </MetadataWrapper>
       </DetailWrapper>
       <ButtonWrapper style={{ height: width > 640 ? '25%' : '15%' }}>
-        <ConnectButton text="Exit" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)} />
+        <ConnectButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)} />
       </ButtonWrapper>
     </Container>
   )

@@ -6,6 +6,7 @@ const Button = styled.button`
   background-image: url(${BackgroundButton});
   background-blend-mode: overlay;
   background-size: 100% 100%;
+  cursor: pointer;
 
   width: 30%;
   height: 25%;
@@ -19,6 +20,10 @@ const Button = styled.button`
   border: none;
   border-radius: 10px;
   box-shadow: 4px 6px #272526;
+
+  :hover {
+    filter: brightness(120%);
+  }
 `
 
 export default function MintButton({ text, className }: { text: string; className?: string }) {
