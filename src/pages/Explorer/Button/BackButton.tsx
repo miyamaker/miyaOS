@@ -7,14 +7,14 @@ const Button = styled.button`
   background-blend-mode: overlay;
   background-size: 100% 100%;
 
-  width: 75px;
-  height: 75px;
+  width: 5.5rem;
+  height: 5.5rem;
 
   color: white;
   text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
     -1px 1px #000;
   text-transform: uppercase;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
 
   border: none;
   border-radius: 50%;
@@ -26,6 +26,6 @@ const Button = styled.button`
   }
 `
 
-export default function ConnectButton({ text, handleClick }: { text: string; handleClick: () => void }) {
+export default function BackButton({ text, handleClick }: { text: string; handleClick: () => void }) {
   return <Button onClick={handleClick}>{text}</Button>
 }

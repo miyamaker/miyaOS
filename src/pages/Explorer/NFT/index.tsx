@@ -3,9 +3,8 @@ import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
 import Dialog from '@/components/Dialog'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
+import BackButton from '@/pages/Explorer/Button/BackButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-import { Component } from 'react'
 
 const Container = styled.div`
   height: 100%;
@@ -175,7 +174,7 @@ export default function NFTDetail({ setPageSection }: { setPageSection: (section
         </MetadataWrapper>
       </DetailWrapper>
       <ButtonWrapper style={{ height: width > 640 ? '25%' : '15%' }}>
-        <ConnectButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)} />
+        <BackButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)} />
       </ButtonWrapper>
     </Container>
   )

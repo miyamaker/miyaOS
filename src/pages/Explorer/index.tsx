@@ -2,6 +2,7 @@ import BackgroundImage from 'assets/explorer/background/background.png'
 import WarningIcon from 'assets/icon/warning.png'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
+import { useAccount } from 'wagmi'
 
 import { NormalButton } from '@/components/Button/NormalButton'
 import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
@@ -61,6 +62,8 @@ export default function ExplorerPage() {
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
 
+  const { isConnected } = useAccount()
+
   const [errorMessage, setErrorMessage] = useState('')
   const [errorName, setErrorName] = useState('MiyaExplorer Error')
   const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)
@@ -73,9 +76,9 @@ export default function ExplorerPage() {
   const renderSection = () => {
     switch (pageSection) {
       case EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION:
-        return <Collections setPageSection={setPageSection} closeWindow={close}></Collections>
+        return <Collections isConnected={isConnected} setPageSection={setPageSection} closeWindow={close}></Collections>
       case EXPLORER_PAGE_SECTION.COLLECTION_SECTION:
-        return <Collection setPageSection={setPageSection} />
+        return <Collection isConnected={isConnected} setPageSection={setPageSection} />
       case EXPLORER_PAGE_SECTION.NFT_SECTION:
         return <NFTDetail setPageSection={setPageSection} />
       default:

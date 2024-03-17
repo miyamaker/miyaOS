@@ -18,11 +18,21 @@ const CollectionContainer = styled.div`
   }
 `
 
-export default function Collection({ setPageSection }: { setPageSection: (section: string) => void }) {
+export default function Collection({
+  isConnected,
+  setPageSection,
+}: {
+  isConnected: boolean
+  setPageSection: (section: string) => void
+}) {
   const { width } = useWindowSize()
   return (
     <CollectionContainer>
-      <CollectionDetail style={{ height: width > 640 ? '58%' : '65%' }} setPageSection={setPageSection} />
+      <CollectionDetail
+        style={{ height: width > 640 ? '58%' : '65%' }}
+        isConnected={isConnected}
+        setPageSection={setPageSection}
+      />
       <RecentMint style={{ height: width > 640 ? '42%' : '35%' }} setPageSection={setPageSection} />
     </CollectionContainer>
   )

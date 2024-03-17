@@ -7,7 +7,8 @@ import type { CSSProperties } from 'react'
 import styled from 'styled-components/macro'
 
 import Dialog from '@/components/Dialog'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
+import BackButton from '@/pages/Explorer/Button/BackButton'
+import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
 import MintButton from '@/pages/Explorer/Button/MintButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
@@ -217,9 +218,11 @@ const socialLinks = [
 export default function CollectionDetail({
   style,
   setPageSection,
+  isConnected,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
+  isConnected: boolean
 }) {
   return (
     <Container style={style}>
@@ -240,8 +243,8 @@ export default function CollectionDetail({
           </SocialList>
         </ImageDetailWrapper>
         <ConnectButtonWrapper>
-          <ConnectButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
-          <ConnectButton text="Connect" handleClick={() => {}} />
+          <BackButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
+          <ConnectWalletButton isConnected={isConnected} />
         </ConnectButtonWrapper>
       </ImageDetailContainer>
       <MintDetail>

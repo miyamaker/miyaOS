@@ -4,7 +4,8 @@ import styled from 'styled-components/macro'
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import NFT1 from '@/assets/explorer/sample/nft_1.png'
 import NFT2 from '@/assets/explorer/sample/nft_2.png'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
+import BackButton from '@/pages/Explorer/Button/BackButton'
+import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
 import CollectionsItems from './CollectionsItems'
@@ -14,11 +15,6 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-
-  * {
-    font-size: 0.8rem;
-    line-height: 1rem;
-  }
 `
 
 const CollectionsInfoContainer = styled.div`
@@ -38,11 +34,6 @@ const ConnectButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  > button {
-    width: 90px;
-    height: 90px;
-  }
 `
 
 const CollectionImage = styled.img`
@@ -56,7 +47,7 @@ const CollectionImage = styled.img`
     border: none;
   }
 `
-const CollectionTitle = styled.h1`
+const CollectionTitle = styled.div`
   font-weight: bolder;
   text-transform: uppercase;
   margin-bottom: 1rem;
@@ -79,6 +70,7 @@ const CollectionDescription = styled.div`
     border-radius: 5%;
     text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
       -1px 1px #000;
+    font-size: 0.8rem;
   }
 `
 
@@ -136,9 +128,11 @@ const CollectionInfoWrapper = styled.div`
 export default function Collections({
   setPageSection,
   closeWindow,
+  isConnected,
 }: {
   setPageSection: (section: string) => void
   closeWindow: () => void
+  isConnected: boolean
 }) {
   return (
     <Wrapper>
@@ -151,11 +145,8 @@ export default function Collections({
           </CollectionDescription>
         </CollectionInfoWrapper>
         <ConnectButtonWrapper>
-          <ConnectButton text="Exit" handleClick={closeWindow}></ConnectButton>
-          <ConnectButton
-            text="Connect"
-            handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
-          ></ConnectButton>
+          <BackButton text="Exit" handleClick={closeWindow} />
+          <ConnectWalletButton isConnected={isConnected} />
         </ConnectButtonWrapper>
       </CollectionsInfoContainer>
       <CollectionListContainer>
