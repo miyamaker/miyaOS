@@ -7,6 +7,7 @@ import { useWaves } from '@/store/experience/hooks'
 
 // import { fs } from './webgl'
 import { fs } from './webgl'
+import { useClusterName } from '@/hooks/useClusterName'
 
 const GradientBlock = styled.div`
   position: absolute;
@@ -51,6 +52,7 @@ const OSInfo = styled.div`
 export default function Background() {
   const [waves] = useWaves()
   const { account, balance } = useAccount()
+  const clusterName = useClusterName(account?.address)
   const ens = useEnsName({ address: account?.address })
 
   return (
@@ -61,7 +63,7 @@ export default function Background() {
           <p>Version 1.0.0</p>
           {account?.isConnected && (
             <>
-              {ens.data && <p>{ens.data}</p>}
+              {clusterName ? <p>{clusterName}</p> : !!ens.data && <p>{ens.data}</p>}
               {balance && <p>{Number(balance.formatted).toFixed(3)} ETH</p>}
             </>
           )}

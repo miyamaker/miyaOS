@@ -20,6 +20,7 @@ import AccountProvider from './context/AccountProvider'
 import Router from './Router'
 import store from './store'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
+import ClustersProvider from './context/ClustersProvider'
 
 const { chains, publicClient } = configureChains([mainnet, goerli, sepolia], [publicProvider()], {
   pollingInterval: 10_000,
@@ -85,12 +86,14 @@ export default function App() {
       <Provider store={store}>
         <WagmiConfig config={wagmiClient}>
           <AccountProvider>
-            <RainbowKitProvider chains={chains} theme={readTheme}>
-              <ThemeProvider>
-                <ThemedGlobalStyle />
-                <Router />
-              </ThemeProvider>
-            </RainbowKitProvider>
+            <ClustersProvider>
+              <RainbowKitProvider chains={chains} theme={readTheme}>
+                <ThemeProvider>
+                  <ThemedGlobalStyle />
+                  <Router />
+                </ThemeProvider>
+              </RainbowKitProvider>
+            </ClustersProvider>
           </AccountProvider>
         </WagmiConfig>
       </Provider>

@@ -555,6 +555,11 @@
     call-me-maybe "^1.0.1"
     js-yaml "^4.1.0"
 
+"@clustersxyz/sdk@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@clustersxyz/sdk/-/sdk-0.1.6.tgz#afe1765825693230d2778896bd80c11a2bd5e0be"
+  integrity sha512-Bbjag6shUi1DRaf/C/AEGF3sAs8dOR9J3s/Ua4JVIL3sSZEEIBUvIlavyYg75MoPf7w+oyLmvRJ8nYhUv4f81A==
+
 "@coinbase/wallet-sdk@^3.6.6":
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.7.1.tgz#44b3b7a925ff5cc974e4cbf7a44199ffdcf03541"
