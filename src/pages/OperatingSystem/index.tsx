@@ -3,12 +3,14 @@ import MiyaLogo from 'assets/134321870.png'
 import Folder from 'assets/folder.png?preset=thumbnail&resize=true'
 import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
 import CreateNew from 'assets/miyamints1.png?preset=thumbnail&resize=true'
-import { Fragment, useEffect, useMemo } from 'react'
+import { debounce } from 'lodash'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
+import CustomBottomBar from '@/components/CustomBottomBar'
 import DynamicWrapper from '@/components/DynamicWrapper'
 import OsLoader from '@/components/OsLoader'
 import TaskBar from '@/components/TaskBar'
@@ -82,6 +84,7 @@ const AuctionPage = Pages.auction
 const ExplorerPage = Pages.explorer
 
 export default function OperatingSystem() {
+  const [bottomBarVisible, setBottomBarVisible] = useState(false)
   const location = useLocation()
   /* Responsiveness stuff */
   const { width, height } = useWindowSize()
@@ -110,6 +113,10 @@ export default function OperatingSystem() {
       })
     )
   }
+
+  const handleToggleBottomBar = debounce(() => {
+    setBottomBarVisible((prevVisible) => !prevVisible)
+  }, 300) // Adjust the debounce time as needed
 
   useEffect(() => {
     const page = Object.values(Pages).find((p) => p.path === location.pathname)
@@ -224,9 +231,20 @@ export default function OperatingSystem() {
               </div>
             </div>
           </div>
+          {bottomBarVisible && (
+            <CustomBottomBar
+              bottomBarVisible={bottomBarVisible}
+              setSelected={(selectedItem) => console.log(`Selected: ${selectedItem}`)}
+            />
+          )}
         </Icons>
       </Foreground>
-      <TaskBar active={windows} focus={zindex[zindex.length - 1]} onClick={(id) => handleTaskbar(id)} />
+      <TaskBar
+        active={windows}
+        focus={zindex[zindex.length - 1]}
+        onClick={(id) => handleTaskbar(id)}
+        toggleBottomBar={handleToggleBottomBar} // Pass the toggle function to TaskBar
+      />
       <FourthWall />
     </div>
   )
