@@ -23,7 +23,7 @@ export default function DynamicWrapper({ identifier }: { identifier: string }) {
         return <Manager />
       case 'auction':
         return <Auction />
-      case 'explorer':
+      case 'launchpad':
         return <Explorer />
       default:
         return <></>

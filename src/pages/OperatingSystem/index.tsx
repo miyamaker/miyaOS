@@ -79,7 +79,7 @@ const Icons = styled.div`
 const UploaderPage = Pages.uploader
 const ManagePage = Pages.manager
 const AuctionPage = Pages.auction
-const ExplorerPage = Pages.explorer
+const ExplorerPage = Pages.launchpad
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -179,7 +179,7 @@ export default function OperatingSystem() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen(ExplorerPage?.id as PageKey)}>
+                <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
                   MiyaNet
                   <br />
                   Explorer
@@ -220,6 +220,15 @@ export default function OperatingSystem() {
                   onClick={() => handleOpen(AuctionPage?.id as PageKey)}
                 >
                   {AuctionPage?.label}
+                </DesktopIcon>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
+                <DesktopIcon
+                  normalState={ExplorerPage?.icon?.src}
+                  onClick={() => handleOpen(ExplorerPage?.id as PageKey)}
+                >
+                  {ExplorerPage?.label}
                 </DesktopIcon>
               </div>
             </div>
