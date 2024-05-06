@@ -2,7 +2,7 @@ import MiyaLogo from 'assets/134321870.png?preset=icon&resize=true'
 import ExecutableIcon from 'assets/create_new.png?preset=icon&resize=true'
 import GearIcon from 'assets/executable_gear.png?preset=icon&resize=true'
 import AuctionIcon from 'assets/icon/auction.png?preset=icon&resize=true'
-import LaunchpadIcon from 'assets/launchpad_logo.webp?preset=icon&resize=true'
+import LaunchpadIcon from 'assets/launchpad_logo.png?preset=icon&resize=true'
 import ManageIcon from 'assets/miya_website_logo_2-removebg-preview.png?preset=icon&resize=true'
 import MintIcon from 'assets/miyamints1.png?preset=icon&resize=true'
 
