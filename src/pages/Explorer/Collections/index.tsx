@@ -1,12 +1,16 @@
+import { useQuery } from '@apollo/client'
 import CollectionsImage from 'assets/explorer/sample/collections.jpeg'
 import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import NFT1 from '@/assets/explorer/sample/nft_1.png'
 import NFT2 from '@/assets/explorer/sample/nft_2.png'
+import { Spinner } from '@/components/Spinner'
+import { GET_COLLECTIONS } from '@/gql/collections'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import type { Collection } from '@/pages/Explorer/types/collection'
 
 import CollectionsItems from './CollectionsItems'
 
@@ -134,6 +138,7 @@ export default function Collections({
   closeWindow: () => void
   isConnected: boolean
 }) {
+  const { loading, error, data } = useQuery(GET_COLLECTIONS, { variables: { skip: 0, first: 20 } })
   return (
     <Wrapper>
       <CollectionsInfoContainer>
@@ -153,17 +158,31 @@ export default function Collections({
         <CollectionListWrapper>
           <CollectionSearch type="text" placeholder="Search for collection..." />
           <CollectionListItemContainer>
-            {Array.from({ length: 20 }).map((_, index) => (
-              <CollectionsItems
-                key={index}
-                collectionImage={index % 2 === 0 ? NFT1 : NFT2}
-                collectionName={
-                  index % 2 === 0 ? `approved collection ${index + 1}` : `community collection ${index + 1}`
-                }
-                isApprovedCollection={index % 2 === 0}
-                setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
-              />
-            ))}
+            {loading || error ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: 'calc(100% - 1.3rem)',
+                }}
+              >
+                <Spinner />
+              </div>
+            ) : (
+              (data.collections as Collection[]).map((_, index) => (
+                <CollectionsItems
+                  key={index}
+                  collectionImage={index % 2 === 0 ? NFT1 : NFT2}
+                  collectionName={
+                    index % 2 === 0 ? `approved collection ${index + 1}` : `community collection ${index + 1}`
+                  }
+                  isApprovedCollection={index % 2 === 0}
+                  setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
+                />
+              ))
+            )}
           </CollectionListItemContainer>
         </CollectionListWrapper>
       </CollectionListContainer>

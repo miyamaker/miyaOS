@@ -10,6 +10,7 @@
     "generate:types": "json2ts -i './src/abis/**/*.json' "
   },
   "dependencies": {
+    "@apollo/client": "^3.10.4",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@irys/query": "^0.0.2",
     "@irys/sdk": "^0.0.4",
@@ -25,7 +26,7 @@
     "axios": "^1.3.3",
     "buffer": "^6.0.3",
     "filereader-stream": "^2.0.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-request": "^5.1.0",
     "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
