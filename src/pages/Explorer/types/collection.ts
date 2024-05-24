@@ -1,15 +1,10 @@
 type Collection = {
-  id: string
-  creator: string
-  owner: string
-  collection: string
-  aligned: string
-  blockNumberCreated: number
-  blockTimestampCreated: number
-  transactionHashCreated: string
-  blockNumberUpdated: number
-  blockTimestampUpdated: number
-  transactionHashUpdated: string
+  name: string
+  symbol: string
+  address: string
+  createdAt: string
+  metadataUri: string
+  totalSupply: number
 }
 
 export type { Collection }

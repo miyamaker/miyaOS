@@ -9,10 +9,11 @@ import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapp
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
-import Collection from '@/pages/Explorer/Collection'
+import CollectionInfo from '@/pages/Explorer/Collection'
 import Collections from '@/pages/Explorer/Collections'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import NFTDetail from '@/pages/Explorer/NFT'
+import type { Collection } from '@/pages/Explorer/types/collection'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
@@ -64,21 +65,44 @@ export default function ExplorerPage() {
 
   const { isConnected } = useAccount()
 
-  const [errorMessage, setErrorMessage] = useState('')
-  const [errorName, setErrorName] = useState('MiyaExplorer Error')
-  const [pageSection, setPageSection] = useState(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+  const [errorName, setErrorName] = useState<string>('MiyaLaunchpad Error')
+  const [pageSection, setPageSection] = useState<string>(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)
+  const [selectedCollection, setSelectedCollection] = useState<Collection>({
+    name: '',
+    metadataUri: '',
+    address: '',
+    createdAt: '',
+    symbol: '',
+    totalSupply: 0,
+  })
 
   const handleCloseErrorPopup = () => {
-    setErrorName('MiyaExplorer Error')
+    setErrorName('MiyaLaunchpad Error')
     setErrorMessage('')
   }
 
   const renderSection = () => {
     switch (pageSection) {
       case EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION:
-        return <Collections isConnected={isConnected} setPageSection={setPageSection} closeWindow={close}></Collections>
+        return (
+          <Collections
+            isConnected={isConnected}
+            setPageSection={setPageSection}
+            closeWindow={close}
+            setSelectedCollection={setSelectedCollection}
+          />
+        )
       case EXPLORER_PAGE_SECTION.COLLECTION_SECTION:
-        return <Collection isConnected={isConnected} setPageSection={setPageSection} />
+        return (
+          <CollectionInfo
+            setErrorMessage={setErrorMessage}
+            setErrorName={setErrorName}
+            isConnected={isConnected}
+            setPageSection={setPageSection}
+            selectedCollection={selectedCollection}
+          />
+        )
       case EXPLORER_PAGE_SECTION.NFT_SECTION:
         return <NFTDetail setPageSection={setPageSection} />
       default:

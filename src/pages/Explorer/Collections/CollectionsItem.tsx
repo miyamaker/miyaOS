@@ -1,6 +1,9 @@
 import styled from 'styled-components/macro'
 
+import SampleImage from '@/assets/explorer/sample/nft_2.png'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import type { Collection } from '@/pages/Explorer/types/collection'
+import { useContractMetadata } from '@/pages/Explorer/useContractMetadata'
 
 const CollectionListItemWrapper = styled.div`
   display: flex;
@@ -24,6 +27,7 @@ const CollectionItemNameWrapper = styled.div`
   font-weight: bolder;
   text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
     -1px 1px #000;
+
   > p {
     text-wrap: nowrap;
     text-overflow: ellipsis;
@@ -36,12 +40,9 @@ const CollectionApprovedName = styled.p`
   color: rgba(130, 106, 237, 1);
 `
 
-const CollectionCommunityName = styled.p`
-  color: rgba(158, 240, 26, 1);
-`
-
 const CollectionItemIcon = styled.div`
   width: 25%;
+
   > img {
     width: auto;
     height: auto;
@@ -52,28 +53,21 @@ const CollectionItemIcon = styled.div`
   }
 `
 
-export default function CollectionsItems({
-  collectionImage,
-  collectionName,
-  isApprovedCollection,
-  setPageSection,
+export default function CollectionsItem({
+  collection,
+  handleClick,
 }: {
-  collectionImage: string
-  collectionName: string
-  isApprovedCollection: boolean
-  setPageSection: (section: string) => void
+  collection: Collection
+  handleClick: () => void
 }) {
+  const { image } = useContractMetadata({ metadataUri: collection.metadataUri })
   return (
-    <CollectionListItemWrapper onClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}>
+    <CollectionListItemWrapper onClick={handleClick}>
       <CollectionItemIcon>
-        <img src={collectionImage} alt="NFT" />
+        <img src={image || SampleImage} alt={collection.name} />
       </CollectionItemIcon>
       <CollectionItemNameWrapper>
-        {isApprovedCollection ? (
-          <CollectionApprovedName>{collectionName}</CollectionApprovedName>
-        ) : (
-          <CollectionCommunityName>{collectionName}</CollectionCommunityName>
-        )}
+        <CollectionApprovedName>{collection.name}</CollectionApprovedName>
       </CollectionItemNameWrapper>
     </CollectionListItemWrapper>
   )

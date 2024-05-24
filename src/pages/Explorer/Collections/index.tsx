@@ -3,16 +3,13 @@ import CollectionsImage from 'assets/explorer/sample/collections.jpeg'
 import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
-import NFT1 from '@/assets/explorer/sample/nft_1.png'
-import NFT2 from '@/assets/explorer/sample/nft_2.png'
 import { Spinner } from '@/components/Spinner'
 import { GET_COLLECTIONS } from '@/gql/collections'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
+import CollectionsItem from '@/pages/Explorer/Collections/CollectionsItem'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import type { Collection } from '@/pages/Explorer/types/collection'
-
-import CollectionsItems from './CollectionsItems'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -133,12 +130,20 @@ export default function Collections({
   setPageSection,
   closeWindow,
   isConnected,
+  setSelectedCollection,
 }: {
   setPageSection: (section: string) => void
   closeWindow: () => void
   isConnected: boolean
+  setSelectedCollection: (collection: Collection) => void
 }) {
-  const { loading, error, data } = useQuery(GET_COLLECTIONS, { variables: { skip: 0, first: 20 } })
+  const { loading, error, data } = useQuery(GET_COLLECTIONS, { variables: { offset: 0, limit: 20 } })
+
+  const handleClickCollection = (collection: Collection) => {
+    setSelectedCollection(collection)
+    setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
+  }
+
   return (
     <Wrapper>
       <CollectionsInfoContainer>
@@ -171,15 +176,11 @@ export default function Collections({
                 <Spinner />
               </div>
             ) : (
-              (data.collections as Collection[]).map((_, index) => (
-                <CollectionsItems
+              (data.Collection as Collection[]).map((collection, index) => (
+                <CollectionsItem
                   key={index}
-                  collectionImage={index % 2 === 0 ? NFT1 : NFT2}
-                  collectionName={
-                    index % 2 === 0 ? `approved collection ${index + 1}` : `community collection ${index + 1}`
-                  }
-                  isApprovedCollection={index % 2 === 0}
-                  setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
+                  collection={collection}
+                  handleClick={() => handleClickCollection(collection)}
                 />
               ))
             )}

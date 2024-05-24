@@ -59,10 +59,13 @@ export function useNFT({ address }: { address: Address }) {
     return { name: '', symbol: '', description: '', image: '', externalLink: '', collaborators: [] }
   }
 
-  let imageUri = (contractMetadata?.image || '').replace('ipfs://', '')
-  const cid = imageUri.split('/')[0]
-  const imageFile = imageUri.split('/')[1]
-  imageUri = `https://${cid}.ipfs.nftstorage.link/${imageFile}`
+  let imageUri = contractMetadata?.image || ''
+  if (imageUri.includes('ipfs://')) {
+    imageUri = (contractMetadata?.image || '').replace('ipfs://', '')
+    const cid = imageUri.split('/')[0]
+    const imageFile = imageUri.split('/')[1]
+    imageUri = `https://${cid}.ipfs.nftstorage.link/${imageFile}`
+  }
 
   return {
     name: contractMetadata?.name || '',

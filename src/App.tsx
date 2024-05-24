@@ -81,7 +81,7 @@ const wagmiClient = createConfig({
 })
 
 const client = new ApolloClient({
-  uri: import.meta.env.VITE_SUBGRAPH_URL,
+  uri: import.meta.env.VITE_GRAPHQL_URL,
   cache: new InMemoryCache(),
 })
 

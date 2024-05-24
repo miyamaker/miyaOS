@@ -3,6 +3,7 @@ import { useWindowSize } from 'usehooks-ts'
 
 import CollectionDetail from '@/pages/Explorer/Collection/CollectionDetail'
 import RecentMint from '@/pages/Explorer/RecentMint'
+import type { Collection } from '@/pages/Explorer/types/collection'
 
 const CollectionContainer = styled.div`
   height: 100%;
@@ -18,12 +19,18 @@ const CollectionContainer = styled.div`
   }
 `
 
-export default function Collection({
+export default function CollectionInfo({
   isConnected,
   setPageSection,
+  selectedCollection,
+  setErrorMessage,
+  setErrorName,
 }: {
   isConnected: boolean
   setPageSection: (section: string) => void
+  selectedCollection: Collection
+  setErrorMessage: (value: string) => void
+  setErrorName: (value: string) => void
 }) {
   const { width } = useWindowSize()
   return (
@@ -32,6 +39,9 @@ export default function Collection({
         style={{ height: width > 640 ? '58%' : '65%' }}
         isConnected={isConnected}
         setPageSection={setPageSection}
+        selectedCollection={selectedCollection}
+        setErrorMessage={setErrorMessage}
+        setErrorName={setErrorName}
       />
       <RecentMint style={{ height: width > 640 ? '42%' : '35%' }} setPageSection={setPageSection} />
     </CollectionContainer>

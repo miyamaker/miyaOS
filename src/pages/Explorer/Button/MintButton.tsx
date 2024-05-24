@@ -26,6 +26,20 @@ const Button = styled.button`
   }
 `
 
-export default function MintButton({ text, className }: { text: string; className?: string }) {
-  return <Button className={className}>{text}</Button>
+export default function MintButton({
+  disabled,
+  text,
+  className,
+  onClick,
+}: {
+  disabled?: boolean
+  text: string
+  className?: string
+  onClick?: () => void
+}) {
+  return (
+    <Button disabled={disabled} className={className} onClick={onClick}>
+      {text}
+    </Button>
+  )
 }
