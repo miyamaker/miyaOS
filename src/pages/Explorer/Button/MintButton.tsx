@@ -24,6 +24,10 @@ const Button = styled.button`
   :hover {
     filter: brightness(120%);
   }
+  :disabled {
+    cursor: not-allowed;
+    filter: brightness(60%);
+  }
 `
 
 export default function MintButton({

@@ -262,6 +262,8 @@ export default function CollectionDetail({
   selectedCollection,
   setErrorMessage,
   setErrorName,
+  setToggleFetchRecentMint,
+  toggleFetchRecentMint,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
@@ -269,6 +271,8 @@ export default function CollectionDetail({
   selectedCollection: Collection
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
+  setToggleFetchRecentMint: (value: boolean) => void
+  toggleFetchRecentMint: boolean
 }) {
   const [freeMintAmount, setFreeMintAmount] = useState<number>(1)
   const [payMintAmount, setPayMintAmount] = useState<number>(1)
@@ -289,10 +293,12 @@ export default function CollectionDetail({
     onSuccess: () => {
       setTransacting(false)
       setTxHash('')
+      setToggleFetchRecentMint(!toggleFetchRecentMint)
     },
     onReplaced: () => {
       setTransacting(false)
       setTxHash('')
+      setToggleFetchRecentMint(!toggleFetchRecentMint)
     },
   })
 
@@ -308,6 +314,7 @@ export default function CollectionDetail({
       setTxHash(result.hash)
     } catch (e) {
       setTransacting(false)
+      setToggleFetchRecentMint(!toggleFetchRecentMint)
       // warn message
       setErrorMessage(get(e, 'shortMessage') || '')
       setErrorName(get(e, 'name') || '')
@@ -387,7 +394,7 @@ export default function CollectionDetail({
               <p>{description}</p>
             ) : (
               <p
-                style={{ display: 'flex', width: '95%', height: '84%', justifyContent: 'center', alignItems: 'center' }}
+                style={{ display: 'flex', width: '95%', height: '83%', justifyContent: 'center', alignItems: 'center' }}
               >
                 Have no Description
               </p>

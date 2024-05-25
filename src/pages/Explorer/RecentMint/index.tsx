@@ -51,18 +51,20 @@ export default function RecentMint({
   setPageSection,
   selectedCollection,
   setSelectedToken,
+  toggleFetchRecentMint,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
   selectedCollection: Collection
   setSelectedToken: (token: Token) => void
+  toggleFetchRecentMint: boolean
 }) {
   const [currentCounter, setCurrentCounter] = useState<number>(1)
   const [isEndPage, setIsEndPage] = useState<boolean>(true)
 
   const { address } = useAccount()
 
-  const { loading, error, data } = useQuery(GET_NFTS_OF_USER, {
+  const { loading, error, data, refetch } = useQuery(GET_NFTS_OF_USER, {
     variables: {
       offset: (currentCounter - 1) * ITEM_PER_PAGE,
       limit: ITEM_PER_PAGE,
@@ -80,6 +82,10 @@ export default function RecentMint({
       }
     }
   }, [data])
+
+  useEffect(() => {
+    refetch()
+  }, [toggleFetchRecentMint])
 
   return (
     <Container style={style}>

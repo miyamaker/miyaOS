@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
@@ -35,10 +36,14 @@ export default function CollectionInfo({
   setErrorName: (value: string) => void
   setSelectedToken: (value: Token) => void
 }) {
+  const [toggleFetchRecentMint, setToggleFetchRecentMint] = useState<boolean>(false)
+
   const { width } = useWindowSize()
   return (
     <CollectionContainer>
       <CollectionDetail
+        setToggleFetchRecentMint={setToggleFetchRecentMint}
+        toggleFetchRecentMint={toggleFetchRecentMint}
         style={{ height: width > 640 ? '58%' : '65%' }}
         isConnected={isConnected}
         setPageSection={setPageSection}
@@ -47,6 +52,7 @@ export default function CollectionInfo({
         setErrorName={setErrorName}
       />
       <RecentMint
+        toggleFetchRecentMint={toggleFetchRecentMint}
         style={{ height: width > 640 ? '42%' : '35%' }}
         setPageSection={setPageSection}
         selectedCollection={selectedCollection}
