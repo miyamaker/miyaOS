@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
+import type { Token } from '@/pages/Explorer'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import { useTokenMetadata } from '@/pages/Explorer/useTokenMetadata'
 
@@ -49,15 +50,29 @@ export default function NFTItem({
   tokenId,
   collectionAddress,
   setPageSection,
+  setSelectedToken,
 }: {
   tokenId: string
   collectionAddress: string
   setPageSection: (section: string) => void
+  setSelectedToken: (token: Token) => void
 }) {
-  const { name, image, description, attributes } = useTokenMetadata({ address: collectionAddress as Address, tokenId })
+  const { name, image, description, attributes, externalURL } = useTokenMetadata({
+    address: collectionAddress as Address,
+    tokenId,
+  })
+
+  const handleClick = () => {
+    setSelectedToken({
+      tokenId,
+      collectionAddress,
+      metadata: { name, image, description, attributes, external_url: externalURL },
+    })
+    setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)
+  }
 
   return (
-    <Container onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>
+    <Container onClick={handleClick}>
       <Wrapper>
         <ImageWrapper>
           <Image src={image} alt={name} />

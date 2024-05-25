@@ -5,6 +5,7 @@ import styled from 'styled-components/macro'
 import { useAccount } from 'wagmi'
 
 import { Spinner } from '@/components/Spinner'
+import type { Token } from '@/pages/Explorer'
 import { GET_NFTS_OF_USER } from '@/pages/Explorer/gql/NFTs'
 import NFTItem from '@/pages/Explorer/RecentMint/NFTItem'
 import Pagination from '@/pages/Explorer/RecentMint/Pagination'
@@ -49,10 +50,12 @@ export default function RecentMint({
   style,
   setPageSection,
   selectedCollection,
+  setSelectedToken,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
   selectedCollection: Collection
+  setSelectedToken: (token: Token) => void
 }) {
   const [currentCounter, setCurrentCounter] = useState<number>(1)
   const [isEndPage, setIsEndPage] = useState<boolean>(true)
@@ -102,6 +105,7 @@ export default function RecentMint({
                 tokenId={token_id}
                 key={index}
                 setPageSection={setPageSection}
+                setSelectedToken={setSelectedToken}
               />
             ))}
           </NFTList>

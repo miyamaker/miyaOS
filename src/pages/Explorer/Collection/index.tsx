@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
+import type { Token } from '@/pages/Explorer'
 import CollectionDetail from '@/pages/Explorer/Collection/CollectionDetail'
 import RecentMint from '@/pages/Explorer/RecentMint'
 import type { Collection } from '@/pages/Explorer/types/collection'
@@ -25,12 +26,14 @@ export default function CollectionInfo({
   selectedCollection,
   setErrorMessage,
   setErrorName,
+  setSelectedToken,
 }: {
   isConnected: boolean
   setPageSection: (section: string) => void
   selectedCollection: Collection
   setErrorMessage: (value: string) => void
   setErrorName: (value: string) => void
+  setSelectedToken: (value: Token) => void
 }) {
   const { width } = useWindowSize()
   return (
@@ -47,6 +50,7 @@ export default function CollectionInfo({
         style={{ height: width > 640 ? '42%' : '35%' }}
         setPageSection={setPageSection}
         selectedCollection={selectedCollection}
+        setSelectedToken={setSelectedToken}
       />
     </CollectionContainer>
   )

@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
 import Dialog from '@/components/Dialog'
-import type { NFT } from '@/pages/Explorer'
+import type { Token } from '@/pages/Explorer'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
@@ -136,7 +136,7 @@ export default function NFTDetail({
   selectedToken,
 }: {
   setPageSection: (section: string) => void
-  selectedToken: NFT
+  selectedToken: Token
 }) {
   const { width } = useWindowSize()
   return (

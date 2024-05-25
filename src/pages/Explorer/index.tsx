@@ -14,10 +14,10 @@ import Collections from '@/pages/Explorer/Collections'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 import NFTDetail from '@/pages/Explorer/NFT'
 import type { Collection } from '@/pages/Explorer/types/collection'
+import type { TokenMetadata } from '@/store/collections/reducer'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
-import { TokenMetadata } from '@/store/collections/reducer'
 
 const page = Pages.explorer
 const pageId = page?.id as PageKey
@@ -58,10 +58,10 @@ const Container = styled.div`
   height: 100%;
 `
 
-export type NFT = {
+export type Token = {
   metadata: TokenMetadata
   tokenId: string
-  collection: Collection
+  collectionAddress: string
 }
 
 export default function ExplorerPage() {
@@ -83,7 +83,7 @@ export default function ExplorerPage() {
     symbol: '',
     totalSupply: 0,
   })
-  const [selectedToken, setSelectedToken] = useState<NFT>({
+  const [selectedToken, setSelectedToken] = useState<Token>({
     metadata: {
       name: '',
       description: '',
@@ -92,14 +92,7 @@ export default function ExplorerPage() {
       attributes: [],
     },
     tokenId: '',
-    collection: {
-      name: '',
-      metadataUri: '',
-      address: '',
-      createdAt: '',
-      symbol: '',
-      totalSupply: 0,
-    },
+    collectionAddress: '',
   })
 
   const handleCloseErrorPopup = () => {
@@ -126,6 +119,7 @@ export default function ExplorerPage() {
             isConnected={isConnected}
             setPageSection={setPageSection}
             selectedCollection={selectedCollection}
+            setSelectedToken={setSelectedToken}
           />
         )
       case EXPLORER_PAGE_SECTION.NFT_SECTION:
