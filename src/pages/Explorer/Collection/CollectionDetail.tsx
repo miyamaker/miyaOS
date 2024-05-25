@@ -12,7 +12,16 @@ import type { Address } from 'viem'
 import { formatUnits } from 'viem'
 import { useWaitForTransaction } from 'wagmi'
 
+import { NormalButton } from '@/components/Button/NormalButton'
 import Dialog from '@/components/Dialog'
+import {
+  NotificationButtonWrapper,
+  NotificationContent,
+  NotificationMessage,
+  NotificationWindow,
+  NotificationWrapper,
+} from '@/components/Notification'
+import { Spinner } from '@/components/Spinner'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
 import MintButton from '@/pages/Explorer/Button/MintButton'
@@ -193,6 +202,7 @@ const MintInputContainer = styled.div`
 const MintInputWrapper = styled.div`
   display: flex;
   width: 100%;
+
   > * + * {
     margin-left: 0.5rem;
   }
@@ -205,9 +215,11 @@ const Label = styled.div`
 const MintPriceDetail = styled.div`
   display: flex;
   font-size: 0.65rem;
+
   > * + * {
     margin-left: 0.5rem;
   }
+
   > span {
     color: #fff;
     text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
@@ -274,10 +286,12 @@ export default function CollectionDetail({
   setToggleFetchRecentMint: (value: boolean) => void
   toggleFetchRecentMint: boolean
 }) {
+  const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false)
   const [freeMintAmount, setFreeMintAmount] = useState<number>(1)
   const [payMintAmount, setPayMintAmount] = useState<number>(1)
   const [transacting, setTransacting] = useState<boolean>(false)
   const [txHash, setTxHash] = useState<string>('')
+  const [hash, setHash] = useState<string>('')
 
   const { image, description } = useContractMetadata({ metadataUri: selectedCollection.metadataUri })
   const { price } = useNFTPrice({ address: selectedCollection.address as Address })
@@ -309,11 +323,14 @@ export default function CollectionDetail({
   const handlePayMint = async () => {
     if (!isConnected) return
     setTransacting(true)
+    setIsOpenNotification(true)
     try {
       const result = await mint(payMintAmount)
       setTxHash(result.hash)
+      setHash(result.hash)
     } catch (e) {
       setTransacting(false)
+      setIsOpenNotification(false)
       setToggleFetchRecentMint(!toggleFetchRecentMint)
       // warn message
       setErrorMessage(get(e, 'shortMessage') || '')
@@ -321,87 +338,132 @@ export default function CollectionDetail({
     }
   }
 
+  const handleClose = () => {
+    if (transacting) return
+    setIsOpenNotification(false)
+  }
+
   return (
-    <Container style={style}>
-      <ImageDetailContainer>
-        <CollectionName>{selectedCollection ? selectedCollection.name : 'RADBRO WEBRING'}</CollectionName>
-        <ImageDetailWrapper>
-          <ImageDetailGroup>
-            <ImageWrapper>
-              <CollectionImage
-                src={image || NFTImage}
-                alt={selectedCollection ? selectedCollection.name : 'RADBRO WEBRING'}
-              />
-            </ImageWrapper>
-          </ImageDetailGroup>
-          {/* <SocialList> */}
-          {/*  {socialLinks.map(({ name, image, link }, index) => ( */}
-          {/*    <SocialItem href={link} target="_blank" key={index}> */}
-          {/*      <Icon src={image} alt={name} /> */}
-          {/*    </SocialItem> */}
-          {/*  ))} */}
-          {/* </SocialList> */}
-        </ImageDetailWrapper>
-        <ConnectButtonWrapper>
-          <BackButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
-          <ConnectWalletButton isConnected={isConnected} />
-        </ConnectButtonWrapper>
-      </ImageDetailContainer>
-      <MintDetail>
-        <MintWrapper>
-          <MintInputContainer>
-            <Label>Free Mint</Label>
-            <MintPriceDetail>
-              <span>{freeMintAmount}</span>
-              <span>*</span>
-              <span>0</span>
-              <span>=</span>
-              <span style={{ color: '#00ba7c' }}>0 ETH</span>
-            </MintPriceDetail>
-            <MintInputWrapper>
-              <MintInput
-                type="number"
-                min={1}
-                value={freeMintAmount}
-                onChange={(e) => setFreeMintAmount(Number(e.target.value))}
-              />
-              <Button text={'Mint'} />
-            </MintInputWrapper>
-          </MintInputContainer>
-          <MintInputContainer>
-            <Label>Pay Mint</Label>
-            <MintPriceDetail>
-              <span>{payMintAmount}</span>
-              <span>*</span>
-              <span>{formatUnits(price, 18)}</span>
-              <span>=</span>
-              <span style={{ color: '#00ba7c' }}>{calculateTotalPayment()} ETH</span>
-            </MintPriceDetail>
-            <MintInputWrapper>
-              <MintInput
-                type="number"
-                min={1}
-                value={payMintAmount}
-                onChange={(e) => setPayMintAmount(Number(e.target.value))}
-              />
-              <Button disabled={transacting} text={transacting ? 'Minting...' : `Mint`} onClick={handlePayMint} />
-            </MintInputWrapper>
-          </MintInputContainer>
-        </MintWrapper>
-        <MintInfoWrapper>
-          <Dialog>
-            {description ? (
-              <p>{description}</p>
-            ) : (
-              <p
-                style={{ display: 'flex', width: '95%', height: '83%', justifyContent: 'center', alignItems: 'center' }}
-              >
-                Have no Description
-              </p>
-            )}
-          </Dialog>
-        </MintInfoWrapper>
-      </MintDetail>
-    </Container>
+    <>
+      <Container style={style}>
+        <ImageDetailContainer>
+          <CollectionName>{selectedCollection ? selectedCollection.name : 'RADBRO WEBRING'}</CollectionName>
+          <ImageDetailWrapper>
+            <ImageDetailGroup>
+              <ImageWrapper>
+                <CollectionImage
+                  src={image || NFTImage}
+                  alt={selectedCollection ? selectedCollection.name : 'RADBRO WEBRING'}
+                />
+              </ImageWrapper>
+            </ImageDetailGroup>
+            {/* <SocialList> */}
+            {/*  {socialLinks.map(({ name, image, link }, index) => ( */}
+            {/*    <SocialItem href={link} target="_blank" key={index}> */}
+            {/*      <Icon src={image} alt={name} /> */}
+            {/*    </SocialItem> */}
+            {/*  ))} */}
+            {/* </SocialList> */}
+          </ImageDetailWrapper>
+          <ConnectButtonWrapper>
+            <BackButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
+            <ConnectWalletButton isConnected={isConnected} />
+          </ConnectButtonWrapper>
+        </ImageDetailContainer>
+        <MintDetail>
+          <MintWrapper>
+            <MintInputContainer>
+              <Label>Free Mint</Label>
+              <MintPriceDetail>
+                <span>{freeMintAmount}</span>
+                <span>*</span>
+                <span>0</span>
+                <span>=</span>
+                <span style={{ color: '#00ba7c' }}>0 ETH</span>
+              </MintPriceDetail>
+              <MintInputWrapper>
+                <MintInput
+                  type="number"
+                  min={1}
+                  value={freeMintAmount}
+                  onChange={(e) => setFreeMintAmount(Number(e.target.value))}
+                />
+                <Button text={'Mint'} />
+              </MintInputWrapper>
+            </MintInputContainer>
+            <MintInputContainer>
+              <Label>Pay Mint</Label>
+              <MintPriceDetail>
+                <span>{payMintAmount}</span>
+                <span>*</span>
+                <span>{formatUnits(price, 18)}</span>
+                <span>=</span>
+                <span style={{ color: '#00ba7c' }}>{calculateTotalPayment()} ETH</span>
+              </MintPriceDetail>
+              <MintInputWrapper>
+                <MintInput
+                  type="number"
+                  min={1}
+                  value={payMintAmount}
+                  onChange={(e) => setPayMintAmount(Number(e.target.value))}
+                />
+                <Button disabled={transacting} text={transacting ? 'Minting...' : `Mint`} onClick={handlePayMint} />
+              </MintInputWrapper>
+            </MintInputContainer>
+          </MintWrapper>
+          <MintInfoWrapper>
+            <Dialog>
+              {description ? (
+                <p>{description}</p>
+              ) : (
+                <p
+                  style={{
+                    display: 'flex',
+                    width: '95%',
+                    height: '83%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Have no Description
+                </p>
+              )}
+            </Dialog>
+          </MintInfoWrapper>
+        </MintDetail>
+      </Container>
+      {isOpenNotification && (
+        <NotificationWrapper>
+          <NotificationWindow notificationLabel="Minting..." handleClose={handleClose}>
+            <NotificationContent>
+              {transacting ? (
+                <>
+                  <NotificationMessage>
+                    <Spinner width="32px" />
+                    <div>Transaction has been submit. Please wait!</div>
+                  </NotificationMessage>
+                </>
+              ) : (
+                <>
+                  <NotificationMessage>
+                    <div>
+                      <div style={{ paddingRight: '0.5rem' }}>Mint success!</div>
+                      <a href={`https://sepolia.etherscan.io/tx/${hash}`} target="_blank" rel="noreferrer noopener">
+                        Go to scan
+                      </a>
+                    </div>
+                  </NotificationMessage>
+                  <NotificationButtonWrapper>
+                    <NormalButton style={{ width: '30%' }} onClick={() => setIsOpenNotification(false)}>
+                      OK
+                    </NormalButton>
+                  </NotificationButtonWrapper>
+                </>
+              )}
+            </NotificationContent>
+          </NotificationWindow>
+        </NotificationWrapper>
+      )}
+    </>
   )
 }
