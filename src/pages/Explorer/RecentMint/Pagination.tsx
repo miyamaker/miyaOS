@@ -45,11 +45,11 @@ const Counter = styled.div`
 `
 
 export default function Pagination({
-  totalPages,
+  isEndPage,
   currentPage,
   setCurrentCounter,
 }: {
-  totalPages: number
+  isEndPage: boolean
   currentPage: number
   setCurrentCounter: (counter: number) => void
 }) {
@@ -63,19 +63,15 @@ export default function Pagination({
         previousButtonRef.current.disabled = false
       }
 
-      if (current < totalPages) {
+      if (!isEndPage) {
         current += 1
         setCurrentCounter(current)
-      }
-
-      if (current === totalPages && nextButtonRef.current) {
-        nextButtonRef.current.disabled = true
       }
 
       return
     }
 
-    if (current === totalPages && nextButtonRef.current) {
+    if (!isEndPage && nextButtonRef.current) {
       nextButtonRef.current.disabled = false
     }
 
@@ -83,17 +79,19 @@ export default function Pagination({
       current -= 1
       setCurrentCounter(current)
     }
-
-    if (current === 1 && previousButtonRef.current) {
-      previousButtonRef.current.disabled = true
-    }
   }
 
   useEffect(() => {
-    if (previousButtonRef.current) {
+    if (nextButtonRef.current && isEndPage) {
+      nextButtonRef.current.disabled = true
+    }
+  }, [isEndPage])
+
+  useEffect(() => {
+    if (previousButtonRef.current && currentPage === 1) {
       previousButtonRef.current.disabled = true
     }
-  }, [])
+  }, [currentPage])
 
   return (
     <PaginateWrapper>
@@ -105,9 +103,7 @@ export default function Pagination({
         >
           <Icon src={PreviousIcon} alt="Previous Icon" />
         </NormalButton>
-        <Counter>
-          {currentPage} / {totalPages}
-        </Counter>
+        <Counter>{currentPage}</Counter>
         <NormalButton
           style={{ borderRadius: '50%', boxShadow: 'none', padding: '0' }}
           ref={nextButtonRef}

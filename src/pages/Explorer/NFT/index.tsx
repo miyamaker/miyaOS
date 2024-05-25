@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
 import Dialog from '@/components/Dialog'
+import type { NFT } from '@/pages/Explorer'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
 
@@ -130,42 +131,30 @@ const TraitValue = styled.div`
   }
 `
 
-const TraitsSample = [
-  {
-    trait: 'badge',
-    value: 'communicator',
-  },
-  {
-    trait: 'environment',
-    value: 'lounge lizards',
-  },
-  {
-    trait: 'logo',
-    value: 'cyberbro',
-  },
-  {
-    trait: 'remilio',
-    value: 'remilio-2305',
-  },
-]
-
-export default function NFTDetail({ setPageSection }: { setPageSection: (section: string) => void }) {
+export default function NFTDetail({
+  setPageSection,
+  selectedToken,
+}: {
+  setPageSection: (section: string) => void
+  selectedToken: NFT
+}) {
   const { width } = useWindowSize()
   return (
     <Container>
       <DetailWrapper style={{ height: width > 640 ? '75%' : '85%' }}>
         <ImageWrapper>
-          <Image src={NFTImage} alt="NFT" />
+          <Image src={selectedToken.metadata.image || NFTImage} alt="NFT" />
         </ImageWrapper>
         <MetadataWrapper>
-          <div>Radbro #123</div>
-          <div>By RadBroDeployer</div>
-          <div>Radbros on chain. Just tell to check the chain. Radbros get $RAD.</div>
+          <div>
+            {selectedToken.metadata.name} #{selectedToken.tokenId}
+          </div>
+          <div>{selectedToken.metadata.description}</div>
           <Traits>
-            {TraitsSample.map(({ trait, value }, index) => (
+            {selectedToken.metadata.attributes.map(({ trait_type, value }, index) => (
               <TraitWrapper key={index}>
                 <Trait>
-                  <TraitTitle>{trait}</TraitTitle>
+                  <TraitTitle>{trait_type}</TraitTitle>
                   <TraitValue>{value}</TraitValue>
                 </Trait>
               </TraitWrapper>

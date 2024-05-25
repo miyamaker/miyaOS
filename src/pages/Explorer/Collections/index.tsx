@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import { Spinner } from '@/components/Spinner'
-import { GET_COLLECTIONS } from '@/gql/collections'
+import { GET_COLLECTIONS } from '@/pages/Explorer/gql/collections'
 import BackButton from '@/pages/Explorer/Button/BackButton'
 import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
 import CollectionsItem from '@/pages/Explorer/Collections/CollectionsItem'

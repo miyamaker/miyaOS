@@ -1,13 +1,14 @@
-import NFT1 from 'assets/explorer/sample/nft_1.png'
-import NFT2 from 'assets/explorer/sample/nft_2.png'
-import NFT3 from 'assets/explorer/sample/nft_3.png'
-import NFT4 from 'assets/explorer/sample/nft_4.png'
+import { useQuery } from '@apollo/client'
 import type { CSSProperties } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+import { useAccount } from 'wagmi'
 
+import { Spinner } from '@/components/Spinner'
+import { GET_NFTS_OF_USER } from '@/pages/Explorer/gql/NFTs'
 import NFTItem from '@/pages/Explorer/RecentMint/NFTItem'
 import Pagination from '@/pages/Explorer/RecentMint/Pagination'
+import type { Collection } from '@/pages/Explorer/types/collection'
 
 const Container = styled.div`
   width: 100%;
@@ -35,86 +36,78 @@ const NFTList = styled.div`
   }
 `
 
-const sample = [
-  {
-    tokenId: 1133,
-    image: NFT1,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 2324,
-    image: NFT2,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 4893,
-    image: NFT3,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 1238,
-    image: NFT4,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 5153,
-    image: NFT1,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 2123,
-    image: NFT2,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 231,
-    image: NFT3,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 4156,
-    image: NFT4,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 213,
-    image: NFT2,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 45241,
-    image: NFT3,
-    name: 'RADBRO',
-  },
-  {
-    tokenId: 1234,
-    image: NFT4,
-    name: 'RADBRO',
-  },
-]
-
 const ITEM_PER_PAGE = 8
+
+type NFT = {
+  metadataUri: string
+  token_id: string
+  owner_id: string
+  collection: Collection
+}
 
 export default function RecentMint({
   style,
   setPageSection,
+  selectedCollection,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
+  selectedCollection: Collection
 }) {
-  const totalPages = Math.ceil(sample.length / ITEM_PER_PAGE)
   const [currentCounter, setCurrentCounter] = useState<number>(1)
+  const [isEndPage, setIsEndPage] = useState<boolean>(true)
+
+  const { address } = useAccount()
+
+  const { loading, error, data } = useQuery(GET_NFTS_OF_USER, {
+    variables: {
+      offset: (currentCounter - 1) * ITEM_PER_PAGE,
+      limit: ITEM_PER_PAGE,
+      collectionAddress: selectedCollection.address,
+      ownerAddress: address || '',
+    },
+  })
+
+  useEffect(() => {
+    if (data) {
+      if ((data.Token as NFT[]).length < ITEM_PER_PAGE) {
+        setIsEndPage(true)
+      } else {
+        setIsEndPage(false)
+      }
+    }
+  }, [data])
+
   return (
     <Container style={style}>
       <Title>Recent Mints</Title>
-      <NFTList>
-        {sample
-          .slice(ITEM_PER_PAGE * (currentCounter - 1), ITEM_PER_PAGE * currentCounter)
-          .map(({ tokenId, image, name }, index) => (
-            <NFTItem tokenId={tokenId} image={image} name={name} key={index} setPageSection={setPageSection} />
-          ))}
-      </NFTList>
-      <Pagination totalPages={totalPages} currentPage={currentCounter} setCurrentCounter={setCurrentCounter} />
+      {loading || error ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <NFTList>
+            {(data.Token as NFT[]).map(({ token_id, collection }, index) => (
+              <NFTItem
+                collectionAddress={collection.address}
+                tokenId={token_id}
+                key={index}
+                setPageSection={setPageSection}
+              />
+            ))}
+          </NFTList>
+          <Pagination isEndPage={isEndPage} currentPage={currentCounter} setCurrentCounter={setCurrentCounter} />
+        </>
+      )}
     </Container>
   )
 }

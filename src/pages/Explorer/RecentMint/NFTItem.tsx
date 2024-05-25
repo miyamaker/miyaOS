@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro'
+import type { Address } from 'viem'
 
 import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import { useTokenMetadata } from '@/pages/Explorer/useTokenMetadata'
 
 const Container = styled.div`
   width: 25%;
@@ -45,15 +47,15 @@ const Description = styled.div`
 
 export default function NFTItem({
   tokenId,
-  image,
-  name,
+  collectionAddress,
   setPageSection,
 }: {
-  tokenId: number
-  image: string
-  name: string
+  tokenId: string
+  collectionAddress: string
   setPageSection: (section: string) => void
 }) {
+  const { name, image, description, attributes } = useTokenMetadata({ address: collectionAddress as Address, tokenId })
+
   return (
     <Container onClick={() => setPageSection(EXPLORER_PAGE_SECTION.NFT_SECTION)}>
       <Wrapper>

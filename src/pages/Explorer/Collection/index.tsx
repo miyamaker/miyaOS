@@ -43,7 +43,11 @@ export default function CollectionInfo({
         setErrorMessage={setErrorMessage}
         setErrorName={setErrorName}
       />
-      <RecentMint style={{ height: width > 640 ? '42%' : '35%' }} setPageSection={setPageSection} />
+      <RecentMint
+        style={{ height: width > 640 ? '42%' : '35%' }}
+        setPageSection={setPageSection}
+        selectedCollection={selectedCollection}
+      />
     </CollectionContainer>
   )
 }
