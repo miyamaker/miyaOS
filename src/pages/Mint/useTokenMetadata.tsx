@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Address } from 'viem'
 
-import { useTokenURI } from '@/pages/Explorer/useTokenURI'
+import { useTokenURI } from '@/pages/Mint/useTokenURI'
 import type { TokenMetadata } from '@/store/collections/reducer'
 
 export function useTokenMetadata({ address, tokenId }: { address: Address; tokenId: string }) {

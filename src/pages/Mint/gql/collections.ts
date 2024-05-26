@@ -8,7 +8,6 @@ export const GET_COLLECTIONS = gql`
       address
       metadataUri
       createdAt
-      totalSupply
     }
   }
 `

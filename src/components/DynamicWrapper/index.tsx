@@ -1,18 +1,18 @@
 import { lazy, Suspense, useMemo } from 'react'
 
-const Mint = lazy(() => import('@/pages/Mint'))
+const Launch = lazy(() => import('@/pages/Launch'))
 const Home = lazy(() => import('@/pages/Home'))
 const Components = lazy(() => import('@/pages/Components'))
 const Uploader = lazy(() => import('@/pages/Uploader'))
 const Manager = lazy(() => import('@/pages/Manage'))
 const Auction = lazy(() => import('@/pages/Auction'))
-const Explorer = lazy(() => import('@/pages/Explorer'))
+const Mint = lazy(() => import('@/pages/Mint'))
 
 export default function DynamicWrapper({ identifier }: { identifier: string }) {
   const component = useMemo(() => {
     switch (identifier) {
-      case 'mint':
-        return <Mint />
+      case 'launch':
+        return <Launch />
       case 'home':
         return <Home />
       case 'components':
@@ -23,8 +23,8 @@ export default function DynamicWrapper({ identifier }: { identifier: string }) {
         return <Manager />
       case 'auction':
         return <Auction />
-      case 'launchpad':
-        return <Explorer />
+      case 'mint':
+        return <Mint />
       default:
         return <></>
     }

@@ -2,9 +2,9 @@ import MiyaLogo from 'assets/134321870.png?preset=icon&resize=true'
 import ExecutableIcon from 'assets/create_new.png?preset=icon&resize=true'
 import GearIcon from 'assets/executable_gear.png?preset=icon&resize=true'
 import AuctionIcon from 'assets/icon/auction.png?preset=icon&resize=true'
-import LaunchpadIcon from 'assets/launchpad_logo.png?preset=icon&resize=true'
+import MintIcon from 'assets/launchpad_logo.png?preset=icon&resize=true'
 import ManageIcon from 'assets/miya_website_logo_2-removebg-preview.png?preset=icon&resize=true'
-import MintIcon from 'assets/miyamints1.png?preset=icon&resize=true'
+import LaunchIcon from 'assets/miyamints1.png?preset=icon&resize=true'
 
 export type Page = {
   id: string
@@ -21,18 +21,8 @@ const Pages: Record<string, Page> = {
   home: {
     id: 'home',
     path: '/about',
-    label: 'MiyaNet Explorer',
+    label: 'Net Mint',
     icon: MiyaLogo[0],
-    minSize: {
-      width: 800,
-      height: 720,
-    },
-  },
-  launchpad: {
-    id: 'launchpad',
-    path: '/launchpad',
-    label: 'MiyaLaunchpad',
-    icon: LaunchpadIcon[0],
     minSize: {
       width: 800,
       height: 720,
@@ -41,8 +31,18 @@ const Pages: Record<string, Page> = {
   mint: {
     id: 'mint',
     path: '/mint',
-    label: 'MiyaMints Setup Wizard',
+    label: 'Mint',
     icon: MintIcon[0],
+    minSize: {
+      width: 800,
+      height: 720,
+    },
+  },
+  launch: {
+    id: 'launch',
+    path: '/launch',
+    label: 'Launch',
+    icon: LaunchIcon[0],
     minSize: {
       width: 600,
       height: 575,
@@ -71,7 +71,7 @@ const Pages: Record<string, Page> = {
   manager: {
     id: 'manager',
     path: '/manage',
-    label: 'MiyaManager',
+    label: 'Manager',
     icon: ManageIcon[0],
     minSize: {
       width: 600,
@@ -81,7 +81,7 @@ const Pages: Record<string, Page> = {
   auction: {
     id: 'auction',
     path: '/auction',
-    label: 'MiyaAuction',
+    label: 'Auction',
     icon: AuctionIcon[0],
     minSize: {
       width: 800,

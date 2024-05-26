@@ -3,9 +3,9 @@ import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
 import Dialog from '@/components/Dialog'
-import type { Token } from '@/pages/Explorer'
-import BackButton from '@/pages/Explorer/Button/BackButton'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
+import type { Token } from '@/pages/Mint'
+import BackButton from '@/pages/Mint/Button/BackButton'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
 
 const Container = styled.div`
   height: 100%;

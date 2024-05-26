@@ -79,7 +79,7 @@ const Icons = styled.div`
 const UploaderPage = Pages.uploader
 const ManagePage = Pages.manager
 const AuctionPage = Pages.auction
-const ExplorerPage = Pages.launchpad
+const MintPage = Pages.mint
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -180,7 +180,7 @@ export default function OperatingSystem() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
                 <DesktopIcon normalState={MiyaLogo} onClick={() => handleOpen('home')}>
-                  MiyaNet
+                  Net
                   <br />
                   Explorer
                 </DesktopIcon>
@@ -199,10 +199,10 @@ export default function OperatingSystem() {
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
                 <DesktopIcon
                   normalState={CreateNew[0]?.src}
-                  onClick={() => handleOpen('mint')}
+                  onClick={() => handleOpen('launch')}
                   realignment={'0 -10px 0 0'}
                 >
-                  MiyaMints.exe
+                  Launch
                 </DesktopIcon>
                 {/*
                 <DesktopIcon
@@ -224,11 +224,8 @@ export default function OperatingSystem() {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0', gap: '2rem' }}>
-                <DesktopIcon
-                  normalState={ExplorerPage?.icon?.src}
-                  onClick={() => handleOpen(ExplorerPage?.id as PageKey)}
-                >
-                  {ExplorerPage?.label}
+                <DesktopIcon normalState={MintPage?.icon?.src} onClick={() => handleOpen(MintPage?.id as PageKey)}>
+                  {MintPage?.label}
                 </DesktopIcon>
               </div>
             </div>

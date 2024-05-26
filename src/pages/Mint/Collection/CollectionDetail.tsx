@@ -22,14 +22,14 @@ import {
   NotificationWrapper,
 } from '@/components/Notification'
 import { Spinner } from '@/components/Spinner'
-import BackButton from '@/pages/Explorer/Button/BackButton'
-import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
-import MintButton from '@/pages/Explorer/Button/MintButton'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-import type { Collection } from '@/pages/Explorer/types/collection'
-import { useContractMetadata } from '@/pages/Explorer/useContractMetadata'
-import { useMintWithFee } from '@/pages/Explorer/useMintWithFee'
-import { useNFTPrice } from '@/pages/Explorer/useNFTPrice'
+import BackButton from '@/pages/Mint/Button/BackButton'
+import ConnectWalletButton from '@/pages/Mint/Button/ConnectWalletButton'
+import MintButton from '@/pages/Mint/Button/MintButton'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import type { Collection } from '@/pages/Mint/types/collection'
+import { useContractMetadata } from '@/pages/Mint/useContractMetadata'
+import { useMintWithFee } from '@/pages/Mint/useMintWithFee'
+import { useNFTPrice } from '@/pages/Mint/useNFTPrice'
 
 const Container = styled.div`
   height: 100%;
@@ -388,7 +388,7 @@ export default function CollectionDetail({
                   value={freeMintAmount}
                   onChange={(e) => setFreeMintAmount(Number(e.target.value))}
                 />
-                <Button text={'Mint'} />
+                <Button text={'Launch'} />
               </MintInputWrapper>
             </MintInputContainer>
             <MintInputContainer>

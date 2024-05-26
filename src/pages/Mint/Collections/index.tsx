@@ -4,12 +4,12 @@ import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import { Spinner } from '@/components/Spinner'
-import { GET_COLLECTIONS } from '@/pages/Explorer/gql/collections'
-import BackButton from '@/pages/Explorer/Button/BackButton'
-import ConnectWalletButton from '@/pages/Explorer/Button/ConnectWalletButton'
-import CollectionsItem from '@/pages/Explorer/Collections/CollectionsItem'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-import type { Collection } from '@/pages/Explorer/types/collection'
+import { GET_COLLECTIONS } from '@/pages/Mint/gql/collections'
+import BackButton from '@/pages/Mint/Button/BackButton'
+import ConnectWalletButton from '@/pages/Mint/Button/ConnectWalletButton'
+import CollectionsItem from '@/pages/Mint/Collections/CollectionsItem'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import type { Collection } from '@/pages/Mint/types/collection'
 
 const Wrapper = styled.div`
   height: 100%;

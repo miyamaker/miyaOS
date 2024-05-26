@@ -2,10 +2,10 @@ import { useState } from 'react'
 import styled from 'styled-components/macro'
 import { useWindowSize } from 'usehooks-ts'
 
-import type { Token } from '@/pages/Explorer'
-import CollectionDetail from '@/pages/Explorer/Collection/CollectionDetail'
-import RecentMint from '@/pages/Explorer/RecentMint'
-import type { Collection } from '@/pages/Explorer/types/collection'
+import type { Token } from '@/pages/Mint'
+import CollectionDetail from '@/pages/Mint/Collection/CollectionDetail'
+import RecentMint from '@/pages/Mint/RecentMint'
+import type { Collection } from '@/pages/Mint/types/collection'
 
 const CollectionContainer = styled.div`
   height: 100%;

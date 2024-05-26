@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
-import type { Token } from '@/pages/Explorer'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-import { useTokenMetadata } from '@/pages/Explorer/useTokenMetadata'
+import type { Token } from '@/pages/Mint'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import { useTokenMetadata } from '@/pages/Mint/useTokenMetadata'
 
 const Container = styled.div`
   width: 25%;

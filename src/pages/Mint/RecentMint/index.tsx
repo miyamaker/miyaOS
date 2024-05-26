@@ -5,11 +5,11 @@ import styled from 'styled-components/macro'
 import { useAccount } from 'wagmi'
 
 import { Spinner } from '@/components/Spinner'
-import type { Token } from '@/pages/Explorer'
-import { GET_NFTS_OF_USER } from '@/pages/Explorer/gql/NFTs'
-import NFTItem from '@/pages/Explorer/RecentMint/NFTItem'
-import Pagination from '@/pages/Explorer/RecentMint/Pagination'
-import type { Collection } from '@/pages/Explorer/types/collection'
+import type { Token } from '@/pages/Mint'
+import { GET_NFTS_OF_USER } from '@/pages/Mint/gql/NFTs'
+import NFTItem from '@/pages/Mint/RecentMint/NFTItem'
+import Pagination from '@/pages/Mint/RecentMint/Pagination'
+import type { Collection } from '@/pages/Mint/types/collection'
 
 const Container = styled.div`
   width: 100%;

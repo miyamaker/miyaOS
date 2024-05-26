@@ -5,7 +5,7 @@ import { mainnet, useWaitForTransaction } from 'wagmi'
 import { z } from 'zod'
 
 import { ConnectedButton } from '@/components/Button'
-import { uriValidate } from '@/pages/Mint/validators'
+import { uriValidate } from '@/pages/Launch/validators'
 
 import { useBaseUri } from '../useBaseUri'
 import TableInput from './TableInput'
