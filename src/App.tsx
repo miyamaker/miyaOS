@@ -1,5 +1,6 @@
 import '@rainbow-me/rainbowkit/styles.css'
 
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import type { Theme } from '@rainbow-me/rainbowkit'
 import { connectorsForWallets, lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import {
@@ -80,9 +81,16 @@ const wagmiClient = createConfig({
   publicClient,
 })
 
+const client = new ApolloClient({
+  uri: import.meta.env.VITE_GRAPHQL_URL,
+  cache: new InMemoryCache(),
+})
+
 export default function App() {
   return (
     <>
+
+      <ApolloProvider client={client}>
       <Provider store={store}>
         <WagmiConfig config={wagmiClient}>
           <AccountProvider>
@@ -93,10 +101,13 @@ export default function App() {
                   <Router />
                 </ThemeProvider>
               </RainbowKitProvider>
-            </ClustersProvider>
-          </AccountProvider>
-        </WagmiConfig>
-      </Provider>
+
+             </ClustersProvider>
+            </AccountProvider>
+          </WagmiConfig>
+        </Provider>
+      </ApolloProvider>
+
     </>
   )
 }

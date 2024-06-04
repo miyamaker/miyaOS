@@ -1,24 +1,21 @@
+import { useQuery } from '@apollo/client'
 import CollectionsImage from 'assets/explorer/sample/collections.jpeg'
 import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
-import NFT1 from '@/assets/explorer/sample/nft_1.png'
-import NFT2 from '@/assets/explorer/sample/nft_2.png'
-import ConnectButton from '@/pages/Explorer/Button/ConnectButton'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Explorer/constants'
-import CollectionsItems from './CollectionsItems'
+import { Spinner } from '@/components/Spinner'
+import { GET_COLLECTIONS } from '@/pages/Mint/gql/collections'
+import BackButton from '@/pages/Mint/Button/BackButton'
+import ConnectWalletButton from '@/pages/Mint/Button/ConnectWalletButton'
+import CollectionsItem from '@/pages/Mint/Collections/CollectionsItem'
+import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import type { Collection } from '@/pages/Mint/types/collection'
 
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: row;
-
-  * {
-    font-family: Revalia;
-    font-size: 0.8rem;
-    line-height: 1rem;
-  }
 `
 
 const CollectionsInfoContainer = styled.div`
@@ -38,11 +35,6 @@ const ConnectButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  > button {
-    width: 90px;
-    height: 90px;
-  }
 `
 
 const CollectionImage = styled.img`
@@ -50,18 +42,17 @@ const CollectionImage = styled.img`
   width: 75%;
   height: 75%;
   object-fit: contain;
-  border: none;
   border-radius: 5%;
 
   :hover {
     border: none;
   }
 `
-const CollectionTitle = styled.h1`
+const CollectionTitle = styled.div`
   font-weight: bolder;
   text-transform: uppercase;
   margin-bottom: 1rem;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 1);
 `
 
 const CollectionDescription = styled.div`
@@ -75,11 +66,12 @@ const CollectionDescription = styled.div`
     color: white;
     text-transform: uppercase;
     background-color: rgba(39, 37, 38, 0.8);
-    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
     padding: 1rem;
     border-radius: 5%;
     text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000,
       -1px 1px #000;
+    font-size: 0.8rem;
   }
 `
 
@@ -98,17 +90,17 @@ const CollectionListWrapper = styled.div`
   width: 75%;
   height: 75%;
   border: none;
+  padding: 0.5rem;
   background: rgba(39, 37, 38, 0.9);
-  box-shadow: 0px 0px 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0, 0, 0, 0.6);
   margin-bottom: 4rem;
 `
 
 const CollectionListItemContainer = styled.div`
   width: 100%;
-  height: 90%;
-  margin-bottom: 3rem;
+  height: calc(100% - 1.3rem);
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `
 
@@ -134,7 +126,24 @@ const CollectionInfoWrapper = styled.div`
   justify-content: center;
 `
 
-export default function Collections({ setPageSection }: { setPageSection: (section: string) => void }) {
+export default function Collections({
+  setPageSection,
+  closeWindow,
+  isConnected,
+  setSelectedCollection,
+}: {
+  setPageSection: (section: string) => void
+  closeWindow: () => void
+  isConnected: boolean
+  setSelectedCollection: (collection: Collection) => void
+}) {
+  const { loading, error, data } = useQuery(GET_COLLECTIONS, { variables: { offset: 0, limit: 20 } })
+
+  const handleClickCollection = (collection: Collection) => {
+    setSelectedCollection(collection)
+    setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
+  }
+
   return (
     <Wrapper>
       <CollectionsInfoContainer>
@@ -146,28 +155,35 @@ export default function Collections({ setPageSection }: { setPageSection: (secti
           </CollectionDescription>
         </CollectionInfoWrapper>
         <ConnectButtonWrapper>
-          <ConnectButton text="Exit" handleClick={() => console.log('click')}></ConnectButton>
-          <ConnectButton
-            text="Connect"
-            handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
-          ></ConnectButton>
+          <BackButton text="Exit" handleClick={closeWindow} />
+          <ConnectWalletButton isConnected={isConnected} />
         </ConnectButtonWrapper>
       </CollectionsInfoContainer>
       <CollectionListContainer>
         <CollectionListWrapper>
           <CollectionSearch type="text" placeholder="Search for collection..." />
           <CollectionListItemContainer>
-            {Array.from({ length: 20 }).map((_, index) => (
-              <CollectionsItems
-                key={index}
-                collectionImage={index % 2 === 0 ? NFT1 : NFT2}
-                collectionName={
-                  index % 2 === 0 ? `approved collection ${index + 1}` : `community collection ${index + 1}`
-                }
-                isApprovedCollection={index % 2 === 0}
-                setPageSection={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)}
-              ></CollectionsItems>
-            ))}
+            {loading || error ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: 'calc(100% - 1.3rem)',
+                }}
+              >
+                <Spinner />
+              </div>
+            ) : (
+              (data.Collection as Collection[]).map((collection, index) => (
+                <CollectionsItem
+                  key={index}
+                  collection={collection}
+                  handleClick={() => handleClickCollection(collection)}
+                />
+              ))
+            )}
           </CollectionListItemContainer>
         </CollectionListWrapper>
       </CollectionListContainer>

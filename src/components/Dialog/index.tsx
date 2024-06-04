@@ -9,6 +9,7 @@ const Container = styled.div`
   padding: 0.5rem;
   border: 5px solid rgba(93, 90, 90, 0.1);
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6);
+  font-size: 0.7rem;
 
   > * + * {
     margin-top: 0.75rem;
