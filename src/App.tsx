@@ -21,6 +21,7 @@ import AccountProvider from './context/AccountProvider'
 import Router from './Router'
 import store from './store'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
+import ClustersProvider from './context/ClustersProvider'
 
 const { chains, publicClient } = configureChains([mainnet, goerli, sepolia], [publicProvider()], {
   pollingInterval: 10_000,
@@ -88,20 +89,25 @@ const client = new ApolloClient({
 export default function App() {
   return (
     <>
+
       <ApolloProvider client={client}>
-        <Provider store={store}>
-          <WagmiConfig config={wagmiClient}>
-            <AccountProvider>
+      <Provider store={store}>
+        <WagmiConfig config={wagmiClient}>
+          <AccountProvider>
+            <ClustersProvider>
               <RainbowKitProvider chains={chains} theme={readTheme}>
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <Router />
                 </ThemeProvider>
               </RainbowKitProvider>
+
+             </ClustersProvider>
             </AccountProvider>
           </WagmiConfig>
         </Provider>
       </ApolloProvider>
+
     </>
   )
 }

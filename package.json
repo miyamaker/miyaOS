@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
+    "@clustersxyz/sdk": "^0.1.6",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@irys/query": "^0.0.2",
     "@irys/sdk": "^0.0.4",
