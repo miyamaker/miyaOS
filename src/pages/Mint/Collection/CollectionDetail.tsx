@@ -388,7 +388,7 @@ export default function CollectionDetail({
                   value={freeMintAmount}
                   onChange={(e) => setFreeMintAmount(Number(e.target.value))}
                 />
-                <Button text={'Launch'} />
+                <Button text={'Mint'} />
               </MintInputWrapper>
             </MintInputContainer>
             <MintInputContainer>
