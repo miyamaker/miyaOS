@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
-import { useAccount } from 'wagmi'
 
 import { Spinner } from '@/components/Spinner'
 import type { Token } from '@/pages/Mint'
@@ -62,14 +61,11 @@ export default function RecentMint({
   const [currentCounter, setCurrentCounter] = useState<number>(1)
   const [isEndPage, setIsEndPage] = useState<boolean>(true)
 
-  const { address } = useAccount()
-
   const { loading, error, data, refetch } = useQuery(GET_NFTS_OF_USER, {
     variables: {
       offset: (currentCounter - 1) * ITEM_PER_PAGE,
       limit: ITEM_PER_PAGE,
       collectionAddress: selectedCollection.address,
-      ownerAddress: address || '',
     },
   })
 
