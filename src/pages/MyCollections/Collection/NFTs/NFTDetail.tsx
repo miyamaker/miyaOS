@@ -5,7 +5,7 @@ import { useWindowSize } from 'usehooks-ts'
 import Dialog from '@/components/Dialog'
 import type { Token } from '@/pages/Mint'
 import BackButton from '@/pages/Mint/Button/BackButton'
-import { MINT_PAGE_SECTION } from '@/pages/Mint/constants'
+import { MY_COLLECTIONS_PAGE_SECTION } from '@/pages/MyCollections/constants'
 
 const Container = styled.div`
   height: 100%;
@@ -163,7 +163,7 @@ export default function NFTDetail({
         </MetadataWrapper>
       </DetailWrapper>
       <ButtonWrapper style={{ height: width > 640 ? '25%' : '15%' }}>
-        <BackButton text="Back" handleClick={() => setPageSection(MINT_PAGE_SECTION.COLLECTION_SECTION)} />
+        <BackButton text="Back" handleClick={() => setPageSection(MY_COLLECTIONS_PAGE_SECTION.COLLECTION_SECTION)} />
       </ButtonWrapper>
     </Container>
   )

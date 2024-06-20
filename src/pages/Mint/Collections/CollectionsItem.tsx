@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro'
 
 import SampleImage from '@/assets/explorer/sample/nft_2.png'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
 import type { Collection } from '@/pages/Mint/types/collection'
 import { useContractMetadata } from '@/pages/Mint/useContractMetadata'
 

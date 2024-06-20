@@ -2,8 +2,8 @@ import styled from 'styled-components/macro'
 import type { Address } from 'viem'
 
 import type { Token } from '@/pages/Mint'
-import { MINT_PAGE_SECTION } from '@/pages/Mint/constants'
 import { useTokenMetadata } from '@/pages/Mint/useTokenMetadata'
+import { MY_COLLECTIONS_PAGE_SECTION } from '@/pages/MyCollections/constants'
 
 const Container = styled.div`
   width: 25%;
@@ -30,6 +30,8 @@ const Image = styled.img`
   max-height: 100%;
   max-width: 100%;
   border: none;
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
 
   :hover {
     border: none;
@@ -68,7 +70,7 @@ export default function NFTItem({
       collectionAddress,
       metadata: { name, image, description, attributes, external_url: externalURL },
     })
-    setPageSection(MINT_PAGE_SECTION.NFT_SECTION)
+    setPageSection(MY_COLLECTIONS_PAGE_SECTION.NFT_SECTION)
   }
 
   return (

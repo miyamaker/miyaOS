@@ -7,6 +7,7 @@ const Uploader = lazy(() => import('@/pages/Uploader'))
 const Manager = lazy(() => import('@/pages/Manage'))
 const Auction = lazy(() => import('@/pages/Auction'))
 const Mint = lazy(() => import('@/pages/Mint'))
+const MyCollections = lazy(() => import('@/pages/MyCollections'))
 
 export default function DynamicWrapper({ identifier }: { identifier: string }) {
   const component = useMemo(() => {
@@ -25,6 +26,8 @@ export default function DynamicWrapper({ identifier }: { identifier: string }) {
         return <Auction />
       case 'mint':
         return <Mint />
+      case 'myCollections':
+        return <MyCollections />
       default:
         return <></>
     }

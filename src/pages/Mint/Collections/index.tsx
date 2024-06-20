@@ -4,11 +4,11 @@ import styled from 'styled-components/macro'
 
 import SearchIcon from '@/assets/explorer/icon/search.svg'
 import { Spinner } from '@/components/Spinner'
-import { GET_COLLECTIONS } from '@/pages/Mint/gql/collections'
 import BackButton from '@/pages/Mint/Button/BackButton'
 import ConnectWalletButton from '@/pages/Mint/Button/ConnectWalletButton'
 import CollectionsItem from '@/pages/Mint/Collections/CollectionsItem'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import { MINT_PAGE_SECTION } from '@/pages/Mint/constants'
+import { GET_COLLECTIONS } from '@/pages/Mint/gql/collections'
 import type { Collection } from '@/pages/Mint/types/collection'
 
 const Wrapper = styled.div`
@@ -141,7 +141,7 @@ export default function Collections({
 
   const handleClickCollection = (collection: Collection) => {
     setSelectedCollection(collection)
-    setPageSection(EXPLORER_PAGE_SECTION.COLLECTION_SECTION)
+    setPageSection(MINT_PAGE_SECTION.COLLECTION_SECTION)
   }
 
   return (
