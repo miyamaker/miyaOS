@@ -1,6 +1,7 @@
 import MiyaLogo from 'assets/134321870.png?preset=icon&resize=true'
 import ExecutableIcon from 'assets/create_new.png?preset=icon&resize=true'
 import GearIcon from 'assets/executable_gear.png?preset=icon&resize=true'
+import FolderOpen from 'assets/folder_open.png?preset=thumbnail&resize=true'
 import AuctionIcon from 'assets/icon/auction.png?preset=icon&resize=true'
 import MintIcon from 'assets/launchpad_logo.png?preset=icon&resize=true'
 import ManageIcon from 'assets/miya_website_logo_2-removebg-preview.png?preset=icon&resize=true'
@@ -21,7 +22,7 @@ const Pages: Record<string, Page> = {
   home: {
     id: 'home',
     path: '/about',
-    label: 'Net Mint',
+    label: 'Net Explorer',
     icon: MiyaLogo[0],
     minSize: {
       width: 800,
@@ -33,6 +34,16 @@ const Pages: Record<string, Page> = {
     path: '/mint',
     label: 'Mint',
     icon: MintIcon[0],
+    minSize: {
+      width: 800,
+      height: 720,
+    },
+  },
+  myCollections: {
+    id: 'myCollections',
+    path: '/my-collections',
+    label: 'My Collections',
+    icon: FolderOpen[0],
     minSize: {
       width: 800,
       height: 720,

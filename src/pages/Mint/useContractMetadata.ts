@@ -5,10 +5,13 @@ import type { ContractMetadata } from '@/store/collections/reducer'
 export function useContractMetadata({ metadataUri }: { metadataUri: string }) {
   let contractUri = metadataUri
   if (contractUri.includes('ipfs://')) {
-    const uri = contractUri.replace('ipfs://', '')
-    const cid = uri.split('/')[0]
-    const contractFile = uri.split('/')[1]
-    contractUri = `https://${cid}.ipfs.nftstorage.link/${contractFile}`
+    const imageCID = contractUri.replace('ipfs://', '')
+    contractUri = `https://nftstorage.link/ipfs/${imageCID}`
+  }
+
+  if (contractUri.includes('ar://')) {
+    const imageCID = contractUri.replace('ar://', '')
+    contractUri = `https://gateway.irys.xyz/${imageCID}`
   }
 
   const { data: contractMetadata, error } = useFetch<ContractMetadata>(contractUri)
@@ -19,10 +22,13 @@ export function useContractMetadata({ metadataUri }: { metadataUri: string }) {
 
   let imageUri = contractMetadata?.image || ''
   if (imageUri.includes('ipfs://')) {
-    imageUri = (contractMetadata?.image || '').replace('ipfs://', '')
-    const cid = imageUri.split('/')[0]
-    const imageFile = imageUri.split('/')[1]
-    imageUri = `https://${cid}.ipfs.nftstorage.link/${imageFile}`
+    const imageCID = (contractMetadata?.image || '').replace('ipfs://', '')
+    imageUri = `https://nftstorage.link/ipfs/${imageCID}`
+  }
+
+  if (imageUri.includes('ar://')) {
+    const imageCID = (contractMetadata?.image || '').replace('ar://', '')
+    imageUri = `https://gateway.irys.xyz/${imageCID}`
   }
 
   return {

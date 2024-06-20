@@ -80,6 +80,7 @@ const UploaderPage = Pages.uploader
 const ManagePage = Pages.manager
 const AuctionPage = Pages.auction
 const MintPage = Pages.mint
+const MyCollectionPage = Pages.myCollections
 
 export default function OperatingSystem() {
   const location = useLocation()
@@ -102,6 +103,7 @@ export default function OperatingSystem() {
     }
 
     const page = Pages[id]
+    console.log(Pages, id, page)
     if (!page) return
     dispatch(
       openWindow({
@@ -212,8 +214,12 @@ export default function OperatingSystem() {
                   {ComponentPage?.label}
                 </DesktopIcon>
                 */}
-                <DesktopIcon normalState={Folder[0]?.src} hoverState={FolderOpen[0]?.src} onClick={() => null}>
-                  My collections
+                <DesktopIcon
+                  normalState={Folder[0]?.src}
+                  hoverState={FolderOpen[0]?.src}
+                  onClick={() => handleOpen(MyCollectionPage?.id as PageKey)}
+                >
+                  {MyCollectionPage?.label}
                 </DesktopIcon>
                 <DesktopIcon
                   normalState={AuctionPage?.icon?.src}

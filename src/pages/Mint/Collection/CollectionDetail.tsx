@@ -25,7 +25,7 @@ import { Spinner } from '@/components/Spinner'
 import BackButton from '@/pages/Mint/Button/BackButton'
 import ConnectWalletButton from '@/pages/Mint/Button/ConnectWalletButton'
 import MintButton from '@/pages/Mint/Button/MintButton'
-import { EXPLORER_PAGE_SECTION } from '@/pages/Mint/constants'
+import { MINT_PAGE_SECTION } from '@/pages/Mint/constants'
 import type { Collection } from '@/pages/Mint/types/collection'
 import { useContractMetadata } from '@/pages/Mint/useContractMetadata'
 import { useMintWithFee } from '@/pages/Mint/useMintWithFee'
@@ -366,7 +366,7 @@ export default function CollectionDetail({
             {/* </SocialList> */}
           </ImageDetailWrapper>
           <ConnectButtonWrapper>
-            <BackButton text="Back" handleClick={() => setPageSection(EXPLORER_PAGE_SECTION.COLLECTIONS_SECTION)} />
+            <BackButton text="Back" handleClick={() => setPageSection(MINT_PAGE_SECTION.COLLECTIONS_SECTION)} />
             <ConnectWalletButton isConnected={isConnected} />
           </ConnectButtonWrapper>
         </ImageDetailContainer>
@@ -388,7 +388,7 @@ export default function CollectionDetail({
                   value={freeMintAmount}
                   onChange={(e) => setFreeMintAmount(Number(e.target.value))}
                 />
-                <Button text={'Launch'} />
+                <Button text={'Mint'} />
               </MintInputWrapper>
             </MintInputContainer>
             <MintInputContainer>

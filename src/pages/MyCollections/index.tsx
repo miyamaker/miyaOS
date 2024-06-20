@@ -1,25 +1,22 @@
 import BackgroundImage from 'assets/explorer/background/background.png'
-import WarningIcon from 'assets/icon/warning.png'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
-import { useAccount } from 'wagmi'
 
-import { NormalButton } from '@/components/Button/NormalButton'
-import { ErrorButtonWrapper, ErrorContent, ErrorMessage, ErrorWindow, ErrorWrapper } from '@/components/Errors'
 import TitleBar from '@/components/TitleBar'
 import WindowWrapper from '@/components/WindowWrapper'
 import Pages from '@/constants/pages'
-import CollectionInfo from '@/pages/Mint/Collection'
-import Collections from '@/pages/Mint/Collections'
 import { MINT_PAGE_SECTION } from '@/pages/Mint/constants'
-import NFTDetail from '@/pages/Mint/NFT'
-import type { Collection } from '@/pages/Mint/types/collection'
+import CollectionInfo from '@/pages/MyCollections/Collection'
+import NFTDetail from '@/pages/MyCollections/Collection/NFTs/NFTDetail'
+import Collections from '@/pages/MyCollections/Collections'
+import { MY_COLLECTIONS_PAGE_SECTION } from '@/pages/MyCollections/constants'
+import type { CollectionBaseInfo } from '@/pages/MyCollections/types/token'
 import type { TokenMetadata } from '@/store/collections/reducer'
 import { useAppDispatch } from '@/store/hooks'
 import { closeWindow, minimizeWindow } from '@/store/windows/actions'
 import type { PageKey } from '@/store/windows/reducer'
 
-const page = Pages.mint
+const page = Pages.myCollections
 const pageId = page?.id as PageKey
 
 const Background = styled.div`
@@ -64,24 +61,19 @@ export type Token = {
   collectionAddress: string
 }
 
-export default function MintPage() {
+export default function MyCollectionsPage() {
   // Window mgmt
   const dispatch = useAppDispatch()
   const close = () => dispatch(closeWindow({ value: pageId }))
   const minimize = () => dispatch(minimizeWindow({ value: pageId }))
 
-  const { isConnected } = useAccount()
-
-  const [errorMessage, setErrorMessage] = useState<string>('')
-  const [errorName, setErrorName] = useState<string>('Mint Error')
-  const [pageSection, setPageSection] = useState<string>(MINT_PAGE_SECTION.COLLECTIONS_SECTION)
-  const [selectedCollection, setSelectedCollection] = useState<Collection>({
+  const [pageSection, setPageSection] = useState<string>(MY_COLLECTIONS_PAGE_SECTION.COLLECTIONS_SECTION)
+  const [selectedCollection, setSelectedCollection] = useState<CollectionBaseInfo>({
     name: '',
+    symbol: '',
     metadataUri: '',
     address: '',
-    createdAt: '',
-    symbol: '',
-    totalSupply: 0,
+    maxSupply: '0',
   })
   const [selectedToken, setSelectedToken] = useState<Token>({
     metadata: {
@@ -95,35 +87,20 @@ export default function MintPage() {
     collectionAddress: '',
   })
 
-  const handleCloseErrorPopup = () => {
-    setErrorName('Mint Error')
-    setErrorMessage('')
-  }
-
   const renderSection = () => {
     switch (pageSection) {
       case MINT_PAGE_SECTION.COLLECTIONS_SECTION:
-        return (
-          <Collections
-            isConnected={isConnected}
-            setPageSection={setPageSection}
-            closeWindow={close}
-            setSelectedCollection={setSelectedCollection}
-          />
-        )
+        return <Collections setPageSection={setPageSection} setSelectedCollection={setSelectedCollection} />
       case MINT_PAGE_SECTION.COLLECTION_SECTION:
         return (
           <CollectionInfo
-            setErrorMessage={setErrorMessage}
-            setErrorName={setErrorName}
-            isConnected={isConnected}
             setPageSection={setPageSection}
             selectedCollection={selectedCollection}
             setSelectedToken={setSelectedToken}
           />
         )
       case MINT_PAGE_SECTION.NFT_SECTION:
-        return <NFTDetail selectedToken={selectedToken} setPageSection={setPageSection} />
+        return <NFTDetail setPageSection={setPageSection} selectedToken={selectedToken} />
       default:
         return <></>
     }
@@ -146,26 +123,7 @@ export default function MintPage() {
         {page?.label}
       </TitleBar>
       <Background>
-        <Container>
-          {renderSection()}
-          {errorMessage && (
-            <ErrorWrapper>
-              <ErrorWindow errorLabel={errorName} handleClose={handleCloseErrorPopup}>
-                <ErrorContent>
-                  <ErrorMessage>
-                    <img src={WarningIcon} alt="Error icon" />
-                    <div>{errorMessage}</div>
-                  </ErrorMessage>
-                  <ErrorButtonWrapper>
-                    <NormalButton style={{ width: '30%' }} onClick={handleCloseErrorPopup}>
-                      OK
-                    </NormalButton>
-                  </ErrorButtonWrapper>
-                </ErrorContent>
-              </ErrorWindow>
-            </ErrorWrapper>
-          )}
-        </Container>
+        <Container>{renderSection()}</Container>
       </Background>
     </WindowWrapper>
   )

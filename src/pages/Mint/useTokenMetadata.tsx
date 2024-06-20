@@ -26,7 +26,11 @@ export function useTokenMetadata({ address, tokenId }: { address: Address; token
 
         if (uri.includes('ar://')) {
           const cid = uri.replace('ar://', '')
-          link = `https://gateway.irys.xyz/${cid}`
+          if (!cid.includes('.json')) {
+            link = `https://gateway.irys.xyz/${cid}.json`
+          } else {
+            link = `https://gateway.irys.xyz/${cid}`
+          }
         }
 
         const response = await fetch(link)

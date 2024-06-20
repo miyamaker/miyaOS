@@ -2,24 +2,21 @@ import { useQuery } from '@apollo/client'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+import { useAccount } from 'wagmi'
 
 import { Spinner } from '@/components/Spinner'
 import type { Token } from '@/pages/Mint'
 import { GET_NFTS_OF_USER } from '@/pages/Mint/gql/NFTs'
-import NFTItem from '@/pages/Mint/RecentMint/NFTItem'
-import Pagination from '@/pages/Mint/RecentMint/Pagination'
 import type { Collection } from '@/pages/Mint/types/collection'
+import NFTItem from '@/pages/MyCollections/Collection/NFTs/NFTItem'
+import Pagination from '@/pages/MyCollections/Collection/NFTs/Pagination'
+import type { CollectionBaseInfo } from '@/pages/MyCollections/types/token'
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-`
-
-const Title = styled.div`
-  font-size: large;
-  text-transform: uppercase;
 `
 
 const NFTList = styled.div`
@@ -45,27 +42,28 @@ type NFT = {
   collection: Collection
 }
 
-export default function RecentMint({
+export default function NFTs({
   style,
   setPageSection,
   selectedCollection,
   setSelectedToken,
-  toggleFetchRecentMint,
 }: {
   style?: CSSProperties
   setPageSection: (section: string) => void
-  selectedCollection: Collection
+  selectedCollection: CollectionBaseInfo
   setSelectedToken: (token: Token) => void
-  toggleFetchRecentMint: boolean
 }) {
   const [currentCounter, setCurrentCounter] = useState<number>(1)
   const [isEndPage, setIsEndPage] = useState<boolean>(true)
 
-  const { loading, error, data, refetch } = useQuery(GET_NFTS_OF_USER, {
+  const { address } = useAccount()
+
+  const { loading, error, data } = useQuery(GET_NFTS_OF_USER, {
     variables: {
       offset: (currentCounter - 1) * ITEM_PER_PAGE,
       limit: ITEM_PER_PAGE,
       collectionAddress: selectedCollection.address,
+      ownerAddress: address || '',
     },
   })
 
@@ -79,13 +77,8 @@ export default function RecentMint({
     }
   }, [data])
 
-  useEffect(() => {
-    refetch()
-  }, [toggleFetchRecentMint])
-
   return (
     <Container style={style}>
-      <Title>Recent Mints</Title>
       {loading || error ? (
         <div
           style={{
